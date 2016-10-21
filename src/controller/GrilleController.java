@@ -17,8 +17,12 @@ public class GrilleController
 		
 		for(int i=0; i<grille.getCases().length; i++)
 		{
-			CaseController caseController=new CaseController(grille.getCases()[i], 
-					grilleView.getCaseViews()[i]);
+			for(int j=0; j<grille.getCases()[i].length; j++)
+			{
+				CaseController caseController=new CaseController(grille.getCases()[i][j], 
+						grilleView.getCaseViews()[i][j]);
+			}
+			
 		}
 	}
 
