@@ -18,6 +18,7 @@ public class SolverImpl implements Solver
 		this.grille=grille;
 		this.casesAvecContraintesCreees=new ArrayList<CaseImpl>();
 		this.contraintes=new ArrayList<ConstraintImpl>();
+		constraintsGenerator();
 	}
 	
 	
@@ -25,8 +26,67 @@ public class SolverImpl implements Solver
 	@Override
 	public void solve() 
 	{
-		// TODO Auto-generated method stub
-		
+		backtracking(0);
+	}
+	
+	//Pos est le numéro de la case, sert pour faire du récursif
+	public boolean backtracking(int pos) 
+	{
+		//Si on est au bout du sudoku, c'est qu'on a pas eu de blocages :)
+		if (pos == 9*9)
+		{
+			return true;
+		}
+	        
+
+		//Si la case n'est pas vide, on avance
+	    int i = pos/9;
+	    int j = pos%9;
+	    CaseImpl maCase=this.grille.getCase(i, j);
+	    if (maCase.getValue() != 0)
+	    {
+	    	return backtracking(pos+1);
+	    }
+	    
+	    //Si la case est vide, pour chaque valeur possible
+	    for (int value : maCase.getDomain())
+	    {
+	    	//testons cette valeur dans cette case
+	    	maCase.setValue(value);
+	    	
+	    	//Prélèvement des contraintes de la case
+	    	List<ConstraintImpl> contraintesDeLaCase=getConstraints(maCase);
+	    	
+	    	//Cette valeur satisfait-elle toutes les contraintes?
+	    	boolean constraintsSatisfied=true;
+	    	int k=0;
+	    	while(constraintsSatisfied && k<contraintesDeLaCase.size())
+	    	{
+	    		if(!contraintesDeLaCase.get(k).isSatisfied())
+	    		{
+	    			constraintsSatisfied=false;
+	    		}
+	    		else
+	    		{
+	    			k++;
+	    		}
+	    	}
+	    	
+	    	//Si cela satisfait toutes les contraintes de la case
+	        if (constraintsSatisfied)
+	        {
+	        	//Reduction des domaines
+	        	arcConsistency();
+	        	//On passe à la suite
+	            if (backtracking(pos+1))
+	            {
+	            	return true;
+	            }
+	        }
+	    }
+	    maCase.setValue(0);
+
+	    return false;
 	}
 	
 	public void constraintsGenerator()
@@ -65,6 +125,10 @@ public class SolverImpl implements Solver
 			contraintesTestees.remove(0);
 			boolean removed=domainReducer(contrainteParcourue);
 			//...Avec les voisins
+			if(removed)
+			{
+				
+			}
 		}
 		
 	}
@@ -155,6 +219,20 @@ public class SolverImpl implements Solver
 	        }
 	    }
 	    return casesBlocRestantes;
+	}
+	
+	public List<ConstraintImpl> getConstraints(CaseImpl maCase)
+	{
+		List<ConstraintImpl> contraintesDeLaCase=new ArrayList<ConstraintImpl>();
+		for(ConstraintImpl contrainte: this.contraintes)
+		{
+			if(contrainte.getCase1()==maCase || 
+					contrainte.getCase2()==maCase)
+			{
+				contraintesDeLaCase.add(contrainte);
+			}
+		}
+		return contraintesDeLaCase;
 	}
 
 
