@@ -187,7 +187,9 @@ public class WindowImpl extends JFrame
 		boutonEntrerManuellementUneGrille.setIcon(imageBoutonEntrerManuellementUneGrille);
 		panelBoutons.add(boutonEntrerManuellementUneGrille);
 		boutonEntrerManuellementUneGrille.addActionListener(ecouteurBoutonEntrerManuellementUneGrille);
-				
+			
+		//
+		
 		this.setVisible(true);
 		this.revalidate();
 		
