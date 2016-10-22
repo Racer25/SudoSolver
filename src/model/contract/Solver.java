@@ -11,4 +11,5 @@ public interface Solver
 	public List<CaseImpl> getCasesLigne(CaseImpl maCase);
 	public List<CaseImpl> getCasesColonne(CaseImpl maCase);
 	public List<CaseImpl> getCasesBlocRestantes(CaseImpl maCase);
+	public void start();
 }

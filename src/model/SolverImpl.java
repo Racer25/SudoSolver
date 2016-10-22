@@ -7,7 +7,7 @@ import java.util.List;
 import model.contract.Solver;
 
 //Résout le sudoku
-public class SolverImpl implements Solver 
+public class SolverImpl extends Thread implements Solver 
 {
 	
 	private GrilleImpl grille;
@@ -44,13 +44,23 @@ public class SolverImpl implements Solver
 		}
 	}
 	
+	@Override
+	public void run()
+	{
+		solve();
+	}
 	
 	
 	@Override
 	public void solve() 
 	{
 		System.out.println("Initialisation de la résolution");
-		backtracking(0);
+		boolean resolved=backtracking(0);
+		
+		if(resolved)
+		{
+			//Faire un truc
+		}
 	}
 	
 	//Pos est le numéro de la case, sert pour faire du récursif
@@ -74,7 +84,7 @@ public class SolverImpl implements Solver
     	//Si la case n'est pas vide, on avance
 	    if (maCase.getValue() != 0)
 	    {
-	    	System.out.println("Case non vide");
+	    	System.out.println("Case non vide, suivante!");
 	    	return backtracking(pos+1);
 	    }
 	    
