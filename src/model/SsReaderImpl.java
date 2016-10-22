@@ -13,32 +13,34 @@ public class SsReaderImpl {
 		
 		Integer[][] grille = new Integer[9][9]; 
 		
-		try { 
+		try {
 		InputStream inputStream = new FileInputStream(file); 
 		InputStreamReader inputStreamReader = new InputStreamReader(inputStream); 
 		BufferedReader bufferReader = new BufferedReader(inputStreamReader); 
 		String ligne;
-		int nombreDeCaracteres = 11*11;
-		int index = 0;
-		ligne = bufferReader.readLine(); 
-		System.out.println(ligne);
-		int ind = ligne.indexOf(" ");
-		for(int i = 0; i > 9 ; i++){
-			for(int j = 0 ; j < 9 ; j++){
-				while(ligne.charAt(index) == '!' || ligne.charAt(index) == '-'){
-					index++;
-				}
+		int numeroLigne = 0;
+		int i = 0;
+		int j = 0;
+		while((ligne = bufferReader.readLine()) != null){
+			for(int index = 0 ; index < 11 ; index++){
 				if(ligne.charAt(index) == '.'){
 					grille[i][j] = null;
-					index++;
+					j++;
+					if(j == 9){
+						j = 0;
+						i++;
+					}
 				}
-				else{
-					grille[i][j] = Integer.parseInt(ligne, ligne.charAt(index));
-					index++;
+				else if(ligne.charAt(index) != '!' && ligne.charAt(index) != '-'){
+					grille[i][j] = Character.getNumericValue(ligne.charAt(index));
+					j++;
+					if(j == 9){
+						j = 0;
+						i++;
+					}
 				}
 			}
 		}
-		
 		bufferReader.close(); 
 		
 		} 
