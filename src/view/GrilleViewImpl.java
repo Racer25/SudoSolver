@@ -30,16 +30,19 @@ public class GrilleViewImpl extends JPanel
 	private JPanel grille32;
 	private JPanel grille33;
 	
+	private GrilleImpl grilleImpl;
+	
 	//Constructeur
 	public GrilleViewImpl(GrilleImpl grilleImpl){
 		
+		this.grilleImpl = grilleImpl;
 		this.tabCaseImpl = grilleImpl.getCases();
 		this.tabCaseViewImpl = new CaseViewImpl[9][9];
 		layoutGrille = new GridLayout(3,3);
 		
 		for(int i = 0 ; i < 9 ; i++){
 			for(int j = 0 ; j < 9 ; j++){
-				tabCaseViewImpl[i][j] = new CaseViewImpl(tabCaseImpl[i][j].getValue());
+				tabCaseViewImpl[i][j] = new CaseViewImpl(tabCaseImpl[i][j]);
 			}
 		}
 		
@@ -134,6 +137,14 @@ public class GrilleViewImpl extends JPanel
 
 	public void setCaseViews(CaseViewImpl[][] caseViews) {
 		this.tabCaseViewImpl = caseViews;
+	}
+
+	public GrilleImpl getGrilleImpl() {
+		return grilleImpl;
+	}
+
+	public void setGrilleImpl(GrilleImpl grilleImpl) {
+		this.grilleImpl = grilleImpl;
 	}
 
 }

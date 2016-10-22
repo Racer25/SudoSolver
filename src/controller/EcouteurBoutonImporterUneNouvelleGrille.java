@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.util.Random;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import model.GrilleImpl;
 import model.SsReaderImpl;
 import view.GrilleViewImpl;
@@ -15,16 +14,16 @@ import view.GrilleViewImpl;
 public class EcouteurBoutonImporterUneNouvelleGrille implements ActionListener{
 
 	//Variables
-	private GrilleViewImpl vueGrilleInitial;
+	private GrilleViewImpl vueGrilleInitiale;
 	private GrilleImpl grilleInitiale;
 	private SsReaderImpl ssReaderImpl;
 	private Random random;
 	private GrilleImpl valeurs;
 	
-	public EcouteurBoutonImporterUneNouvelleGrille(GrilleViewImpl vueGrilleInitial, GrilleImpl grilleInitiale){
+	public EcouteurBoutonImporterUneNouvelleGrille(GrilleViewImpl vueGrilleInitiale){
 		
-		this.grilleInitiale = grilleInitiale;
-		this.vueGrilleInitial = vueGrilleInitial;
+		this.grilleInitiale = vueGrilleInitiale.getGrilleImpl();
+		this.vueGrilleInitiale = vueGrilleInitiale;
 		
 	}
 	
@@ -34,7 +33,7 @@ public class EcouteurBoutonImporterUneNouvelleGrille implements ActionListener{
 		
 		random = new Random();
 		
-		//A RETOUCHER PARCOURIR LE DOSSIER
+		//On parcours les fichiers du répertoire "grille" et on choisi un ".ss" aléatoirement
 		ssReaderImpl = new SsReaderImpl();
 		File repertoire = new File("./grilles");
 		String [] listeFichiers;
@@ -49,12 +48,11 @@ public class EcouteurBoutonImporterUneNouvelleGrille implements ActionListener{
 		for(int x = 0 ; x < 9 ; x++){
 			for(int y = 0 ; y < 9 ; y++){
 				grilleInitiale.getCase(x, y).setValue(valeurs.getCase(x, y).getValue());
-				//PROBLEME vueGrilleInitial.getCaseViews()[x][y].setValueView(valeurs.getCase(x, y).getValue())
-
+				vueGrilleInitiale.getCaseViews()[x][y].setCaseImpl(valeurs.getCase(x, y));
+				vueGrilleInitiale.getCaseViews()[x][y].revalidate();
 			}
 		}
 				
-		vueGrilleInitial.revalidate();
-		}
+	}
 }
 

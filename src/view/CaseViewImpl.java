@@ -1,24 +1,28 @@
 package view;
 
 import java.awt.Color;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import model.CaseImpl;
 
 public class CaseViewImpl extends JPanel
 {
 	private static final long serialVersionUID = 8307207484767445082L;
 	
 	//Variables
-	private Integer value;
+	private CaseImpl caseImpl;
 	private JLabel valueView;
 	
 	//Constructeur
-	public CaseViewImpl(Integer value){
-		this.value = value;
-		if(value != 0){
-			this.valueView = new JLabel(Integer.toString(value));
+	public CaseViewImpl(CaseImpl caseImpl){
+		this.caseImpl = caseImpl;
+		if(caseImpl.getValue() != 0){
+			this.valueView = new JLabel(Integer.toString(caseImpl.getValue()));
+			this.add(valueView);
+		}else{
+			this.valueView = new JLabel(" ");
 			this.add(valueView);
 		}
 		this.setBackground(Color.WHITE);
@@ -29,16 +33,16 @@ public class CaseViewImpl extends JPanel
 	public JLabel getValueView() {
 		return valueView;
 	}
-	public void setValueView(int valueView) {
-		this.valueView.setText(Integer.toString(valueView));
+	public void setValueView(JLabel valueView) {
+		this.valueView = valueView;
 	}
 
-	public int getValue() {
-		return value;
+	public CaseImpl getCaseImpl() {
+		return caseImpl;
 	}
 
-	public void setValue(int value) {
-		this.value = value;
+	public void setCaseImpl(CaseImpl caseImpl) {
+		this.caseImpl = caseImpl;
 	}
 	
 }
