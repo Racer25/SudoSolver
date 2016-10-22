@@ -7,7 +7,7 @@ import java.util.List;
 import model.contract.Solver;
 
 //Résout le sudoku
-public class SolverImpl implements Solver 
+public class SolverImpl extends Thread implements Solver 
 {
 	
 	private GrilleImpl grille;
@@ -44,6 +44,11 @@ public class SolverImpl implements Solver
 		}
 	}
 	
+	@Override
+	public void run()
+	{
+		solve();
+	}
 	
 	
 	@Override

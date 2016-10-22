@@ -25,7 +25,7 @@ public class EcouteurBoutonStartPause implements ActionListener{
 		boutonStartPause.setIcon(imageBoutonStartPause);
 		
 		//Résolution
-		this.solver.solve();
+		this.solver.start();
 	}
 
 	public Solver getSolver() {
