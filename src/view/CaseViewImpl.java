@@ -17,10 +17,9 @@ public class CaseViewImpl extends JPanel
 	//Constructeur
 	public CaseViewImpl(Integer value){
 		this.value = value;
-		if(value != 0){
-			this.valueView = new JLabel(Integer.toString(value));
-			this.add(valueView);
-		}
+		this.valueView = new JLabel();
+		setValueView(value);
+		this.add(valueView);
 		this.setBackground(Color.WHITE);
 		this.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
 		
@@ -29,8 +28,17 @@ public class CaseViewImpl extends JPanel
 	public JLabel getValueView() {
 		return valueView;
 	}
-	public void setValueView(int valueView) {
-		this.valueView.setText(Integer.toString(valueView));
+	public void setValueView(int valueView) 
+	{
+		if(valueView!=0)
+		{
+			this.valueView.setText(Integer.toString(valueView));
+		}
+		else
+		{
+			this.valueView.setText("");
+		}
+		
 	}
 
 	public int getValue() {
