@@ -33,6 +33,7 @@ public class CaseViewImpl extends JPanel
 	public JLabel getValueView() {
 		return valueView;
 	}
+	
 	public void setValueView(JLabel valueView) {
 		this.valueView = valueView;
 	}

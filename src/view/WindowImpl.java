@@ -1,18 +1,13 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.GridLayout;
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,7 +15,6 @@ import controller.EcouteurBoutonEntrerManuellementUneGrille;
 import controller.EcouteurBoutonImporterUneNouvelleGrille;
 import controller.EcouteurBoutonReset;
 import controller.EcouteurBoutonStartPause;
-import javax.swing.JPanel;
 import model.GrilleImpl;
 
 public class WindowImpl extends JFrame
@@ -82,7 +76,7 @@ public class WindowImpl extends JFrame
 	
 	public WindowImpl(GrilleImpl grilleFinale){
 		
-		//Options de la fenêtre
+		//Options de la fenï¿½tre
 		this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		this.setTitle("SUDOKU");
 		this.setLocationRelativeTo(null);

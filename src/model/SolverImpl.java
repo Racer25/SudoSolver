@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import model.contract.Solver;
@@ -21,6 +22,28 @@ public class SolverImpl implements Solver
 		constraintsGenerator();
 	}
 	
+	public void constraintsGenerator()
+	{
+		for(int i=0; i<this.grille.getCases().length; i++)
+		{
+			for(int j=0; j<this.grille.getCases()[i].length; j++)
+			{
+				CaseImpl caseParcourue=this.grille.getCases()[i][j];
+				List<CaseImpl> casesLiees=getCasesLiees(caseParcourue);
+				
+				for(CaseImpl caseLiee:casesLiees)
+				{
+					//Créer une contrainte si la caseLiee n'a pas été une caseParcourue
+					if(!this.casesAvecContraintesCreees.contains(caseLiee))
+					{
+						this.contraintes.add(new ConstraintImpl(caseParcourue, caseLiee));
+					}
+				}
+				this.casesAvecContraintesCreees.add(caseParcourue);
+			}
+		}
+	}
+	
 	
 	
 	@Override
@@ -37,12 +60,16 @@ public class SolverImpl implements Solver
 		{
 			return true;
 		}
-	        
-
-		//Si la case n'est pas vide, on avance
+		
+		//Prélèvement de la case
 	    int i = pos/9;
 	    int j = pos%9;
 	    CaseImpl maCase=this.grille.getCase(i, j);
+	    
+    	//Prélèvement des contraintes de la case
+    	List<ConstraintImpl> contraintesDeLaCase=getConstraints(maCase);
+    	
+    	//Si la case n'est pas vide, on avance
 	    if (maCase.getValue() != 0)
 	    {
 	    	return backtracking(pos+1);
@@ -53,9 +80,6 @@ public class SolverImpl implements Solver
 	    {
 	    	//testons cette valeur dans cette case
 	    	maCase.setValue(value);
-	    	
-	    	//Prélèvement des contraintes de la case
-	    	List<ConstraintImpl> contraintesDeLaCase=getConstraints(maCase);
 	    	
 	    	//Cette valeur satisfait-elle toutes les contraintes?
 	    	boolean constraintsSatisfied=true;
@@ -76,7 +100,7 @@ public class SolverImpl implements Solver
 	        if (constraintsSatisfied)
 	        {
 	        	//Reduction des domaines
-	        	arcConsistency();
+	        	arcConsistency(maCase);
 	        	//On passe à la suite
 	            if (backtracking(pos+1))
 	            {
@@ -89,45 +113,25 @@ public class SolverImpl implements Solver
 	    return false;
 	}
 	
-	public void constraintsGenerator()
-	{
-		for(int i=0; i<this.grille.getCases().length; i++)
-		{
-			for(int j=0; j<this.grille.getCases()[i].length; j++)
-			{
-				CaseImpl caseParcourue=this.grille.getCases()[i][j];
-				List<CaseImpl> casesLiees=new ArrayList<CaseImpl>();
-				casesLiees.addAll(getCasesLigne(caseParcourue));
-				casesLiees.addAll(getCasesColonne((caseParcourue)));
-				casesLiees.addAll(getCasesBlocRestantes((caseParcourue)));
-				
-				for(CaseImpl caseLiee:casesLiees)
-				{
-					//Créer une contrainte si la caseLiee n'a pas été une caseParcourue
-					if(!this.casesAvecContraintesCreees.contains(caseLiee))
-					{
-						this.contraintes.add(new ConstraintImpl(caseParcourue, caseLiee));
-					}
-				}
-				this.casesAvecContraintesCreees.add(caseParcourue);
-			}
-		}
-	}
-	
-	//Va réduire le domaine des valeurs possibles des cases de la grille
+	//Va réduire le domaine des valeurs possibles de la case est de ses voisins,
 	//En utilisant les contraintes
-	public void arcConsistency() 
+	public void arcConsistency(CaseImpl maCase) 
 	{
-		List<ConstraintImpl> contraintesTestees=new ArrayList<ConstraintImpl>(this.contraintes);
-		while(!contraintesTestees.isEmpty())
+		LinkedList<ConstraintImpl> contraintesATester=getConstraints(maCase);
+		while(!contraintesATester.isEmpty())
 		{
-			ConstraintImpl contrainteParcourue=contraintesTestees.get(0);
-			contraintesTestees.remove(0);
+			ConstraintImpl contrainteParcourue=contraintesATester.get(0);
+			contraintesATester.remove(0);
 			boolean removed=domainReducer(contrainteParcourue);
-			//...Avec les voisins
+			//...Avec les voisins/cases liées
 			if(removed)
 			{
-				
+				List<CaseImpl> casesLiees=getCasesLiees(contrainteParcourue.getCase1());
+				for(CaseImpl caseLiee:casesLiees)
+				{
+					ConstraintImpl contrainteAvecCaseLiee=getConstraint(caseLiee, maCase);
+					contraintesATester.addFirst(contrainteAvecCaseLiee);
+				}
 			}
 		}
 		
@@ -169,6 +173,14 @@ public class SolverImpl implements Solver
 		return !indexsASupprimer.isEmpty();
 	}
 	
+	public List<CaseImpl> getCasesLiees(CaseImpl maCase)
+	{
+		List<CaseImpl> casesLiees=new ArrayList<CaseImpl>();
+		casesLiees.addAll(getCasesLigne(maCase));
+		casesLiees.addAll(getCasesColonne((maCase)));
+		casesLiees.addAll(getCasesBlocRestantes((maCase)));
+		return casesLiees;
+	}
 
 	@Override
 	public List<CaseImpl> getCasesLigne(CaseImpl maCase) 
@@ -221,9 +233,9 @@ public class SolverImpl implements Solver
 	    return casesBlocRestantes;
 	}
 	
-	public List<ConstraintImpl> getConstraints(CaseImpl maCase)
+	public LinkedList<ConstraintImpl> getConstraints(CaseImpl maCase)
 	{
-		List<ConstraintImpl> contraintesDeLaCase=new ArrayList<ConstraintImpl>();
+		LinkedList<ConstraintImpl> contraintesDeLaCase=new LinkedList<ConstraintImpl>();
 		for(ConstraintImpl contrainte: this.contraintes)
 		{
 			if(contrainte.getCase1()==maCase || 
@@ -233,6 +245,23 @@ public class SolverImpl implements Solver
 			}
 		}
 		return contraintesDeLaCase;
+	}
+	
+	public ConstraintImpl getConstraint(CaseImpl maCase1, CaseImpl maCase2)
+	{
+		ConstraintImpl contrainteDeLaCase=null;
+		for(ConstraintImpl contrainte: this.contraintes)
+		{
+			if(contrainte.getCase1()==maCase1 && contrainte.getCase2()==maCase2)
+			{
+				contrainteDeLaCase=contrainte;
+			}
+			else if(contrainte.getCase1()==maCase2 && contrainte.getCase2()==maCase1)
+			{
+				contrainteDeLaCase=contrainte;
+			}
+		}
+		return contrainteDeLaCase;
 	}
 
 
