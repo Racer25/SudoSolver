@@ -174,7 +174,7 @@ public class WindowImpl extends JFrame
 		imageBoutonImporterUneNouvelleGrille = new ImageIcon("./images/reset.png" );
 		boutonImporterUneNouvelleGrille.setIcon(imageBoutonImporterUneNouvelleGrille);
 		panelBoutons.add(boutonImporterUneNouvelleGrille);
-		ecouteurBoutonImporterUneNouvelleGrille = new EcouteurBoutonImporterUneNouvelleGrille(vueGrilleInitiale);
+		ecouteurBoutonImporterUneNouvelleGrille = new EcouteurBoutonImporterUneNouvelleGrille(vueGrilleInitiale, vueGrilleFinale);
 		boutonImporterUneNouvelleGrille.addActionListener(ecouteurBoutonImporterUneNouvelleGrille);
 			
 		//Le bouton "entrer manuellement une grille"
