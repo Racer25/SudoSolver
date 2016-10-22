@@ -190,6 +190,11 @@ public class WindowImpl extends JFrame
 		panelBoutons.add(boutonEntrerManuellementUneGrille);
 		boutonEntrerManuellementUneGrille.addActionListener(ecouteurBoutonEntrerManuellementUneGrille);
 			
+		//Panel Vide 
+		JPanel panelVide = new JPanel();
+		panelVide.setBackground(Color.decode("#FFEBCD"));
+		panelDroit.add(panelVide);
+		
 		//
 		
 		this.setVisible(true);
