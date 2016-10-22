@@ -2,64 +2,31 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-<<<<<<< HEAD
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-=======
 import java.awt.GridLayout;
-
 import javax.swing.BoxLayout;
->>>>>>> branch 'master' of https://github.com/Racer25/SudoSolver.git
 import javax.swing.JFrame;
-<<<<<<< HEAD
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import controller.EcouteurBoutonEntrerManuellementUneGrille;
 import controller.EcouteurBoutonImporterUneNouvelleGrille;
 import controller.EcouteurBoutonReset;
 import controller.EcouteurBoutonStartPause;
-=======
 import javax.swing.JPanel;
-
 import model.GrilleImpl;
->>>>>>> branch 'master' of https://github.com/Racer25/SudoSolver.git
 
 public class WindowImpl extends JFrame
 {
 	private static final long serialVersionUID = 2061491136713215502L;
-<<<<<<< HEAD
-=======
 
-	//Variables
-	private GrilleImpl grilleInitiale;
-	private GrilleImpl grilleFinale;
-	
-	private JPanel panelPrincipal;
-	private GridLayout layoutPanelPrincipal;
-	
-	public WindowImpl(){
-		
-		//Création du panel principal
-		layoutPanelPrincipal = new GridLayout(1,2);
-		panelPrincipal = new JPanel();
-		panelPrincipal.setLayout(layoutPanelPrincipal);
-		panelPrincipal.setBackground(Color.decode("#FEFEE0"));
-		this.getContentPane().add(panelPrincipal,BorderLayout.CENTER);
-		
-		//Création du
-		
-	}
->>>>>>> branch 'master' of https://github.com/Racer25/SudoSolver.git
-	
 	//Les variables 
 	
 	private JPanel panelPrincipal;
@@ -80,16 +47,20 @@ public class WindowImpl extends JFrame
 	private JPanel panelBoutons;
 	private GridLayout layoutPanelBoutons;
 	
-	private GrilleViewImpl grilleInitiale;
+	private GrilleViewImpl vueGrilleInitiale;
 	private GridLayout layoutGrilleInitiale;
+	
+	private GrilleImpl grilleInitiale;
 	
 	private GridBagConstraints contraintesGrilles;
 	private GridBagConstraints contraintesLabels;
 	
 	private JLabel labelGrilleInitiale;
 	
-	private GrilleViewImpl grilleFinale;
+	private GrilleViewImpl vueGrilleFinale;
 	private GridLayout layoutGrilleFinale;
+	
+	private GrilleImpl grilleFinale;
 	
 	private JLabel labelGrilleFinale;
 	
@@ -109,7 +80,7 @@ public class WindowImpl extends JFrame
 	private ImageIcon imageBoutonEntrerManuellementUneGrille;
 	private EcouteurBoutonEntrerManuellementUneGrille ecouteurBoutonEntrerManuellementUneGrille = new EcouteurBoutonEntrerManuellementUneGrille();
 	
-	public WindowImpl(){
+	public WindowImpl(GrilleImpl grilleFinale){
 		
 		//Options de la fen�tre
 		this.setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -148,11 +119,12 @@ public class WindowImpl extends JFrame
 		panelGrilleInitiale.add(labelGrilleInitiale, contraintesLabels);
 		
 		//La grille Initiale
-		grilleInitiale = new GrilleViewImpl(new Integer[9][9]);
+		grilleInitiale = new GrilleImpl();
+		vueGrilleInitiale = new GrilleViewImpl(grilleInitiale);
 		contraintesGrilles = new GridBagConstraints();
 		contraintesGrilles.gridx=0;
 		contraintesGrilles.gridy=1;
-		panelGrilleInitiale.add(grilleInitiale, contraintesGrilles);
+		panelGrilleInitiale.add(vueGrilleInitiale, contraintesGrilles);
 		
 		//Le panel de la grille finale
 		panelGrilleFinale = new JPanel();
@@ -166,8 +138,8 @@ public class WindowImpl extends JFrame
 		panelGrilleFinale.add(labelGrilleFinale, contraintesLabels);
 		
 		//La grille Finale
-		grilleFinale = new GrilleViewImpl(new Integer[9][9]);
-		panelGrilleFinale.add(grilleFinale, contraintesGrilles);
+		vueGrilleFinale = new GrilleViewImpl(grilleFinale);
+		panelGrilleFinale.add(vueGrilleFinale, contraintesGrilles);
 		
 		//Le panel droit
 		panelDroit = new JPanel();
@@ -208,7 +180,7 @@ public class WindowImpl extends JFrame
 		imageBoutonImporterUneNouvelleGrille = new ImageIcon("./images/reset.png" );
 		boutonImporterUneNouvelleGrille.setIcon(imageBoutonImporterUneNouvelleGrille);
 		panelBoutons.add(boutonImporterUneNouvelleGrille);
-		ecouteurBoutonImporterUneNouvelleGrille = new EcouteurBoutonImporterUneNouvelleGrille(panelGrilleInitiale);
+		ecouteurBoutonImporterUneNouvelleGrille = new EcouteurBoutonImporterUneNouvelleGrille(vueGrilleInitiale,grilleInitiale);
 		boutonImporterUneNouvelleGrille.addActionListener(ecouteurBoutonImporterUneNouvelleGrille);
 			
 		//Le bouton "entrer manuellement une grille"

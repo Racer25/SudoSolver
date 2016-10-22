@@ -17,7 +17,7 @@ public class CaseViewImpl extends JPanel
 	//Constructeur
 	public CaseViewImpl(Integer value){
 		this.value = value;
-		if(value != null){
+		if(value != 0){
 			this.valueView = new JLabel(Integer.toString(value));
 			this.add(valueView);
 		}
@@ -29,8 +29,8 @@ public class CaseViewImpl extends JPanel
 	public JLabel getValueView() {
 		return valueView;
 	}
-	public void setValueView(JLabel valueView) {
-		this.valueView = valueView;
+	public void setValueView(int valueView) {
+		this.valueView.setText(Integer.toString(valueView));
 	}
 
 	public int getValue() {

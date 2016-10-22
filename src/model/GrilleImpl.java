@@ -11,6 +11,17 @@ public class GrilleImpl implements Grille
 		super();
 		this.cases=cases;
 	}
+	
+	public GrilleImpl()
+	{
+		super();
+		this.cases = new CaseImpl[9][9];
+		for(int i = 0 ; i < 9 ; i++){
+			for(int j = 0 ; j < 9 ; j++){
+				cases[i][j] = new CaseImpl(0,i,j);
+			}
+		}
+	}
 
 	public CaseImpl[][] getCases() {
 		return cases;
@@ -21,7 +32,7 @@ public class GrilleImpl implements Grille
 	}
 
 	@Override
-	public CaseImpl getCase(int x, int y) 
+	public CaseImpl getCase(int x, int y)
 	{
 		return cases[x][y];
 	}

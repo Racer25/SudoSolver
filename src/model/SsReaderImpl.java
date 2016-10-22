@@ -7,11 +7,15 @@ import java.io.InputStreamReader;
 
 public class SsReaderImpl {
 	
+	//Variables
+	private CaseImpl[][] caseImpl;
+	private GrilleImpl grilleImpl;
+	
 	//Lecteur
 	//La fonction "lireSs" change les valeurs de la variable "grille" en fonction de celles d'un fichier .ss
-	public Integer[][] lireSs(String file){
+	public GrilleImpl lireSs(String file){
 		
-		Integer[][] grille = new Integer[9][9]; 
+		int[][] grille = new int[9][9]; 
 		
 		try {
 		InputStream inputStream = new FileInputStream(file); 
@@ -24,7 +28,7 @@ public class SsReaderImpl {
 		while((ligne = bufferReader.readLine()) != null){
 			for(int index = 0 ; index < 11 ; index++){
 				if(ligne.charAt(index) == '.'){
-					grille[i][j] = null;
+					grille[i][j] = 0;
 					j++;
 					if(j == 9){
 						j = 0;
@@ -41,6 +45,16 @@ public class SsReaderImpl {
 				}
 			}
 		}
+		caseImpl = new CaseImpl[9][9];
+		
+		for(int x = 0 ; x < 9 ; x++){
+			for(int y = 0 ; y < 9 ; y++){
+				caseImpl[x][y] = new CaseImpl(grille[x][y],x,y);
+			}
+		}
+		
+		grilleImpl = new GrilleImpl(caseImpl);
+		
 		bufferReader.close(); 
 		
 		} 
@@ -49,7 +63,10 @@ public class SsReaderImpl {
 		System.out.println(e.toString()); 
 		}
 		
-		return grille;
+		//creer 81 casesimpl
+		//creer grilleimpl
+		
+		return grilleImpl;
 	}
 	
 }

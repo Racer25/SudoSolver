@@ -8,13 +8,17 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import model.CaseImpl;
+import model.GrilleImpl;
+
 public class GrilleViewImpl extends JPanel
 {
 	private static final long serialVersionUID = 8573209872828408779L;
 	
 	//Variables
-	private Integer[][] cases;
 	private GridLayout layoutGrille;
+	private CaseImpl[][] tabCaseImpl;
+	private CaseViewImpl[][] tabCaseViewImpl;
 	
 	private JPanel grille11;
 	private JPanel grille12;
@@ -27,10 +31,17 @@ public class GrilleViewImpl extends JPanel
 	private JPanel grille33;
 	
 	//Constructeur
-	public GrilleViewImpl(Integer[][] cases){
+	public GrilleViewImpl(GrilleImpl grilleImpl){
 		
-		this.cases = cases;
+		this.tabCaseImpl = grilleImpl.getCases();
+		this.tabCaseViewImpl = new CaseViewImpl[9][9];
 		layoutGrille = new GridLayout(3,3);
+		
+		for(int i = 0 ; i < 9 ; i++){
+			for(int j = 0 ; j < 9 ; j++){
+				tabCaseViewImpl[i][j] = new CaseViewImpl(tabCaseImpl[i][j].getValue());
+			}
+		}
 		
 		grille11 = new JPanel();
 		grille11.setLayout(layoutGrille);
@@ -94,37 +105,35 @@ public class GrilleViewImpl extends JPanel
 		for(int i = 0 ; i < 9 ; i++){
 			for(int j = 0 ; j < 9 ; j++){
 				if(i<3 && j<3){
-					grille11.add(new CaseViewImpl(cases[i][j]));
+					grille11.add(tabCaseViewImpl[i][j]);
 				}else if(i<6 && j<3){
-					grille12.add(new CaseViewImpl(cases[i][j]));
+					grille12.add(tabCaseViewImpl[i][j]);
 				}else if(j<3){
-					grille13.add(new CaseViewImpl(cases[i][j]));
+					grille13.add(tabCaseViewImpl[i][j]);
 				}else if(i<3 && j<6){
-					grille21.add(new CaseViewImpl(cases[i][j]));
+					grille21.add(tabCaseViewImpl[i][j]);
 				}else if(i<6 && j<6){
-					grille22.add(new CaseViewImpl(cases[i][j]));
+					grille22.add(tabCaseViewImpl[i][j]);
 				}else if(j<6){
-					grille23.add(new CaseViewImpl(cases[i][j]));
+					grille23.add(tabCaseViewImpl[i][j]);
 				}else if(i<3){
-					grille31.add(new CaseViewImpl(cases[i][j]));
+					grille31.add(tabCaseViewImpl[i][j]);
 				}else if(i<6){
-					grille32.add(new CaseViewImpl(cases[i][j]));
+					grille32.add(tabCaseViewImpl[i][j]);
 				}else{
-					grille33.add(new CaseViewImpl(cases[i][j]));
+					grille33.add(tabCaseViewImpl[i][j]);
 				}
 			}
 		}		
 		
 	}
-	
-	private CaseViewImpl[][] caseViews;
 
 	public CaseViewImpl[][] getCaseViews() {
-		return caseViews;
+		return tabCaseViewImpl;
 	}
 
 	public void setCaseViews(CaseViewImpl[][] caseViews) {
-		this.caseViews = caseViews;
+		this.tabCaseViewImpl = caseViews;
 	}
 
 }

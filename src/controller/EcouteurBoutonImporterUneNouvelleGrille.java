@@ -1,26 +1,30 @@
 package controller;
 
 import java.awt.GridBagConstraints;
+import java.io.File;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import model.GrilleImpl;
 import model.SsReaderImpl;
 import view.GrilleViewImpl;
 
 public class EcouteurBoutonImporterUneNouvelleGrille implements ActionListener{
 
 	//Variables
-	private JPanel panelGrilleInitiale;
+	private GrilleViewImpl vueGrilleInitial;
+	private GrilleImpl grilleInitiale;
 	private SsReaderImpl ssReaderImpl;
 	private Random random;
-	private Integer[][] valeurs;
+	private GrilleImpl valeurs;
 	
-	public EcouteurBoutonImporterUneNouvelleGrille(JPanel panelGrilleInitiale){
+	public EcouteurBoutonImporterUneNouvelleGrille(GrilleViewImpl vueGrilleInitial, GrilleImpl grilleInitiale){
 		
-		this.panelGrilleInitiale = panelGrilleInitiale;
+		this.grilleInitiale = grilleInitiale;
+		this.vueGrilleInitial = vueGrilleInitial;
 		
 	}
 	
@@ -28,31 +32,29 @@ public class EcouteurBoutonImporterUneNouvelleGrille implements ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		
-		panelGrilleInitiale.removeAll();
 		random = new Random();
-		int i = random.nextInt(5);
 		
 		//A RETOUCHER PARCOURIR LE DOSSIER
 		ssReaderImpl = new SsReaderImpl();
-		valeurs = ssReaderImpl.lireSs("./grilles/3271469"+(30+i)+"-v3-29-L1.ss");
-		
-		System.out.println("Selection de la grille : "+(30+i));
-		
-		//Le label de la grille initiale
-		JLabel labelGrilleInitiale = new JLabel("Grille initiale :");
-		GridBagConstraints contraintesLabels = new GridBagConstraints();
-		contraintesLabels.gridx=0;
-		contraintesLabels.gridy=0;
-		panelGrilleInitiale.add(labelGrilleInitiale, contraintesLabels);
+		File repertoire = new File("./grilles");
+		String [] listeFichiers;
+		listeFichiers=repertoire.list(); 
+		int i = random.nextInt(listeFichiers.length);
+		if(listeFichiers[i].endsWith(".ss")==true){
+			valeurs = ssReaderImpl.lireSs("./grilles/"+listeFichiers[i]);
+		}
+		System.out.println("Selection de la grille : "+listeFichiers[i]);
 				
 		//La grille Initiale
-		GrilleViewImpl grilleInitiale = new GrilleViewImpl(valeurs);
-		GridBagConstraints contraintesGrilles = new GridBagConstraints();
-		contraintesGrilles.gridx=0;
-		contraintesGrilles.gridy=1;
-		panelGrilleInitiale.add(grilleInitiale, contraintesGrilles);
-				
-		panelGrilleInitiale.revalidate();
-	}
+		for(int x = 0 ; x < 9 ; x++){
+			for(int y = 0 ; y < 9 ; y++){
+				grilleInitiale.getCase(x, y).setValue(valeurs.getCase(x, y).getValue());
+				//PROBLEME vueGrilleInitial.getCaseViews()[x][y].setValueView(valeurs.getCase(x, y).getValue())
 
+			}
+		}
+				
+		vueGrilleInitial.revalidate();
+		}
 }
+
