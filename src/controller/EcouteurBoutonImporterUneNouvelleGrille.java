@@ -13,14 +13,18 @@ public class EcouteurBoutonImporterUneNouvelleGrille implements ActionListener{
 	//Variables
 	private GrilleViewImpl vueGrilleInitiale;
 	private GrilleImpl grilleInitiale;
+	private GrilleViewImpl vueGrilleFinale;
+	private GrilleImpl grilleFinale;
 	private SsReaderImpl ssReaderImpl;
 	private Random random;
 	private GrilleImpl valeurs;
 	
-	public EcouteurBoutonImporterUneNouvelleGrille(GrilleViewImpl vueGrilleInitiale){
+	public EcouteurBoutonImporterUneNouvelleGrille(GrilleViewImpl vueGrilleInitiale, GrilleViewImpl vueGrilleFinale){
 		
 		this.grilleInitiale = vueGrilleInitiale.getGrilleImpl();
+		this.grilleFinale = vueGrilleFinale.getGrilleImpl();
 		this.vueGrilleInitiale = vueGrilleInitiale;
+		this.vueGrilleFinale = vueGrilleFinale;
 		
 	}
 	
@@ -45,11 +49,14 @@ public class EcouteurBoutonImporterUneNouvelleGrille implements ActionListener{
 		for(int x = 0 ; x < 9 ; x++){
 			for(int y = 0 ; y < 9 ; y++){
 				grilleInitiale.getCase(x, y).setValue(valeurs.getCase(x, y).getValue());
-				vueGrilleInitiale.getCaseViews()[x][y].setCaseImpl(valeurs.getCase(x, y));
-				vueGrilleInitiale.getCaseViews()[x][y].revalidate();
+				grilleFinale.getCase(x, y).setValue(valeurs.getCase(x, y).getValue());
+				vueGrilleInitiale.getCaseViews()[x][y].setCaseImplValue(valeurs.getCase(x, y).getValue());
+				vueGrilleFinale.getCaseViews()[x][y].setCaseImplValue(valeurs.getCase(x, y).getValue());
 			}
 		}
 		
+		vueGrilleFinale.revalidate();
+		vueGrilleInitiale.revalidate();
 	}
 }
 

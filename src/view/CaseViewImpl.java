@@ -42,12 +42,12 @@ public class CaseViewImpl extends JPanel
 		this.valueView = valueView;
 	}
 
-	public CaseImpl getCaseImpl() {
-		return caseImpl;
+	public int getCaseImplValue() {
+		return caseImpl.getValue();
 	}
 
-	public void setCaseImpl(CaseImpl caseImpl) {
-		this.caseImpl = caseImpl;
+	public void setCaseImplValue(int value) {
+		this.caseImpl.setValue(value);
 	}
 	
 }
