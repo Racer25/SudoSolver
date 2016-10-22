@@ -76,6 +76,8 @@ public class WindowImpl extends JFrame
 	
 	public WindowImpl(GrilleImpl grilleFinale){
 		
+		this.grilleFinale = grilleFinale;
+		
 		//Options de la fen�tre
 		this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		this.setTitle("SUDOKU");
