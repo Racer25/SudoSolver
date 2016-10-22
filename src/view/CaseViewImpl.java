@@ -16,15 +16,19 @@ public class CaseViewImpl extends JPanel
 	private JLabel valueView;
 	
 	//Constructeur
-	public CaseViewImpl(CaseImpl caseImpl){
+	public CaseViewImpl(CaseImpl caseImpl)
+	{
 		this.caseImpl = caseImpl;
-		if(caseImpl.getValue() != 0){
+		if(caseImpl.getValue() != 0)
+		{
 			this.valueView = new JLabel(Integer.toString(caseImpl.getValue()));
-			this.add(valueView);
-		}else{
-			this.valueView = new JLabel(" ");
-			this.add(valueView);
 		}
+		else
+		{
+			this.valueView = new JLabel(" ");
+		}
+
+		this.add(valueView);
 		this.setBackground(Color.WHITE);
 		this.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
 		

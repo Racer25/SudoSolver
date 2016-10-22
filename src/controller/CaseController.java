@@ -23,7 +23,15 @@ public class CaseController implements Observer
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		caseView.setValueView((int) arg);
+		int value=(int) arg;
+		if(value!=0)
+		{
+			caseView.getValueView().setText(Integer.toString(value));
+		}
+		else
+		{
+			caseView.getValueView().setText(" ");
+		}
 		//caseView.revalidate();
 	}
 

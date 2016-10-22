@@ -36,4 +36,23 @@ public class GrilleImpl implements Grille
 	{
 		return cases[x][y];
 	}
+	
+	public void affichage()
+	{
+		for(int i = 0 ; i < 9 ; i++)
+		{
+			for(int j = 0 ; j < 9 ; j++)
+			{
+				if(j==8)
+				{
+					System.out.print(cases[i][j].getValue()+"\n");
+				}
+				else
+				{
+					System.out.print(cases[i][j].getValue()+" ");
+				}
+				
+			}
+		}
+	}
 }
