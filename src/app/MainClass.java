@@ -8,6 +8,5 @@ public class MainClass
 	public static void main(String[] args) 
 	{
 		WindowImpl w = new WindowImpl();
-		
 	}
 }

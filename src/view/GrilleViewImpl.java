@@ -125,5 +125,15 @@ public class GrilleViewImpl extends JPanel
 	public void setCaseViews(Integer[][] cases) {
 		this.cases = cases;
 	}
+	
+	private CaseViewImpl[][] caseViews;
+
+	public CaseViewImpl[][] getCaseViews() {
+		return caseViews;
+	}
+
+	public void setCaseViews(CaseViewImpl[][] caseViews) {
+		this.caseViews = caseViews;
+	}
 
 }

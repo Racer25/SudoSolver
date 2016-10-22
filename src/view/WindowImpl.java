@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+<<<<<<< HEAD
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
@@ -12,7 +13,13 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+=======
+import java.awt.GridLayout;
+
+import javax.swing.BoxLayout;
+>>>>>>> branch 'master' of https://github.com/Racer25/SudoSolver.git
 import javax.swing.JFrame;
+<<<<<<< HEAD
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -20,10 +27,38 @@ import controller.EcouteurBoutonEntrerManuellementUneGrille;
 import controller.EcouteurBoutonImporterUneNouvelleGrille;
 import controller.EcouteurBoutonReset;
 import controller.EcouteurBoutonStartPause;
+=======
+import javax.swing.JPanel;
+
+import model.GrilleImpl;
+>>>>>>> branch 'master' of https://github.com/Racer25/SudoSolver.git
 
 public class WindowImpl extends JFrame
 {
 	private static final long serialVersionUID = 2061491136713215502L;
+<<<<<<< HEAD
+=======
+
+	//Variables
+	private GrilleImpl grilleInitiale;
+	private GrilleImpl grilleFinale;
+	
+	private JPanel panelPrincipal;
+	private GridLayout layoutPanelPrincipal;
+	
+	public WindowImpl(){
+		
+		//Création du panel principal
+		layoutPanelPrincipal = new GridLayout(1,2);
+		panelPrincipal = new JPanel();
+		panelPrincipal.setLayout(layoutPanelPrincipal);
+		panelPrincipal.setBackground(Color.decode("#FEFEE0"));
+		this.getContentPane().add(panelPrincipal,BorderLayout.CENTER);
+		
+		//Création du
+		
+	}
+>>>>>>> branch 'master' of https://github.com/Racer25/SudoSolver.git
 	
 	//Les variables 
 	
