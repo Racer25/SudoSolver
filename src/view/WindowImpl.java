@@ -17,6 +17,8 @@ import controller.EcouteurBoutonReset;
 import controller.EcouteurBoutonStartPause;
 import controller.GrilleController;
 import model.GrilleImpl;
+import model.SolverImpl;
+import model.contract.Solver;
 
 public class WindowImpl extends JFrame
 {
@@ -75,7 +77,8 @@ public class WindowImpl extends JFrame
 	private ImageIcon imageBoutonEntrerManuellementUneGrille;
 	private EcouteurBoutonEntrerManuellementUneGrille ecouteurBoutonEntrerManuellementUneGrille = new EcouteurBoutonEntrerManuellementUneGrille();
 	
-	public WindowImpl(GrilleImpl grilleFinale){
+	public WindowImpl(GrilleImpl grilleFinale)
+	{
 		
 		this.grilleFinale = grilleFinale;
 		
@@ -160,6 +163,8 @@ public class WindowImpl extends JFrame
 		imageBoutonStartPause = new ImageIcon("./images/start.png" );
 		boutonStartPause.setIcon(imageBoutonStartPause);
 		panelBoutons.add(boutonStartPause);
+		Solver solver=new SolverImpl(grilleFinale);
+		ecouteurBoutonStartPause.setSolver(solver);
 		boutonStartPause.addActionListener(ecouteurBoutonStartPause);
 		
 		//Le bouton "reset"
