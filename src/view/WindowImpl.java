@@ -15,6 +15,7 @@ import controller.EcouteurBoutonEntrerManuellementUneGrille;
 import controller.EcouteurBoutonImporterUneNouvelleGrille;
 import controller.EcouteurBoutonReset;
 import controller.EcouteurBoutonStartPause;
+import controller.GrilleController;
 import model.GrilleImpl;
 
 public class WindowImpl extends JFrame
@@ -114,7 +115,8 @@ public class WindowImpl extends JFrame
 		
 		//La grille Initiale
 		grilleInitiale = new GrilleImpl();
-		vueGrilleInitiale = new GrilleViewImpl(grilleInitiale);
+		vueGrilleInitiale = new GrilleViewImpl(grilleFinale);
+		GrilleController grilleController=new GrilleController(grilleFinale, vueGrilleInitiale);
 		contraintesGrilles = new GridBagConstraints();
 		contraintesGrilles.gridx=0;
 		contraintesGrilles.gridy=1;

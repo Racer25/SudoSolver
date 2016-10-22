@@ -49,6 +49,7 @@ public class CaseImpl extends Observable
 	public void setValue(int value) 
 	{
 		this.value = value;
+		setChanged();
 		notifyObservers(value);
 	}
 

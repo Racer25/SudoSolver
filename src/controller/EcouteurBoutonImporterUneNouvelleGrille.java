@@ -1,12 +1,9 @@
 package controller;
 
-import java.awt.GridBagConstraints;
 import java.io.File;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import model.GrilleImpl;
 import model.SsReaderImpl;
 import view.GrilleViewImpl;
@@ -33,7 +30,7 @@ public class EcouteurBoutonImporterUneNouvelleGrille implements ActionListener{
 		
 		random = new Random();
 		
-		//On parcours les fichiers du répertoire "grille" et on choisi un ".ss" aléatoirement
+		//On parcours les fichiers du rï¿½pertoire "grille" et on choisi un ".ss" alï¿½atoirement
 		ssReaderImpl = new SsReaderImpl();
 		File repertoire = new File("./grilles");
 		String [] listeFichiers;
@@ -52,7 +49,7 @@ public class EcouteurBoutonImporterUneNouvelleGrille implements ActionListener{
 				vueGrilleInitiale.getCaseViews()[x][y].revalidate();
 			}
 		}
-				
+		
 	}
 }
 
