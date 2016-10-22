@@ -5,12 +5,17 @@ import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.TextArea;
+import java.io.PrintStream;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import controller.EcouteurBoutonEntrerManuellementUneGrille;
 import controller.EcouteurBoutonImporterUneNouvelleGrille;
 import controller.EcouteurBoutonReset;
@@ -75,7 +80,7 @@ public class WindowImpl extends JFrame
 	
 	private JButton boutonEntrerManuellementUneGrille;
 	private ImageIcon imageBoutonEntrerManuellementUneGrille;
-	private EcouteurBoutonEntrerManuellementUneGrille ecouteurBoutonEntrerManuellementUneGrille = new EcouteurBoutonEntrerManuellementUneGrille();
+	private EcouteurBoutonEntrerManuellementUneGrille ecouteurBoutonEntrerManuellementUneGrille;
 	
 	public WindowImpl(GrilleImpl grilleFinale)
 	{
@@ -193,6 +198,7 @@ public class WindowImpl extends JFrame
 		imageBoutonEntrerManuellementUneGrille = new ImageIcon("./images/reset.png" );
 		boutonEntrerManuellementUneGrille.setIcon(imageBoutonEntrerManuellementUneGrille);
 		panelBoutons.add(boutonEntrerManuellementUneGrille);
+		ecouteurBoutonEntrerManuellementUneGrille = new EcouteurBoutonEntrerManuellementUneGrille(vueGrilleInitiale, vueGrilleFinale);
 		boutonEntrerManuellementUneGrille.addActionListener(ecouteurBoutonEntrerManuellementUneGrille);
 			
 		//Panel Vide 
@@ -200,7 +206,18 @@ public class WindowImpl extends JFrame
 		panelVide.setBackground(Color.decode("#FFEBCD"));
 		panelDroit.add(panelVide);
 		
-		//
+		//Panel Console 
+		JPanel panelConsole = new JPanel();
+		GridLayout layoutPanelConsole = new GridLayout(1,1);
+		panelConsole.setLayout(layoutPanelConsole);
+		panelConsole.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+		TextArea textArea = new TextArea();
+		textArea.setSize(panelConsole.getSize());
+		textArea.setBackground(Color.WHITE);
+		textArea.setText("Console :\n");
+		panelConsole.add(textArea);
+		panelDroit.add(panelConsole);
+		
 		
 		this.setVisible(true);
 		this.revalidate();
