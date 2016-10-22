@@ -163,8 +163,7 @@ public class WindowImpl extends JFrame
 		imageBoutonStartPause = new ImageIcon("./images/start.png" );
 		boutonStartPause.setIcon(imageBoutonStartPause);
 		panelBoutons.add(boutonStartPause);
-		Solver solver=new SolverImpl(grilleFinale);
-		ecouteurBoutonStartPause.setSolver(solver);
+		ecouteurBoutonStartPause.setGrille(grilleFinale);
 		boutonStartPause.addActionListener(ecouteurBoutonStartPause);
 		
 		//Le bouton "reset"

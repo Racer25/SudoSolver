@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import model.GrilleImpl;
 import model.SolverImpl;
 import model.contract.Solver;
 
@@ -14,7 +15,7 @@ public class EcouteurBoutonStartPause implements ActionListener{
 	//Variables
 	private ImageIcon imageBoutonStartPause;
 	private JButton boutonStartPause; 
-	private Solver solver;
+	private GrilleImpl grille;
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
@@ -25,15 +26,16 @@ public class EcouteurBoutonStartPause implements ActionListener{
 		boutonStartPause.setIcon(imageBoutonStartPause);
 		
 		//Résolution
-		this.solver.start();
+		Solver solver=new SolverImpl(grille);
+		solver.start();
 	}
 
-	public Solver getSolver() {
-		return solver;
+	public GrilleImpl getGrille() {
+		return grille;
 	}
 
-	public void setSolver(Solver solver) {
-		this.solver = solver;
+	public void setGrille(GrilleImpl grille) {
+		this.grille = grille;
 	}
 
 }
