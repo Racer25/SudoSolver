@@ -13,6 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.EcouteurSaisie;
+import model.CaseSaisie;
+
 public class EntreeManuelleView extends JFrame{
 
 	//Variables 
@@ -51,9 +54,10 @@ public class EntreeManuelleView extends JFrame{
 		
 		//Ajout des JTextField
 		for(int i = 0 ; i < 9 ; i++){
-				JTextField jTextField = new JTextField();
+				CaseSaisie jTextField = new CaseSaisie();
 				jTextField.setBackground(Color.WHITE);
 				jTextField.setBorder(BorderFactory.createLineBorder(Color.GRAY,1));
+				//this.addKeyListener(new EcouteurSaisie(jTextField));
 				panelSousGrille.add(jTextField);
 		}
 	}

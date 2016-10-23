@@ -31,6 +31,7 @@ import controller.EcouteurBoutonStartPause;
 import controller.EcouteurQuitter;
 import controller.GrilleController;
 import model.BarreMenu;
+import model.Chronometre;
 import model.Console;
 import model.GrilleImpl;
 
@@ -56,6 +57,10 @@ public class WindowImpl extends JFrame
 	//Le panel des boutons
 	private JPanel panelBoutons;
 	private GridBagLayout layoutPanelBoutons;
+	
+	//Chronometre
+	private Chronometre chronometre;
+	private GridBagConstraints contraintesChronometre;
 	
 	private GrilleViewImpl vueGrille;
 	private GridLayout layoutGrille;
@@ -138,6 +143,14 @@ public class WindowImpl extends JFrame
 		contraintesGrilles.gridx=0;
 		contraintesGrilles.gridy=0;
 		panelGrille.add(vueGrille, contraintesGrilles);
+		
+		//Le chronometre 
+		chronometre = new Chronometre();
+		contraintesChronometre = new GridBagConstraints();
+		contraintesChronometre.gridx=0;
+		contraintesChronometre.gridy=1;
+		contraintesChronometre.insets = new Insets(10,10,20,20);
+		panelGrille.add(chronometre, contraintesChronometre);
 		
 		//Le panel des boutons
 		panelBoutons = new JPanel();
