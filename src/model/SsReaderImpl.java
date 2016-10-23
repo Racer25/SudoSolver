@@ -20,62 +20,90 @@ public class SsReaderImpl {
 		
 		try 
 		{
-		InputStream inputStream = new FileInputStream(file); 
-		InputStreamReader inputStreamReader = new InputStreamReader(inputStream); 
-		BufferedReader bufferReader = new BufferedReader(inputStreamReader); 
-		
-		String ligne;
-		int i = 0;
-		int j = 0;
-		while((ligne = bufferReader.readLine()) != null)
-		{
-			for(int index = 0 ; index < 11 ; index++)
+			InputStream inputStream = new FileInputStream(file); 
+			InputStreamReader inputStreamReader = new InputStreamReader(inputStream); 
+			BufferedReader bufferReader = new BufferedReader(inputStreamReader); 
+			
+			boolean fichierValide=true;
+			String ligne;
+			int i = 0;
+			int j = 0;
+			while((ligne = bufferReader.readLine()) != null && fichierValide)
 			{
-				if(ligne.charAt(index) == '.')
+				if(ligne.length()!=11)
 				{
-					grille[i][j] = 0;
-					j++;
-					if(j == 9)
-					{
-						j = 0;
-						i++;
-					}
+					fichierValide=false;
+					break;
 				}
-				else if(ligne.charAt(index) != '!' && ligne.charAt(index) != '-')
+				for(int index = 0 ; index < 11 ; index++)
 				{
-					grille[i][j] = Character.getNumericValue(ligne.charAt(index));
-					j++;
-					if(j == 9)
+					if(ligne.charAt(index) == '.')
 					{
-						j = 0;
-						i++;
+						grille[i][j] = 0;
+						j++;
+						if(j == 9)
+						{
+							j = 0;
+							i++;
+						}
+					}
+					else if("123456789".contains(String.valueOf(ligne.charAt(index))))
+					{
+						grille[i][j] = Character.getNumericValue(ligne.charAt(index));
+						j++;
+						if(j == 9)
+						{
+							j = 0;
+							i++;
+						}
+					}
+					else if(ligne.charAt(index)!='!' && ligne.charAt(index)!='-')
+					{
+						fichierValide=false;
 					}
 				}
 			}
-		}
-		caseImpl = new CaseImpl[9][9];
-		
-		for(int x = 0 ; x < 9 ; x++)
-		{
-			for(int y = 0 ; y < 9 ; y++)
+			
+			if(fichierValide)
 			{
-				caseImpl[x][y] = new CaseImpl(grille[x][y],x,y);
+				caseImpl = new CaseImpl[9][9];
+				
+				for(int x = 0 ; x < 9 ; x++)
+				{
+					for(int y = 0 ; y < 9 ; y++)
+					{
+						caseImpl[x][y] = new CaseImpl(grille[x][y],x,y);
+					}
+				}
+				
+				grilleImpl = new GrilleImpl(caseImpl);
 			}
-		}
-		
-		grilleImpl = new GrilleImpl(caseImpl);
-		
-		bufferReader.close(); 
-		
+			else
+			{
+				//Sortie console WindowImpl
+				System.out.println("Grille invalide");
+				caseImpl = new CaseImpl[9][9];
+				
+				for(int x = 0 ; x < 9 ; x++)
+				{
+					for(int y = 0 ; y < 9 ; y++)
+					{
+						caseImpl[x][y] = new CaseImpl(0,x,y);
+					}
+				}
+				
+				grilleImpl = new GrilleImpl(caseImpl);
+			}
+			
+			
+			bufferReader.close();
 		} 
 		
 		catch (Exception e) 
 		{ 
+			//Sortie console WindowImpl
 			System.out.println(e.toString()); 
 		}
-		
-		//creer 81 casesimpl
-		//creer grilleimpl
 		
 		return grilleImpl;
 	}

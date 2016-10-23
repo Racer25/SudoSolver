@@ -158,6 +158,7 @@ public class WindowImpl extends JFrame
 		grilleInitiale = new GrilleImpl();
 		vueGrilleInitiale = new GrilleViewImpl(grilleFinale);
 		GrilleController grilleController=new GrilleController(grilleFinale, vueGrilleInitiale);
+		
 		contraintesGrilles = new GridBagConstraints();
 		contraintesGrilles.gridx=0;
 		contraintesGrilles.gridy=1;
