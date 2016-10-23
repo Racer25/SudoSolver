@@ -24,10 +24,19 @@ public class CaseImpl extends Observable
 		this.value=value;
 		this.domain=new ArrayList<Integer>();
 		//Domaine par défaut
-		for(int i=1; i<=9; i++)
+		if(value==0)
 		{
-			this.domain.add(i);
+			for(int i=1; i<=9; i++)
+			{
+				this.domain.add(i);
+			}
 		}
+		//Domaine si assigné
+		else
+		{
+			this.domain.add(value);
+		}
+		
 		
 	}
 	

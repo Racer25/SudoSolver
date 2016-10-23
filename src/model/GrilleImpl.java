@@ -16,8 +16,10 @@ public class GrilleImpl implements Grille
 	{
 		super();
 		this.cases = new CaseImpl[9][9];
-		for(int i = 0 ; i < 9 ; i++){
-			for(int j = 0 ; j < 9 ; j++){
+		for(int i = 0 ; i < 9 ; i++)
+		{
+			for(int j = 0 ; j < 9 ; j++)
+			{
 				cases[i][j] = new CaseImpl(0,i,j);
 			}
 		}
