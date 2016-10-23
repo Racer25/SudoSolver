@@ -99,7 +99,7 @@ public class GrilleViewImpl extends JPanel
 		this.add(grille23);
 		this.add(grille33);
 		
-		this.setPreferredSize(new Dimension(200, 200));
+		this.setPreferredSize(new Dimension(300, 300));
 		this.setLayout(layoutGrille);
 		this.setBackground(Color.WHITE);
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));

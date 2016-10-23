@@ -44,40 +44,31 @@ public class WindowImpl extends JFrame
 	private EcouteurQuitter ecouteurQuitter;
 	private EcouteurExporterPDF ecouteurExporterPDF;
 	
+	//Le panel principal
 	private JPanel panelPrincipal;
 	private GridLayout layoutPanelPrincipal;
-	
-	private JPanel panelGauche;
-	private GridLayout layoutPanelGauche;
-	
+		
+	//Le panelDroit
 	private JPanel panelDroit;
 	private GridLayout layoutPanelDroit;
 	
-	private JPanel panelGrilleInitiale;
-	private GridBagLayout layoutPanelGrilleInitiale;
-	
-	private JPanel panelGrilleFinale;
-	private GridBagLayout layoutPanelGrilleFinale;
+	private JPanel panelGrille;
+	private GridBagLayout layoutPanelGrille;
 	
 	private JPanel panelBoutons;
 	private GridLayout layoutPanelBoutons;
 	
-	private GrilleViewImpl vueGrilleInitiale;
-	private GridLayout layoutGrilleInitiale;
+	private GrilleViewImpl vueGrille;
+	private GridLayout layoutGrille;
 	
 	private GrilleImpl grilleInitiale;
 	
 	private GridBagConstraints contraintesGrilles;
 	private GridBagConstraints contraintesLabels;
 	
-	private JLabel labelGrilleInitiale;
-	
-	private GrilleViewImpl vueGrilleFinale;
-	private GridLayout layoutGrilleFinale;
+	private JLabel labelGrille;
 	
 	private GrilleImpl grilleFinale;
-	
-	private JLabel labelGrilleFinale;
 	
 	private JButton boutonStartPause;
 	private ImageIcon imageBoutonStartPause;
@@ -111,6 +102,7 @@ public class WindowImpl extends JFrame
 		
 		//Options de la fen�tre
 		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		this.setMinimumSize(new Dimension(800,520));
 		this.setTitle("SUDOKU");
 		this.setLocationRelativeTo(null);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -132,52 +124,30 @@ public class WindowImpl extends JFrame
 		barreMenu.getQuitter().addActionListener(ecouteurQuitter);
 		ecouteurExporterPDF = new EcouteurExporterPDF();
 		(barreMenu.getExporterPDF()).addActionListener(ecouteurExporterPDF);
-						
-				
-		//Le panel gauche
-		panelGauche = new JPanel();
-		layoutPanelGauche = new GridLayout(2,1);
-		panelGauche.setLayout(layoutPanelGauche);
-		panelPrincipal.add(panelGauche);
-		
+
 		//Le panel de la grille initiale
-		panelGrilleInitiale = new JPanel();
-		layoutPanelGrilleInitiale = new GridBagLayout();
-		panelGrilleInitiale.setLayout(layoutPanelGrilleInitiale);
-		panelGrilleInitiale.setBackground(Color.decode("#E6E6FA"));
-		panelGauche.add(panelGrilleInitiale);
+		panelGrille = new JPanel();
+		layoutPanelGrille = new GridBagLayout();
+		panelGrille.setLayout(layoutPanelGrille);
+		panelGrille.setBackground(Color.decode("#E6E6FA"));
+		panelPrincipal.add(panelGrille);
 		
 		//Le label de la grille initiale
-		labelGrilleInitiale = new JLabel("Grille initiale :");
+		labelGrille = new JLabel("Grille :");
 		contraintesLabels = new GridBagConstraints();
 		contraintesLabels.gridx=0;
 		contraintesLabels.gridy=0;
-		panelGrilleInitiale.add(labelGrilleInitiale, contraintesLabels);
+		panelGrille.add(labelGrille, contraintesLabels);
 		
 		//La grille Initiale
 		grilleInitiale = new GrilleImpl();
-		vueGrilleInitiale = new GrilleViewImpl(grilleFinale);
-		GrilleController grilleController=new GrilleController(grilleFinale, vueGrilleInitiale);
+		vueGrille = new GrilleViewImpl(grilleFinale);
+		GrilleController grilleController = new GrilleController(grilleFinale, vueGrille);
 		
 		contraintesGrilles = new GridBagConstraints();
 		contraintesGrilles.gridx=0;
 		contraintesGrilles.gridy=1;
-		panelGrilleInitiale.add(vueGrilleInitiale, contraintesGrilles);
-		
-		//Le panel de la grille finale
-		panelGrilleFinale = new JPanel();
-		layoutPanelGrilleFinale = new GridBagLayout();
-		panelGrilleFinale.setLayout(layoutPanelGrilleFinale);
-		panelGrilleFinale.setBackground(Color.decode("#E6E6FA"));
-		panelGauche.add(panelGrilleFinale);
-		
-		//Le label de la grille finale
-		labelGrilleFinale = new JLabel("Grille finale :");
-		panelGrilleFinale.add(labelGrilleFinale, contraintesLabels);
-		
-		//La grille Finale
-		vueGrilleFinale = new GrilleViewImpl(grilleFinale);
-		panelGrilleFinale.add(vueGrilleFinale, contraintesGrilles);
+		panelGrille.add(vueGrille, contraintesGrilles);
 		
 		//Le panel droit
 		panelDroit = new JPanel();
@@ -224,7 +194,7 @@ public class WindowImpl extends JFrame
 		imageBoutonImporterUneNouvelleGrille = new ImageIcon("./images/importerunenouvellegrille.png" );
 		boutonImporterUneNouvelleGrille.setIcon(imageBoutonImporterUneNouvelleGrille);
 		panelBoutons.add(boutonImporterUneNouvelleGrille);
-		ecouteurBoutonImporterUneNouvelleGrille = new EcouteurBoutonImporterUneNouvelleGrille(vueGrilleInitiale, vueGrilleFinale);
+		ecouteurBoutonImporterUneNouvelleGrille = new EcouteurBoutonImporterUneNouvelleGrille(vueGrille,grilleInitiale);
 		boutonImporterUneNouvelleGrille.addActionListener(ecouteurBoutonImporterUneNouvelleGrille);
 			
 		//Le bouton "entrer manuellement une grille"
@@ -234,7 +204,7 @@ public class WindowImpl extends JFrame
 		imageBoutonEntrerManuellementUneGrille = new ImageIcon("./images/entrerunegrillemanuellement.png" );
 		boutonEntrerManuellementUneGrille.setIcon(imageBoutonEntrerManuellementUneGrille);
 		panelBoutons.add(boutonEntrerManuellementUneGrille);
-		ecouteurBoutonEntrerManuellementUneGrille = new EcouteurBoutonEntrerManuellementUneGrille(vueGrilleInitiale, vueGrilleFinale);
+		ecouteurBoutonEntrerManuellementUneGrille = new EcouteurBoutonEntrerManuellementUneGrille(vueGrille,grilleInitiale);
 		boutonEntrerManuellementUneGrille.addActionListener(ecouteurBoutonEntrerManuellementUneGrille);
 		
 		//Console

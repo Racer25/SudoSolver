@@ -15,12 +15,11 @@ public class EcouteurBoutonEntrerManuellementUneGrille implements ActionListener
 	private GrilleViewImpl vueGrilleFinale;
 	private GrilleImpl grilleFinale;
 	
-	public EcouteurBoutonEntrerManuellementUneGrille(GrilleViewImpl vueGrilleInitiale, GrilleViewImpl vueGrilleFinale){
+	public EcouteurBoutonEntrerManuellementUneGrille(GrilleViewImpl vueGrille,GrilleImpl grilleInitiale){
 		
-		this.grilleFinale = vueGrilleFinale.getGrilleImpl();
-		this.grilleInitiale = vueGrilleInitiale.getGrilleImpl();
+		this.grilleFinale = vueGrille.getGrilleImpl();
+		this.grilleInitiale = grilleInitiale;
 		this.vueGrilleFinale = vueGrilleFinale;
-		this.vueGrilleInitiale = vueGrilleInitiale;
 		
 	}
 	

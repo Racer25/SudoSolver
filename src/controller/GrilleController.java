@@ -3,8 +3,6 @@ package controller;
 import model.GrilleImpl;
 import view.GrilleViewImpl;
 
-
-
 public class GrilleController
 {
 	private GrilleImpl grille;
