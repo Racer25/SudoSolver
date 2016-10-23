@@ -8,6 +8,7 @@ import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.TextArea;
 import java.io.PrintStream;
 
@@ -47,26 +48,22 @@ public class WindowImpl extends JFrame
 	//Le panel principal
 	private JPanel panelPrincipal;
 	private GridLayout layoutPanelPrincipal;
-		
-	//Le panelDroit
-	private JPanel panelDroit;
-	private GridLayout layoutPanelDroit;
 	
+	//Le panel de la grille
 	private JPanel panelGrille;
 	private GridBagLayout layoutPanelGrille;
 	
+	//Le panel des boutons
 	private JPanel panelBoutons;
-	private GridLayout layoutPanelBoutons;
+	private GridBagLayout layoutPanelBoutons;
 	
 	private GrilleViewImpl vueGrille;
 	private GridLayout layoutGrille;
 	
 	private GrilleImpl grilleInitiale;
+	private GrilleController grilleController;
 	
 	private GridBagConstraints contraintesGrilles;
-	private GridBagConstraints contraintesLabels;
-	
-	private JLabel labelGrille;
 	
 	private GrilleImpl grilleFinale;
 	
@@ -112,7 +109,7 @@ public class WindowImpl extends JFrame
 				
 		//Le panel principal
 		panelPrincipal = new JPanel();
-		layoutPanelPrincipal = new GridLayout(1,2);
+		layoutPanelPrincipal = new GridLayout(1,1);
 		panelPrincipal.setLayout(layoutPanelPrincipal);
 		panelPrincipal.setBackground(Color.WHITE);
 		this.getContentPane().add(panelPrincipal);
@@ -124,7 +121,7 @@ public class WindowImpl extends JFrame
 		barreMenu.getQuitter().addActionListener(ecouteurQuitter);
 		ecouteurExporterPDF = new EcouteurExporterPDF();
 		(barreMenu.getExporterPDF()).addActionListener(ecouteurExporterPDF);
-
+		
 		//Le panel de la grille initiale
 		panelGrille = new JPanel();
 		layoutPanelGrille = new GridBagLayout();
@@ -132,78 +129,80 @@ public class WindowImpl extends JFrame
 		panelGrille.setBackground(Color.decode("#E6E6FA"));
 		panelPrincipal.add(panelGrille);
 		
-		//Le label de la grille initiale
-		labelGrille = new JLabel("Grille :");
-		contraintesLabels = new GridBagConstraints();
-		contraintesLabels.gridx=0;
-		contraintesLabels.gridy=0;
-		panelGrille.add(labelGrille, contraintesLabels);
-		
 		//La grille Initiale
 		grilleInitiale = new GrilleImpl();
 		vueGrille = new GrilleViewImpl(grilleFinale);
-		GrilleController grilleController = new GrilleController(grilleFinale, vueGrille);
+		grilleController = new GrilleController(grilleFinale, vueGrille);
 		
 		contraintesGrilles = new GridBagConstraints();
 		contraintesGrilles.gridx=0;
-		contraintesGrilles.gridy=1;
+		contraintesGrilles.gridy=0;
 		panelGrille.add(vueGrille, contraintesGrilles);
-		
-		//Le panel droit
-		panelDroit = new JPanel();
-		layoutPanelDroit = new GridLayout(5,1);
-		panelDroit.setLayout(layoutPanelDroit);
-		panelDroit.setBackground(Color.decode("#E6E6FA"));
-		panelPrincipal.add(panelDroit);
-		
-		//Panel Vide 
-		JPanel panelVide = new JPanel();
-		panelVide.setBackground(Color.decode("#E6E6FA"));
-		panelDroit.add(panelVide);
 		
 		//Le panel des boutons
 		panelBoutons = new JPanel();
-		layoutPanelBoutons = new GridLayout(1,4);
+		layoutPanelBoutons = new GridBagLayout();
 		panelBoutons.setLayout(layoutPanelBoutons);
 		panelBoutons.setBackground(Color.decode("#E6E6FA"));
-		panelDroit.add(panelBoutons);
+		//panelGauche.add(panelBoutons);
+		this.getContentPane().add(panelBoutons, BorderLayout.WEST);
 		
 		//Le bouton "start/pause"
 		boutonStartPause = new JButton();
+		boutonStartPause.setPreferredSize(new Dimension(80,80));
 		boutonStartPause.setBackground(Color.WHITE);
 		boutonStartPause.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
 		imageBoutonStartPause = new ImageIcon("./images/start.png" );
 		boutonStartPause.setIcon(imageBoutonStartPause);
-		panelBoutons.add(boutonStartPause);
+		GridBagConstraints contraintesStartPause = new GridBagConstraints();
+		contraintesStartPause.gridx = 0;
+		contraintesStartPause.gridy = 0;
+		contraintesStartPause.insets = new Insets(10,10,20,20);
+		panelBoutons.add(boutonStartPause,contraintesStartPause);
 		ecouteurBoutonStartPause.setGrille(grilleFinale);
 		boutonStartPause.addActionListener(ecouteurBoutonStartPause);
 		
 		//Le bouton "reset"
 		boutonReset = new JButton();
+		boutonReset.setPreferredSize(new Dimension(80,80));
 		boutonReset.setBackground(Color.WHITE);
 		boutonReset.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
 		imageBoutonReset = new ImageIcon("./images/reset.png" );
 		boutonReset.setIcon(imageBoutonReset);
-		panelBoutons.add(boutonReset);
+		GridBagConstraints contraintesReset = new GridBagConstraints();
+		contraintesReset.gridx = 0;
+		contraintesReset.gridy = 1;
+		contraintesReset.insets = new Insets(10,10,20,20);
+		panelBoutons.add(boutonReset,contraintesReset);
 		boutonReset.addActionListener(ecouteurBoutonReset);
 		
 		//Le bouton "importer une nouvelle grille"
 		boutonImporterUneNouvelleGrille = new JButton();
+		boutonImporterUneNouvelleGrille.setPreferredSize(new Dimension(80,80));
 		boutonImporterUneNouvelleGrille.setBackground(Color.WHITE);
 		boutonImporterUneNouvelleGrille.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
 		imageBoutonImporterUneNouvelleGrille = new ImageIcon("./images/importerunenouvellegrille.png" );
 		boutonImporterUneNouvelleGrille.setIcon(imageBoutonImporterUneNouvelleGrille);
-		panelBoutons.add(boutonImporterUneNouvelleGrille);
+		GridBagConstraints contraintesImporterUneNouvelleGrille = new GridBagConstraints();
+		contraintesImporterUneNouvelleGrille.gridx = 0;
+		contraintesImporterUneNouvelleGrille.gridy = 2;
+		contraintesImporterUneNouvelleGrille.insets = new Insets(10,10,20,20);
+		panelBoutons.add(boutonImporterUneNouvelleGrille,contraintesImporterUneNouvelleGrille);
 		ecouteurBoutonImporterUneNouvelleGrille = new EcouteurBoutonImporterUneNouvelleGrille(vueGrille,grilleInitiale);
 		boutonImporterUneNouvelleGrille.addActionListener(ecouteurBoutonImporterUneNouvelleGrille);
 			
 		//Le bouton "entrer manuellement une grille"
 		boutonEntrerManuellementUneGrille = new JButton();
+		boutonEntrerManuellementUneGrille.setPreferredSize(new Dimension(80,80));
 		boutonEntrerManuellementUneGrille.setBackground(Color.WHITE);
 		boutonEntrerManuellementUneGrille.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
 		imageBoutonEntrerManuellementUneGrille = new ImageIcon("./images/entrerunegrillemanuellement.png" );
 		boutonEntrerManuellementUneGrille.setIcon(imageBoutonEntrerManuellementUneGrille);
-		panelBoutons.add(boutonEntrerManuellementUneGrille);
+		GridBagConstraints contraintesEntrerManuellementUneGrille = new GridBagConstraints();
+		contraintesEntrerManuellementUneGrille.gridx = 0;
+		contraintesEntrerManuellementUneGrille.gridy = 3;
+		contraintesEntrerManuellementUneGrille.insets = new Insets(10,10,20,20);
+		panelBoutons.add(boutonEntrerManuellementUneGrille,contraintesEntrerManuellementUneGrille);
 		ecouteurBoutonEntrerManuellementUneGrille = new EcouteurBoutonEntrerManuellementUneGrille(vueGrille,grilleInitiale);
 		boutonEntrerManuellementUneGrille.addActionListener(ecouteurBoutonEntrerManuellementUneGrille);
 		
