@@ -16,6 +16,22 @@ public class ConstraintImpl
 		return case1.getValue()!=case2.getValue();
 	}
 	
+	public CaseImpl getOtherCase(CaseImpl maCase)
+	{
+		if(this.case1==maCase)
+		{
+			return this.case2;
+		}
+		else if(this.case2==maCase)
+		{
+			return this.case1;
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
 	//Getters and setters
 	public CaseImpl getCase1() {
 		return case1;
