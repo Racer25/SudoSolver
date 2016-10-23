@@ -1,6 +1,9 @@
 package view;
 
+import java.awt.BorderLayout;
+//Imports
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,22 +17,32 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneLayout;
 
+import controller.EcouteurExporterPDF;
 import controller.EcouteurBoutonEntrerManuellementUneGrille;
 import controller.EcouteurBoutonImporterUneNouvelleGrille;
 import controller.EcouteurBoutonReset;
 import controller.EcouteurBoutonStartPause;
+import controller.EcouteurQuitter;
 import controller.GrilleController;
+import model.BarreMenu;
+import model.Console;
 import model.GrilleImpl;
-import model.SolverImpl;
-import model.contract.Solver;
 
 public class WindowImpl extends JFrame
 {
 	private static final long serialVersionUID = 2061491136713215502L;
 
 	//Les variables 
+	
+	//La barre de menu
+	private BarreMenu barreMenu;
+	private EcouteurQuitter ecouteurQuitter;
+	private EcouteurExporterPDF ecouteurExporterPDF;
 	
 	private JPanel panelPrincipal;
 	private GridLayout layoutPanelPrincipal;
@@ -82,6 +95,15 @@ public class WindowImpl extends JFrame
 	private ImageIcon imageBoutonEntrerManuellementUneGrille;
 	private EcouteurBoutonEntrerManuellementUneGrille ecouteurBoutonEntrerManuellementUneGrille;
 	
+	//Console
+	private JTextArea jTextArea;
+	private Console console;
+	private PrintStream printStream;
+	
+	//Le panel Console
+	private JScrollPane panelConsole;
+	private ScrollPaneLayout layoutPanelConsole;
+	
 	public WindowImpl(GrilleImpl grilleFinale)
 	{
 		
@@ -94,7 +116,7 @@ public class WindowImpl extends JFrame
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//ContentPane
-		this.getContentPane().setBackground(Color.decode("#FFEBCD"));
+		this.getContentPane().setBackground(Color.decode("#E6E6FA"));
 				
 		//Le panel principal
 		panelPrincipal = new JPanel();
@@ -103,6 +125,15 @@ public class WindowImpl extends JFrame
 		panelPrincipal.setBackground(Color.WHITE);
 		this.getContentPane().add(panelPrincipal);
 
+		//La barre de menu
+		barreMenu = new BarreMenu();
+		this.getContentPane().add(barreMenu,BorderLayout.NORTH);
+		EcouteurQuitter ecouteurQuitter = new EcouteurQuitter();
+		barreMenu.getQuitter().addActionListener(ecouteurQuitter);
+		ecouteurExporterPDF = new EcouteurExporterPDF();
+		(barreMenu.getExporterPDF()).addActionListener(ecouteurExporterPDF);
+						
+				
 		//Le panel gauche
 		panelGauche = new JPanel();
 		layoutPanelGauche = new GridLayout(2,1);
@@ -113,7 +144,7 @@ public class WindowImpl extends JFrame
 		panelGrilleInitiale = new JPanel();
 		layoutPanelGrilleInitiale = new GridBagLayout();
 		panelGrilleInitiale.setLayout(layoutPanelGrilleInitiale);
-		panelGrilleInitiale.setBackground(Color.decode("#FFEBCD"));
+		panelGrilleInitiale.setBackground(Color.decode("#E6E6FA"));
 		panelGauche.add(panelGrilleInitiale);
 		
 		//Le label de la grille initiale
@@ -136,7 +167,7 @@ public class WindowImpl extends JFrame
 		panelGrilleFinale = new JPanel();
 		layoutPanelGrilleFinale = new GridBagLayout();
 		panelGrilleFinale.setLayout(layoutPanelGrilleFinale);
-		panelGrilleFinale.setBackground(Color.decode("#FFEBCD"));
+		panelGrilleFinale.setBackground(Color.decode("#E6E6FA"));
 		panelGauche.add(panelGrilleFinale);
 		
 		//Le label de la grille finale
@@ -151,14 +182,19 @@ public class WindowImpl extends JFrame
 		panelDroit = new JPanel();
 		layoutPanelDroit = new GridLayout(5,1);
 		panelDroit.setLayout(layoutPanelDroit);
-		panelDroit.setBackground(Color.decode("#FFEBCD"));
+		panelDroit.setBackground(Color.decode("#E6E6FA"));
 		panelPrincipal.add(panelDroit);
+		
+		//Panel Vide 
+		JPanel panelVide = new JPanel();
+		panelVide.setBackground(Color.decode("#E6E6FA"));
+		panelDroit.add(panelVide);
 		
 		//Le panel des boutons
 		panelBoutons = new JPanel();
 		layoutPanelBoutons = new GridLayout(1,4);
 		panelBoutons.setLayout(layoutPanelBoutons);
-		panelBoutons.setBackground(Color.decode("#FFEBCD"));
+		panelBoutons.setBackground(Color.decode("#E6E6FA"));
 		panelDroit.add(panelBoutons);
 		
 		//Le bouton "start/pause"
@@ -184,7 +220,7 @@ public class WindowImpl extends JFrame
 		boutonImporterUneNouvelleGrille = new JButton();
 		boutonImporterUneNouvelleGrille.setBackground(Color.WHITE);
 		boutonImporterUneNouvelleGrille.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
-		imageBoutonImporterUneNouvelleGrille = new ImageIcon("./images/reset.png" );
+		imageBoutonImporterUneNouvelleGrille = new ImageIcon("./images/importerunenouvellegrille.png" );
 		boutonImporterUneNouvelleGrille.setIcon(imageBoutonImporterUneNouvelleGrille);
 		panelBoutons.add(boutonImporterUneNouvelleGrille);
 		ecouteurBoutonImporterUneNouvelleGrille = new EcouteurBoutonImporterUneNouvelleGrille(vueGrilleInitiale, vueGrilleFinale);
@@ -194,28 +230,28 @@ public class WindowImpl extends JFrame
 		boutonEntrerManuellementUneGrille = new JButton();
 		boutonEntrerManuellementUneGrille.setBackground(Color.WHITE);
 		boutonEntrerManuellementUneGrille.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
-		imageBoutonEntrerManuellementUneGrille = new ImageIcon("./images/reset.png" );
+		imageBoutonEntrerManuellementUneGrille = new ImageIcon("./images/entrerunegrillemanuellement.png" );
 		boutonEntrerManuellementUneGrille.setIcon(imageBoutonEntrerManuellementUneGrille);
 		panelBoutons.add(boutonEntrerManuellementUneGrille);
 		ecouteurBoutonEntrerManuellementUneGrille = new EcouteurBoutonEntrerManuellementUneGrille(vueGrilleInitiale, vueGrilleFinale);
 		boutonEntrerManuellementUneGrille.addActionListener(ecouteurBoutonEntrerManuellementUneGrille);
-			
-		//Panel Vide 
-		JPanel panelVide = new JPanel();
-		panelVide.setBackground(Color.decode("#FFEBCD"));
-		panelDroit.add(panelVide);
+		
+		//Console
+		jTextArea = new JTextArea(8,1);
+		jTextArea.setEditable(false);
+		jTextArea.setBackground(Color.WHITE);
+		jTextArea.setAutoscrolls(true);
+		jTextArea.setText("Console :\n");
+		console = new Console(jTextArea);
+		printStream = new PrintStream(console);
+		System.setOut(printStream);
 		
 		//Panel Console 
-		JPanel panelConsole = new JPanel();
-		GridLayout layoutPanelConsole = new GridLayout(1,1);
+		panelConsole = new JScrollPane(jTextArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		layoutPanelConsole = new ScrollPaneLayout();
 		panelConsole.setLayout(layoutPanelConsole);
-		panelConsole.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-		TextArea textArea = new TextArea();
-		textArea.setSize(panelConsole.getSize());
-		textArea.setBackground(Color.WHITE);
-		textArea.setText("Console :\n");
-		panelConsole.add(textArea);
-		panelDroit.add(panelConsole);
+		panelConsole.setBorder(BorderFactory.createLineBorder(Color.BLACK,4));
+		this.getContentPane().add(panelConsole,BorderLayout.SOUTH);
 		
 		
 		this.setVisible(true);

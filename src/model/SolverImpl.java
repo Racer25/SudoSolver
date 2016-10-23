@@ -54,7 +54,7 @@ public class SolverImpl extends Thread implements Solver
 	@Override
 	public void solve() 
 	{
-		System.out.println("Initialisation de la résolution");
+		System.out.println("Initialisation de la resolution");
 		boolean resolved=backtracking(0);
 		
 		if(resolved)
@@ -69,7 +69,8 @@ public class SolverImpl extends Thread implements Solver
 		//Si on est au bout du sudoku, c'est qu'on a pas eu de blocages :)
 		if (pos == 9*9)
 		{
-			System.out.println("Dernière case");
+			//System.out.println("Dernière case");
+			System.out.println("Fin de la resolution");
 			return true;
 		}
 		
@@ -84,14 +85,14 @@ public class SolverImpl extends Thread implements Solver
     	//Si la case n'est pas vide, on avance
 	    if (maCase.getValue() != 0)
 	    {
-	    	System.out.println("Case non vide, suivante!");
+	    	//System.out.println("Case non vide, suivante!");
 	    	return backtracking(pos+1);
 	    }
 	    
 	    //Si la case est vide, pour chaque valeur possible
 	    for (int value : maCase.getDomain())
 	    {
-	    	System.out.println("Case Vide, au travail!");
+	    	//System.out.println("Case Vide, au travail!");
 	    	//testons cette valeur dans cette case
 	    	maCase.setValue(value);
 	    	
