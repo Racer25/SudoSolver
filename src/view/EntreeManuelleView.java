@@ -54,10 +54,10 @@ public class EntreeManuelleView extends JFrame{
 		
 		//Ajout des JTextField
 		for(int i = 0 ; i < 9 ; i++){
-				CaseSaisie jTextField = new CaseSaisie();
+				JTextField jTextField = new JTextField();
 				jTextField.setBackground(Color.WHITE);
 				jTextField.setBorder(BorderFactory.createLineBorder(Color.GRAY,1));
-				//this.addKeyListener(new EcouteurSaisie(jTextField));
+				jTextField.addKeyListener(new EcouteurSaisie(jTextField));
 				panelSousGrille.add(jTextField);
 		}
 	}

@@ -142,6 +142,7 @@ public class WindowImpl extends JFrame
 		contraintesGrilles = new GridBagConstraints();
 		contraintesGrilles.gridx=0;
 		contraintesGrilles.gridy=0;
+		contraintesGrilles.insets = new Insets(10,10,20,20);
 		panelGrille.add(vueGrille, contraintesGrilles);
 		
 		//Le chronometre 
