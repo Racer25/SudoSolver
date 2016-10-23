@@ -21,9 +21,6 @@ public class EcouteurBoutonStartPause implements ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		
-		boutonStartPause = (JButton) arg0.getSource();
-		imageBoutonStartPause = new ImageIcon("./images/pause.png" );
-		boutonStartPause.setIcon(imageBoutonStartPause);
 		
 		//Résolution
 		Solver solver=new SolverImpl(grille);

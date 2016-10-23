@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-
 import model.CaseImpl;
 import model.GrilleImpl;
 
@@ -100,7 +99,8 @@ public class GrilleViewImpl extends JPanel
 		this.add(grille23);
 		this.add(grille33);
 		
-		this.setPreferredSize(new Dimension(200, 200));
+		this.setPreferredSize(new Dimension(500, 500));
+		this.setMinimumSize(new Dimension(300, 300));
 		this.setLayout(layoutGrille);
 		this.setBackground(Color.WHITE);
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
