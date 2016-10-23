@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.EcouteurSaisie;
-import model.CaseSaisie;
 
 public class EntreeManuelleView extends JFrame{
 
