@@ -3,6 +3,8 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
+
 import model.GrilleImpl;
 import view.EntreeManuelleView;
 import view.GrilleViewImpl;
@@ -28,7 +30,7 @@ public class EcouteurBoutonEntrerManuellementUneGrille implements ActionListener
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		
-		EntreeManuelleView entreeManuelleView = new EntreeManuelleView();
+		EntreeManuelleView entreeManuelleView = new EntreeManuelleView(grilleFinale,grilleInitiale);
 		
 	}
 
