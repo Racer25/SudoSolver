@@ -14,6 +14,7 @@ public class SolverImpl extends Thread implements Solver
 	private GrilleImpl grille;
 	private List<CaseImpl> casesAvecContraintesCreees;
 	private List<ConstraintImpl> contraintes;
+	private List<CaseImpl> casesNonAssigneesTrieeParTailleDomaine;
 	
 	public SolverImpl(GrilleImpl grille)
 	{
@@ -21,6 +22,9 @@ public class SolverImpl extends Thread implements Solver
 		this.casesAvecContraintesCreees=new ArrayList<CaseImpl>();
 		this.contraintes=new ArrayList<ConstraintImpl>();
 		constraintsGenerator();
+		preDomaineReducer();
+		this.casesNonAssigneesTrieeParTailleDomaine=
+				this.grille.getCasesNonAssigneesTrieeParTailleDomaine();
 	}
 	
 	public void constraintsGenerator()
@@ -57,13 +61,16 @@ public class SolverImpl extends Thread implements Solver
 	{
 		long chrono = java.lang.System.currentTimeMillis() ; 
 		System.out.println("Initialisation de la résolution");
+		
 		boolean resolved=backtracking(0);
+		
 		long chrono2 = java.lang.System.currentTimeMillis() ; 
 		long temps = chrono2 - chrono ; 
 		System.out.println("Temps ecoule = " + temps/1000.0 + " s") ; 
 		if(resolved)
 		{
 			//Faire un truc
+			System.out.println("Grille résolue");
 		}
 		else
 		{
@@ -72,57 +79,53 @@ public class SolverImpl extends Thread implements Solver
 		}
 	}
 	
+	public void preDomaineReducer()
+	{
+		for(int i=0; i <this.grille.getCases().length; i++)
+		{
+			for(int j=0; j <this.grille.getCases()[i].length; j++)
+			{
+				if(this.grille.getCases()[i][j].getValue()!=0)
+				{
+					//Prélèvement des contraintes de la case
+			    	List<CaseImpl> casesLiees=getCasesLiees(this.grille.getCases()[i][j]);
+			    	
+			    	for(CaseImpl maCaseLiee: casesLiees)
+			    	{
+			    		maCaseLiee.getDomain().remove(this.grille.getCases()[i][j].getValue());
+			    	}
+			    	
+				}
+			}
+		}
+	}
+	
 	//Pos est le numéro de la case, sert pour faire du récursif
 	public boolean backtracking(int pos) 
 	{
 		//Si on est au bout du sudoku, c'est qu'on a pas eu de blocages :)
-		if (pos == 9*9)
+		if (pos == this.casesNonAssigneesTrieeParTailleDomaine.size())
 		{
-			System.out.println("Dernière case");
 			return true;
 		}
 		
-		//Prélèvement de la case
-	    int i = pos/9;
-	    int j = pos%9;
-	    CaseImpl maCase=this.grille.getCase(i, j);
+	    CaseImpl maCase=this.casesNonAssigneesTrieeParTailleDomaine.get(pos);
 	    
     	//Prélèvement des contraintes de la case
-    	List<ConstraintImpl> contraintesDeLaCase=getConstraints(maCase);
-    	
-    	//Si la case n'est pas vide, on avance
-	    if (maCase.getValue() != 0)
-	    {
-	    	System.out.println("Case "+pos+" non vide, suivante!");
-	    	return backtracking(pos+1);
-	    }
-	    
-	    //Si la case est vide, pour chaque valeur encore possible
-	    
-	    //Affichage domaine
-	    System.out.print("Case "+pos+" domaine: ");
-	    for(Integer val: maCase.getDomain())
-	    {
-	    	System.out.print(val+",");
-	    }
-	    System.out.println("");
-	    
+    	List<ConstraintImpl> contraintesDeLaCase=getConstraints(maCase);	    
 	    //SAVE domaine de la case
 	  	List<Integer> domainSave=new ArrayList<Integer>(maCase.getDomain());
 	    
+	  	//Pour chaque valeur possible
 	    for(Integer value: maCase.getDomain())
 	    {
-	    	System.out.println("Case "+pos+" Vide, au travail! avec valeur "+value);
-	    	//testons cette valeur dans cette case
 	    	maCase.setValue(value);
 	    	
 	    	//Cette valeur satisfait-elle toutes les contraintes?
-	    	System.out.println("Cela satisfait les contraintes?");
 	    	boolean constraintsSatisfied=true;
 	    	int k=0;
 	    	while(constraintsSatisfied && k<contraintesDeLaCase.size())
 	    	{
-	    		System.out.println("Contrainte "+k);
 	    		if(!contraintesDeLaCase.get(k).isSatisfied())
 	    		{
 	    			constraintsSatisfied=false;
@@ -133,14 +136,13 @@ public class SolverImpl extends Thread implements Solver
 	    	//Si cela satisfait toutes les contraintes de la case
 	        if (constraintsSatisfied)
 	        {
-	        	System.out.println("Contraintes satisfaites");
-	        	
 	        	//Reduction des domaines des cases futures+check si unDomaineVide
-	        	
-	        	if(forwardChecking(maCase, pos))
+	        	/*
+	        	 * if(forwardChecking(maCase, pos))
 	        	{
 	        		return false;
 	        	}
+	        	*/
 	        	
 	        	//arcConsistency(maCase);
 	        	
@@ -149,32 +151,59 @@ public class SolverImpl extends Thread implements Solver
 	            {
 	            	return true;
 	            }
-	            
+	            /*
 	            else
 	            {
 	            	 reverseChecking(maCase, pos);
 	            }
-	        }
-	        else
-	        {
-	        	System.out.println("la valeur "+value+" ne marche pas");
+	            */
 	        }
 	    }
-	    System.out.println("#######################################################################");
-	    System.out.println("Aucune valeur possible pour cette case au vue des valeurs précédentes");
-	    System.out.println("#######################################################################");
 	    maCase.setValue(0);
 	    maCase.setDomain(domainSave);
-	    //Affichage domaine
-	    System.out.print("Case "+pos+" domaine: ");
-	    for(Integer val: maCase.getDomain())
-	    {
-	    	System.out.print(val+",");
-	    }
-	    System.out.println("");
 
 	    return false;
 	}
+	
+
+	
+	public boolean forwardChecking(CaseImpl maCase, int pos) 
+	{
+		List<CaseImpl> casesLiees=getCasesLiees(maCase);
+		
+		int k=0;
+		boolean unDomaineVide=false;
+		while(!unDomaineVide && k < casesLiees.size())
+		{
+			int posCaseLiee=casesLiees.get(k).getY()+casesLiees.get(k).getX()*9;
+			if(posCaseLiee>pos)
+			{
+				casesLiees.get(k).getDomain().remove((Integer)maCase.getValue());
+				if(casesLiees.get(k).getDomain().isEmpty())
+				{
+					unDomaineVide=true;
+				}
+			}
+			k++;
+			
+		}
+		return unDomaineVide;
+	}
+	
+	public void reverseChecking(CaseImpl maCase, int pos) 
+	{		
+		List<CaseImpl> casesLiees=getCasesLiees(maCase);
+	
+		for(CaseImpl caseLiee: casesLiees)
+		{
+			int posCaseLiee=caseLiee.getY()+caseLiee.getX()*9;
+			if(posCaseLiee>pos)
+			{
+				caseLiee.getDomain().add(maCase.getValue());
+			}
+		}
+	}
+	
 	
 	//Va réduire le domaine des valeurs possibles de la case est de ses voisins,
 	//En utilisant les contraintes
@@ -198,69 +227,6 @@ public class SolverImpl extends Thread implements Solver
 			}
 		}
 		
-	}
-	
-	public boolean forwardChecking(CaseImpl maCase, int pos) 
-	{
-		System.out.println("NETTOYAGE PAR FC");
-		
-		List<CaseImpl> casesLiees=getCasesLiees(maCase);
-		
-		//SAVE domaines des cases liees futures
-		List<List<Integer>> domains=new ArrayList<List<Integer>>();
-		for(CaseImpl caseLiee : casesLiees)
-		{
-			int posCaseLiee=caseLiee.getY()+caseLiee.getX()*9;
-			if(posCaseLiee>pos)
-			{
-				domains.add(caseLiee.getDomain());
-			}
-			
-		}
-		
-		int k=0;
-		boolean unDomaineVide=false;
-		while(!unDomaineVide && k < casesLiees.size())
-		{
-			int posCaseLiee=casesLiees.get(k).getY()+casesLiees.get(k).getX()*9;
-			if(posCaseLiee>pos)
-			{
-				casesLiees.get(k).getDomain().remove((Integer)maCase.getValue());
-				if(casesLiees.get(k).getDomain().isEmpty())
-				{
-					unDomaineVide=true;
-				}
-			}
-			k++;
-			
-		}
-		
-		//Récupération de la save si un domaine vide
-		if(unDomaineVide)
-		{
-			System.out.println("DOMAINE VIDE, MARCHE ARRIERE.................................");
-			for(int i=0; i<domains.size(); i++)
-			{
-				casesLiees.get(i).setDomain(domains.get(i));
-			}
-		}
-		
-		System.out.println("FIN DU NETTOYAGE PAR FC");
-		return unDomaineVide;
-	}
-	
-	public void reverseChecking(CaseImpl maCase, int pos) 
-	{		
-		List<CaseImpl> casesLiees=getCasesLiees(maCase);
-	
-		for(CaseImpl caseLiee: casesLiees)
-		{
-			int posCaseLiee=caseLiee.getY()+caseLiee.getX()*9;
-			if(posCaseLiee>pos)
-			{
-				caseLiee.getDomain().add(maCase.getValue());
-			}
-		}
 	}
 	
 	//Pour ArcConsistency

@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Observable;
 
 
-public class CaseImpl extends Observable
+public class CaseImpl extends Observable implements Comparable<CaseImpl>
 {	
 	//Valeur de 0 à 9 inclus (0 signifiant VIDE)
-	private int value;
+	private Integer value;
 	
 	private int x;
 	private int y;
@@ -50,12 +50,12 @@ public class CaseImpl extends Observable
 
 	
 	//Getters and Setters
-	public int getValue() 
+	public Integer getValue() 
 	{
 		return value;
 	}
 
-	public void setValue(int value) 
+	public void setValue(Integer value) 
 	{
 		this.value = value;
 		setChanged();
@@ -84,6 +84,23 @@ public class CaseImpl extends Observable
 
 	public void setDomain(List<Integer> domain) {
 		this.domain = domain;
+	}
+
+	@Override
+	public int compareTo(CaseImpl o) 
+	{
+		if(this.getDomain().size()<o.getDomain().size())
+		{
+			return -1;
+		}
+		else if(this.getDomain().size()==o.getDomain().size())
+		{
+			return 0;
+		}
+		else
+		{
+			return 1;
+		}
 	}
 	
 	

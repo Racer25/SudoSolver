@@ -1,5 +1,9 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import model.contract.Grille;
 
 public class GrilleImpl implements Grille
@@ -27,6 +31,31 @@ public class GrilleImpl implements Grille
 
 	public CaseImpl[][] getCases() {
 		return cases;
+	}
+	
+	public List<CaseImpl> getCasesNonAssigneesTrieeParTailleDomaine() 
+	{
+		List<CaseImpl> casesNonAssigneesTrieeParTailleDomaine =new ArrayList<CaseImpl>();
+		for(int i=0; i <this.getCases().length; i++)
+		{
+			for(int j=0; j <this.getCases()[i].length; j++)
+			{
+				CaseImpl maCase=this.getCase(i, j);
+				if(maCase.getValue()==0)
+				{
+					casesNonAssigneesTrieeParTailleDomaine.add(maCase);
+				}
+			}
+		}
+		
+		Collections.sort(casesNonAssigneesTrieeParTailleDomaine);
+		
+		System.out.println("Domaine mini: "+casesNonAssigneesTrieeParTailleDomaine.get(0).getDomain().size()+
+				"à la case x="+casesNonAssigneesTrieeParTailleDomaine.get(0).getX()+", y="+
+				casesNonAssigneesTrieeParTailleDomaine.get(0).getY());
+		System.out.println("Domaine maxi: "+casesNonAssigneesTrieeParTailleDomaine.get(casesNonAssigneesTrieeParTailleDomaine.size()-1).getDomain().size());
+		
+		return casesNonAssigneesTrieeParTailleDomaine;
 	}
 
 	public void setCases(CaseImpl[][] cases) {
