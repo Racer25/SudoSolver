@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JButton;
+
 import model.contract.Solver;
 
 //Résout le sudoku
@@ -15,10 +17,14 @@ public class SolverImpl extends Thread implements Solver
 	private List<CaseImpl> casesAvecContraintesCreees;
 	private List<ConstraintImpl> contraintes;
 	private List<CaseImpl> casesNonAssigneesTrieeParTailleDomaine;
+	private Chronometre chronometre;
+	private JButton start;
 	
-	public SolverImpl(GrilleImpl grille)
+	public SolverImpl(GrilleImpl grille, Chronometre chronometre, JButton start)
 	{
 		this.grille=grille;
+		this.start = start;
+		this.chronometre = chronometre;
 		this.casesAvecContraintesCreees=new ArrayList<CaseImpl>();
 		this.contraintes=new ArrayList<ConstraintImpl>();
 		constraintsGenerator();
@@ -59,23 +65,32 @@ public class SolverImpl extends Thread implements Solver
 	@Override
 	public void solve() 
 	{
-		long chrono = java.lang.System.currentTimeMillis() ; 
+		//long chrono = java.lang.System.currentTimeMillis() ; 
 		System.out.println("Initialisation de la résolution");
 		
 		boolean resolved=backtracking(0);
 		
-		long chrono2 = java.lang.System.currentTimeMillis() ; 
-		long temps = chrono2 - chrono ; 
-		System.out.println("Temps ecoule = " + temps/1000.0 + " s") ; 
+		//long chrono2 = java.lang.System.currentTimeMillis() ; 
+		//long temps = chrono2 - chrono ; 
+		//System.out.println("Temps ecoule = " + temps/1000.0 + " s") ; 
 		if(resolved)
 		{
+			//Arret du chronometre
+			chronometre.arreter();
 			//Faire un truc
 			System.out.println("Grille résolue");
 		}
 		else
 		{
+			//Arret du chronometre
+			chronometre.arreter();
+			
 			//Faire un autre truc
 			System.out.println("Ta grille est fausse");
+			
+			//Acces aux boutons
+			start.setEnabled(true);
+			
 		}
 	}
 	

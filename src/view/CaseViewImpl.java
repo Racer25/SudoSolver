@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Font;
+
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,14 +16,17 @@ public class CaseViewImpl extends JPanel
 	//Variables
 	private CaseImpl caseImpl;
 	private JLabel valueView;
+	//private Font font;
 	
 	//Constructeur
 	public CaseViewImpl(CaseImpl caseImpl)
 	{
 		this.caseImpl = caseImpl;
+		//font = new Font("Arial", 0, 50);
 		if(caseImpl.getValue() != 0)
 		{
 			this.valueView = new JLabel(Integer.toString(caseImpl.getValue()));
+			//this.valueView.setFont(font);
 		}
 		else
 		{
