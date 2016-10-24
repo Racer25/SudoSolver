@@ -16,6 +16,7 @@ public class PDFGenerator {
 	private GrilleImpl grilleFinale;
 	private String[][] grille1;
 	private String[][] grille2;
+	private static int numero = 0;
 	
 	public PDFGenerator(GrilleImpl grilleInitiale, GrilleImpl grilleFinale){
 		this.grilleFinale=grilleFinale;
@@ -45,7 +46,12 @@ public class PDFGenerator {
 		    for(int i = 0 ; i < 9 ; i++){
 		    	for(int j = 0 ; j < 9 ; j++){
 		    		System.out.println(grilleInitiale.getCase(i, j).getValue());
-			    	grille1[i][j]=Integer.toString(grilleInitiale.getCase(i, j).getValue());
+		    		if(grilleInitiale.getCase(i, j).getValue()!=0){
+		    			grille1[i][j]=Integer.toString(grilleInitiale.getCase(i, j).getValue());
+		    		}
+		    		else{
+		    			grille1[i][j]="";
+		    		}
 			    }
 		    }
 		    drawTable(singlePage, contentStream, 670, 210, grille1);
@@ -59,7 +65,12 @@ public class PDFGenerator {
 		    grille2 = new String[9][9];
 		    for(int i = 0 ; i < 9 ; i++){
 		    	for(int j = 0 ; j < 9 ; j++){
-			    	grille2[i][j]=Integer.toString(grilleFinale.getCase(i, j).getValue());
+		    		if(grilleFinale.getCase(i, j).getValue()!=0){
+		    			grille2[i][j]=Integer.toString(grilleFinale.getCase(i, j).getValue());
+		    		}
+		    		else{
+		    			grille2[i][j]="";
+		    		}
 			    }
 		    }
 		    drawTable(singlePage, contentStream, 420, 210, grille2);
@@ -75,7 +86,8 @@ public class PDFGenerator {
 		    contentStream.endText();
 		    
 		    contentStream.close();  // Stream must be closed before saving document.
-		    document.save("./exports/EmptyPage.pdf");
+		    numero++;
+		    document.save("./exports/exportPDF_"+numero+".pdf");
 		} catch (IOException e) {
 		// TODO Auto-generated catch block
 		   	e.printStackTrace();

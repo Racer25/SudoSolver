@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 
 import model.Chronometre;
 import model.GrilleImpl;
@@ -31,8 +32,10 @@ public class EcouteurBoutonStartPause implements ActionListener{
 		//Lancement du chronometre 
 		chronometre.lancer();
 		
+		((JButton) arg0.getSource()).setEnabled(false);
+		
 		//Résolution
-		Solver solver = new SolverImpl(grille,chronometre);
+		Solver solver = new SolverImpl(grille,chronometre,(JButton) arg0.getSource());
 		solver.start();
 	
 	}

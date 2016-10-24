@@ -34,6 +34,7 @@ import model.BarreMenu;
 import model.Chronometre;
 import model.Console;
 import model.GrilleImpl;
+import model.PDFGenerator;
 
 public class WindowImpl extends JFrame
 {
@@ -94,6 +95,9 @@ public class WindowImpl extends JFrame
 	private GridBagConstraints contraintesEntrerManuellementUneGrille;
 	private EcouteurBoutonEntrerManuellementUneGrille ecouteurBoutonEntrerManuellementUneGrille;
 	
+	//Le generateur de PDF
+	private PDFGenerator p;
+	
 	//Console
 	private JTextArea jTextArea;
 	private Console console;
@@ -148,7 +152,8 @@ public class WindowImpl extends JFrame
 		this.getContentPane().add(barreMenu,BorderLayout.NORTH);
 		ecouteurQuitter = new EcouteurQuitter();
 		barreMenu.getQuitter().addActionListener(ecouteurQuitter);
-		ecouteurExporterPDF = new EcouteurExporterPDF(grilleInitiale,grilleFinale);
+		p = new PDFGenerator(grilleInitiale,grilleFinale);
+		ecouteurExporterPDF = new EcouteurExporterPDF(grilleInitiale,grilleFinale,p);
 		(barreMenu.getExporterPDF()).addActionListener(ecouteurExporterPDF);
 		
 		//Le chronometre 
@@ -211,7 +216,8 @@ public class WindowImpl extends JFrame
 		panelBoutons.add(boutonImporterUneNouvelleGrille,contraintesImporterUneNouvelleGrille);
 		ecouteurBoutonImporterUneNouvelleGrille = new EcouteurBoutonImporterUneNouvelleGrille(vueGrille,grilleInitiale);
 		boutonImporterUneNouvelleGrille.addActionListener(ecouteurBoutonImporterUneNouvelleGrille);
-			
+		(barreMenu.getImporterUneNouvelleGrille()).addActionListener(ecouteurBoutonImporterUneNouvelleGrille);
+		
 		//Le bouton "entrer manuellement une grille"
 		boutonEntrerManuellementUneGrille = new JButton();
 		boutonEntrerManuellementUneGrille.setPreferredSize(new Dimension(80,80));
@@ -226,6 +232,7 @@ public class WindowImpl extends JFrame
 		panelBoutons.add(boutonEntrerManuellementUneGrille,contraintesEntrerManuellementUneGrille);
 		ecouteurBoutonEntrerManuellementUneGrille = new EcouteurBoutonEntrerManuellementUneGrille(vueGrille,grilleInitiale);
 		boutonEntrerManuellementUneGrille.addActionListener(ecouteurBoutonEntrerManuellementUneGrille);
+		barreMenu.getAjouterUneGrilleManuellement().addActionListener(ecouteurBoutonEntrerManuellementUneGrille);
 		
 		//Console
 		jTextArea = new JTextArea(8,1);

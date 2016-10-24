@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JButton;
+
 import model.contract.Solver;
 
 //Résout le sudoku
@@ -15,10 +17,12 @@ public class SolverImpl extends Thread implements Solver
 	private List<CaseImpl> casesAvecContraintesCreees;
 	private List<ConstraintImpl> contraintes;
 	private Chronometre chronometre;
+	private JButton start;
 	
-	public SolverImpl(GrilleImpl grille, Chronometre chronometre)
+	public SolverImpl(GrilleImpl grille, Chronometre chronometre, JButton start)
 	{
 		this.grille=grille;
+		this.start = start;
 		this.chronometre = chronometre;
 		this.casesAvecContraintesCreees=new ArrayList<CaseImpl>();
 		this.contraintes=new ArrayList<ConstraintImpl>();
@@ -73,8 +77,13 @@ public class SolverImpl extends Thread implements Solver
 		{
 			//Arret du chronometre
 			chronometre.arreter();
+			
 			//Faire un autre truc
 			System.out.println("Ta grille est fausse");
+			
+			//Acces aux boutons
+			start.setEnabled(true);
+			
 		}
 	}
 	

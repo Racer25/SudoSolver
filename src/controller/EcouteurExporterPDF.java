@@ -11,16 +11,17 @@ public class EcouteurExporterPDF implements ActionListener{
 	//Variables 
 	private GrilleImpl grilleInitiale;
 	private GrilleImpl grilleFinale;
+	private PDFGenerator p;
 	
-	public EcouteurExporterPDF(GrilleImpl grilleInitiale, GrilleImpl grilleFinale){
+	public EcouteurExporterPDF(GrilleImpl grilleInitiale, GrilleImpl grilleFinale,PDFGenerator p){
 		this.grilleInitiale = grilleInitiale;
 		this.grilleFinale = grilleFinale;
+		this.p = p;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		PDFGenerator p = new PDFGenerator(grilleInitiale,grilleFinale);
 		p.createDocument();
 	}
 
