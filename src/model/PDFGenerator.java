@@ -11,7 +11,19 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 public class PDFGenerator {
 	
-	public void createEmptyDocument()
+	//Variables
+	private GrilleImpl grilleInitiale;
+	private GrilleImpl grilleFinale;
+	private String[][] grille1;
+	private String[][] grille2;
+	
+	public PDFGenerator(GrilleImpl grilleInitiale, GrilleImpl grilleFinale){
+		this.grilleFinale=grilleFinale;
+		this.grilleInitiale=grilleInitiale;
+		
+	}
+	
+	public void createDocument()
 	{
 		final PDPage singlePage = new PDPage();
 		final PDFont font = PDType1Font.COURIER;
@@ -29,13 +41,14 @@ public class PDFGenerator {
 		    contentStream.showText("GRILLE INITIALE :");
 		    contentStream.endText();
 		    
-		    String[][] s = new String[9][9];
+		    grille1 = new String[9][9];
 		    for(int i = 0 ; i < 9 ; i++){
 		    	for(int j = 0 ; j < 9 ; j++){
-			    	s[i][j]="0";
+		    		System.out.println(grilleInitiale.getCase(i, j).getValue());
+			    	grille1[i][j]=Integer.toString(grilleInitiale.getCase(i, j).getValue());
 			    }
 		    }
-		    drawTable(singlePage, contentStream, 670, 210, s);
+		    drawTable(singlePage, contentStream, 670, 210, grille1);
 		    
 		    contentStream.beginText();
 		    contentStream.setFont(font, fontSize);
@@ -43,13 +56,13 @@ public class PDFGenerator {
 		    contentStream.showText("GRILLE FINALE :");
 		    contentStream.endText();
 		    
-		    String[][] s2 = new String[9][9];
+		    grille2 = new String[9][9];
 		    for(int i = 0 ; i < 9 ; i++){
 		    	for(int j = 0 ; j < 9 ; j++){
-			    	s2[i][j]="0";
+			    	grille2[i][j]=Integer.toString(grilleFinale.getCase(i, j).getValue());
 			    }
 		    }
-		    drawTable(singlePage, contentStream, 420, 210, s);
+		    drawTable(singlePage, contentStream, 420, 210, grille2);
 		    
 		    contentStream.setLineWidth(1);
 		    contentStream.setLineDashPattern (new float[]{3}, 0);
