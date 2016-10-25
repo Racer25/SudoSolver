@@ -7,10 +7,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 
-import model.Chronometre;
 import model.GrilleImpl;
 import model.SolverImpl;
 import model.contract.Solver;
+import view.Chronometre;
 
 public class EcouteurBoutonStartPause implements ActionListener{
 
@@ -26,7 +26,7 @@ public class EcouteurBoutonStartPause implements ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 
-		//Remise à zéro du chronometre
+		//Remise ï¿½ zï¿½ro du chronometre
 		chronometre.tare();
 		
 		//Lancement du chronometre 

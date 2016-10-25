@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JButton;
 
 import model.contract.Solver;
+import view.Chronometre;
 
 //Résout le sudoku
 public class SolverImpl extends Thread implements Solver 
@@ -63,7 +64,7 @@ public class SolverImpl extends Thread implements Solver
 			{
 				if(this.grille.getCases()[i][j].getValue()!=0)
 				{
-					//Prélèvement des contraintes de la case
+					//Prélèvement des voisins de la case
 			    	List<CaseImpl> casesLiees=this.grille.getCases()[i][j].getVoisins();
 			    	
 			    	for(CaseImpl maCaseLiee: casesLiees)

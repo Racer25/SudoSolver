@@ -28,11 +28,8 @@ import controller.EcouteurBoutonReset;
 import controller.EcouteurBoutonStartPause;
 import controller.EcouteurQuitter;
 import controller.GrilleController;
-import model.BarreMenu;
-import model.Chronometre;
-import model.Console;
 import model.GrilleImpl;
-import model.PDFGenerator;
+import model.utils.PDFGenerator;
 
 public class WindowImpl extends JFrame
 {

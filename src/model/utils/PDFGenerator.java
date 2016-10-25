@@ -1,4 +1,4 @@
-package model;
+package model.utils;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -8,6 +8,8 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+
+import model.GrilleImpl;
 
 public class PDFGenerator {
 	

@@ -1,4 +1,4 @@
-package model;
+package view;
 
 //Imports
 import java.awt.event.InputEvent;
@@ -22,13 +22,13 @@ public class BarreMenu extends JMenuBar{
 	//Constructeur
 	public BarreMenu(){
 	
-		//Création du menu fichier
+		//Crï¿½ation du menu fichier
 		fichier = new JMenu("Fichier");
 		this.add(fichier);
 		quitter = new JMenuItem("Quitter");
 		fichier.add(quitter);
 		
-		//Création du menu fichier
+		//Crï¿½ation du menu fichier
 		options = new JMenu("Options");
 		this.add(options);
 		exporterPDF = new JMenuItem("Exporter en PDF",'E');
