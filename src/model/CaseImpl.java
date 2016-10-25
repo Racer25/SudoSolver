@@ -9,11 +9,11 @@ public class CaseImpl extends Observable implements Comparable<CaseImpl>
 {	
 	//Valeur de 0 à 9 inclus (0 signifiant VIDE)
 	private Integer value;
-	
 	private int x;
 	private int y;
-	
 	private List<Integer> domain;
+	private List<CaseImpl> voisins;
+	private int prioriteTraitement;
 	
 	
 	//Constructors
@@ -101,6 +101,22 @@ public class CaseImpl extends Observable implements Comparable<CaseImpl>
 		{
 			return 1;
 		}
+	}
+
+	public List<CaseImpl> getVoisins() {
+		return voisins;
+	}
+
+	public void setVoisins(List<CaseImpl> voisins) {
+		this.voisins = voisins;
+	}
+
+	public int getPrioriteTraitement() {
+		return prioriteTraitement;
+	}
+
+	public void setPrioriteTraitement(int prioriteTraitement) {
+		this.prioriteTraitement = prioriteTraitement;
 	}
 	
 	

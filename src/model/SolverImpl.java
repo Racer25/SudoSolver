@@ -27,10 +27,10 @@ public class SolverImpl extends Thread implements Solver
 		this.chronometre = chronometre;
 		this.casesAvecContraintesCreees=new ArrayList<CaseImpl>();
 		this.contraintes=new ArrayList<ConstraintImpl>();
-		constraintsGenerator();
+		//constraintsGenerator();
 		preDomaineReducer();
 		this.casesNonAssigneesTrieeParTailleDomaine=
-				this.grille.getCasesNonAssigneesTrieeParTailleDomaine();
+				this.grille.getCasesNonAssigneesTrieeParTailleDomaineEtFixerPriorites();
 	}
 	
 	public void constraintsGenerator()
@@ -40,7 +40,7 @@ public class SolverImpl extends Thread implements Solver
 			for(int j=0; j<this.grille.getCases()[i].length; j++)
 			{
 				CaseImpl caseParcourue=this.grille.getCases()[i][j];
-				List<CaseImpl> casesLiees=getCasesLiees(caseParcourue);
+				List<CaseImpl> casesLiees=this.grille.getCases()[i][j].getVoisins();
 				
 				for(CaseImpl caseLiee:casesLiees)
 				{
@@ -51,6 +51,27 @@ public class SolverImpl extends Thread implements Solver
 					}
 				}
 				this.casesAvecContraintesCreees.add(caseParcourue);
+			}
+		}
+	}
+	
+	public void preDomaineReducer()
+	{
+		for(int i=0; i <this.grille.getCases().length; i++)
+		{
+			for(int j=0; j <this.grille.getCases()[i].length; j++)
+			{
+				if(this.grille.getCases()[i][j].getValue()!=0)
+				{
+					//Prélèvement des contraintes de la case
+			    	List<CaseImpl> casesLiees=this.grille.getCases()[i][j].getVoisins();
+			    	
+			    	for(CaseImpl maCaseLiee: casesLiees)
+			    	{
+			    		maCaseLiee.getDomain().remove(this.grille.getCases()[i][j].getValue());
+			    	}
+			    	
+				}
 			}
 		}
 	}
@@ -91,27 +112,6 @@ public class SolverImpl extends Thread implements Solver
 		start.setEnabled(true);
 	}
 	
-	public void preDomaineReducer()
-	{
-		for(int i=0; i <this.grille.getCases().length; i++)
-		{
-			for(int j=0; j <this.grille.getCases()[i].length; j++)
-			{
-				if(this.grille.getCases()[i][j].getValue()!=0)
-				{
-					//Prélèvement des contraintes de la case
-			    	List<CaseImpl> casesLiees=getCasesLiees(this.grille.getCases()[i][j]);
-			    	
-			    	for(CaseImpl maCaseLiee: casesLiees)
-			    	{
-			    		maCaseLiee.getDomain().remove(this.grille.getCases()[i][j].getValue());
-			    	}
-			    	
-				}
-			}
-		}
-	}
-	
 	//Pos est le numéro de la case, sert pour faire du récursif
 	public boolean backtracking(int pos) 
 	{
@@ -123,8 +123,6 @@ public class SolverImpl extends Thread implements Solver
 		
 	    CaseImpl maCase=this.casesNonAssigneesTrieeParTailleDomaine.get(pos);
 	    
-    	//Prélèvement des contraintes de la case
-    	List<ConstraintImpl> contraintesDeLaCase=getConstraints(maCase);	    
 	    //SAVE domaine de la case
 	  	List<Integer> domainSave=new ArrayList<Integer>(maCase.getDomain());
 	    
@@ -133,24 +131,12 @@ public class SolverImpl extends Thread implements Solver
 	    {
 	    	maCase.setValue(value);
 	    	
-	    	//Cette valeur satisfait-elle toutes les contraintes?
-	    	boolean constraintsSatisfied=true;
-	    	int k=0;
-	    	while(constraintsSatisfied && k<contraintesDeLaCase.size())
-	    	{
-	    		if(!contraintesDeLaCase.get(k).isSatisfied())
-	    		{
-	    			constraintsSatisfied=false;
-	    		}
-	    		k++;
-	    	}
-	    	
 	    	//Si cela satisfait toutes les contraintes de la case
-	        if (constraintsSatisfied)
+	        if (isOkay(maCase))
 	        {
 	        	//Reduction des domaines des cases futures+check si unDomaineVide
 	        	/*
-	        	 * if(forwardChecking(maCase, pos))
+	        	if(forwardChecking(maCase, pos))
 	        	{
 	        		return false;
 	        	}
@@ -169,6 +155,7 @@ public class SolverImpl extends Thread implements Solver
 	            	 reverseChecking(maCase, pos);
 	            }
 	            */
+	            
 	        }
 	    }
 	    maCase.setValue(0);
@@ -177,17 +164,35 @@ public class SolverImpl extends Thread implements Solver
 	    return false;
 	}
 	
+	//Vérifie si la valeur actuelle de la case est possible au vue de l'était actuel de la grille
+	//A APPELER SUR UNE CASE NON VIDE/NON ASSIGNEE
+	public boolean isOkay(CaseImpl maCase)
+	{
+		//Cette valeur satisfait-elle toutes les contraintes?
+    	boolean constraintsSatisfied=true;
+    	int k=0;
+    	while(constraintsSatisfied && k<maCase.getVoisins().size())
+    	{
+    		if(maCase.getValue()==maCase.getVoisins().get(k).getValue())
+    		{
+    			constraintsSatisfied=false;
+    		}
+    		k++;
+    	}
+    	return constraintsSatisfied;
+	}
 
 	
 	public boolean forwardChecking(CaseImpl maCase, int pos) 
 	{
-		List<CaseImpl> casesLiees=getCasesLiees(maCase);
+		List<CaseImpl> casesLiees=maCase.getVoisins();
 		
 		int k=0;
 		boolean unDomaineVide=false;
 		while(!unDomaineVide && k < casesLiees.size())
 		{
-			int posCaseLiee=casesLiees.get(k).getY()+casesLiees.get(k).getX()*9;
+			//Problème ici
+			int posCaseLiee=casesLiees.get(k).getPrioriteTraitement();
 			if(posCaseLiee>pos)
 			{
 				casesLiees.get(k).getDomain().remove((Integer)maCase.getValue());
@@ -204,11 +209,11 @@ public class SolverImpl extends Thread implements Solver
 	
 	public void reverseChecking(CaseImpl maCase, int pos) 
 	{		
-		List<CaseImpl> casesLiees=getCasesLiees(maCase);
+		List<CaseImpl> casesLiees=maCase.getVoisins();
 	
 		for(CaseImpl caseLiee: casesLiees)
 		{
-			int posCaseLiee=caseLiee.getY()+caseLiee.getX()*9;
+			int posCaseLiee=caseLiee.getPrioriteTraitement();
 			if(posCaseLiee>pos)
 			{
 				caseLiee.getDomain().add(maCase.getValue());
@@ -230,7 +235,7 @@ public class SolverImpl extends Thread implements Solver
 			//Avec les voisins/cases liées
 			if(removed)
 			{
-				List<CaseImpl> casesLiees=getCasesLiees(maCase);
+				List<CaseImpl> casesLiees=maCase.getVoisins();
 				for(CaseImpl caseLiee:casesLiees)
 				{
 					ConstraintImpl contrainteAvecCaseLiee=getConstraint(caseLiee, maCase);
@@ -277,65 +282,7 @@ public class SolverImpl extends Thread implements Solver
 		return somethingRemoved;
 	}
 	
-	public List<CaseImpl> getCasesLiees(CaseImpl maCase)
-	{
-		List<CaseImpl> casesLiees=new ArrayList<CaseImpl>();
-		casesLiees.addAll(getCasesLigne(maCase));
-		casesLiees.addAll(getCasesColonne((maCase)));
-		casesLiees.addAll(getCasesBlocRestantes((maCase)));
-		return casesLiees;
-	}
-
-	@Override
-	public List<CaseImpl> getCasesLigne(CaseImpl maCase) 
-	{
-		List<CaseImpl> casesLigne=new ArrayList<CaseImpl>();
-		for (int j=0; j < 9; j++)
-	    {
-			CaseImpl caseParcourue=this.grille.getCase(maCase.getX(), j);
-	    	if (!(caseParcourue == maCase))
-	    	{
-	    		casesLigne.add(caseParcourue);
-	    	}
-	    }
-	    return casesLigne;
-	}
 	
-	@Override
-	public List<CaseImpl> getCasesColonne(CaseImpl maCase) 
-	{
-		List<CaseImpl> casesColonne=new ArrayList<CaseImpl>();
-		for (int i=0; i < 9; i++)
-	    {
-			CaseImpl caseParcourue=this.grille.getCase(i, maCase.getY());
-	    	if (!(caseParcourue == maCase))
-	    	{
-	    		casesColonne.add(caseParcourue);
-	    	}
-	    }
-	    return casesColonne;
-	}
-	
-	@Override
-	public List<CaseImpl> getCasesBlocRestantes(CaseImpl maCase) 
-	{
-		List<CaseImpl> casesBlocRestantes=new ArrayList<CaseImpl>();
-		int minXBloc = 3*(maCase.getX()/3);
-	    int minYBloc = 3*(maCase.getY()/3);
-	    for (int i=minXBloc; i < minXBloc+3; i++)
-	    {
-	    	for (int j=minYBloc; j < minYBloc+3; j++)
-	        {
-	    		CaseImpl caseParcourue=this.grille.getCase(i, j);
-		   		if (caseParcourue.getX()!=maCase.getX() && 
-		   				caseParcourue.getY()!=maCase.getY())
-		        {
-		   			casesBlocRestantes.add(caseParcourue);
-		        }
-	        }
-	    }
-	    return casesBlocRestantes;
-	}
 	
 	public LinkedList<ConstraintImpl> getConstraints(CaseImpl maCase)
 	{
