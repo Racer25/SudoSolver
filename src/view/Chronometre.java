@@ -1,15 +1,15 @@
-package model;
+package view;
 
-import java.lang.*;
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 
 public class Chronometre extends JPanel
 {
+	private static final long serialVersionUID = 2649187737448274951L;
+	
 	private static int heure=0,minute=0,seconde=0,milliseconde=0;
 	private Timer timer1;
 	private JLabel label1;
@@ -20,9 +20,9 @@ public class Chronometre extends JPanel
 		int delais=1000;
 		ActionListener tache_timer;
 
-		/* création des composants */
-		//label1 = new JLabel(heure+":"+minute+":"+seconde+":"+milliseconde); /* déclarer final car une classe interne va acceder à ce composant */
-		label1 = new JLabel("00:00:00"); /* déclarer final car une classe interne va acceder à ce composant */
+		/* crï¿½ation des composants */
+		//label1 = new JLabel(heure+":"+minute+":"+seconde+":"+milliseconde); /* dï¿½clarer final car une classe interne va acceder ï¿½ ce composant */
+		label1 = new JLabel("00:00:00"); /* dï¿½clarer final car une classe interne va acceder ï¿½ ce composant */
 		this.setSize(new Dimension(20,20));
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 		this.setBackground(Color.DARK_GRAY);
@@ -40,7 +40,7 @@ public class Chronometre extends JPanel
 	
 		JPanel Panel1 = new JPanel();
 
-		/* Action réalisé par le timer */
+		/* Action rï¿½alisï¿½ par le timer */
 		tache_timer= new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e1)

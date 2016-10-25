@@ -16,9 +16,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneLayout;
@@ -30,11 +28,8 @@ import controller.EcouteurBoutonReset;
 import controller.EcouteurBoutonStartPause;
 import controller.EcouteurQuitter;
 import controller.GrilleController;
-import model.BarreMenu;
-import model.Chronometre;
-import model.Console;
 import model.GrilleImpl;
-import model.PDFGenerator;
+import model.utils.PDFGenerator;
 
 public class WindowImpl extends JFrame
 {

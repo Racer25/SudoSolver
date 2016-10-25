@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import model.GrilleImpl;
-import model.SsReaderImpl;
+import model.utils.SsReaderImpl;
 import view.GrilleViewImpl;
 
 public class EcouteurBoutonImporterUneNouvelleGrille implements ActionListener{

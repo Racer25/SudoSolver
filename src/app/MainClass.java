@@ -1,7 +1,7 @@
 package app;
 
 import model.GrilleImpl;
-import model.PDFGenerator;
+import model.utils.PDFGenerator;
 import view.WindowImpl;
 
 public class MainClass 

@@ -9,7 +9,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import controller.EcouteurSaisie;
 import model.CaseImpl;
 import model.GrilleImpl;
 
