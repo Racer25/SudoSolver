@@ -143,7 +143,7 @@ public class SolverImpl extends Thread implements Solver
 	        	}
 	        	*/
 	        	
-	        	//arcConsistency(maCase);
+	        	//arcConsistency(maCase, pos);
 	        	
 	        	//On passe à la suite
 	            if (backtracking(pos+1))
@@ -225,31 +225,32 @@ public class SolverImpl extends Thread implements Solver
 	
 	//Va réduire le domaine des valeurs possibles de la case est de ses voisins,
 	//En utilisant les contraintes
-	public void arcConsistency(CaseImpl maCase) 
+	public void arcConsistency(CaseImpl maCase, int pos) 
 	{
-		LinkedList<ConstraintImpl> contraintesATester=getConstraints(maCase);
-		while(!contraintesATester.isEmpty())
+		LinkedList<CaseImpl> voisinsATester=new LinkedList<CaseImpl>(maCase.getVoisins());
+		while(!voisinsATester.isEmpty())
 		{
-			ConstraintImpl contrainteParcourue=contraintesATester.getFirst();
-			boolean removed=domainReducerAC(contrainteParcourue, maCase);
-			contraintesATester.removeFirst();
-			//Avec les voisins/cases liées
-			if(removed)
+			CaseImpl voisinParcouru=voisinsATester.getFirst();
+			if(voisinParcouru.getPrioriteTraitement()>pos)
 			{
-				List<CaseImpl> casesLiees=maCase.getVoisins();
-				for(CaseImpl caseLiee:casesLiees)
+				boolean removed=domainReducerAC(voisinParcouru, maCase, pos);
+				voisinsATester.removeFirst();
+				//Avec les voisins/cases liées
+				if(removed)
 				{
-					ConstraintImpl contrainteAvecCaseLiee=getConstraint(caseLiee, maCase);
-					contraintesATester.addFirst(contrainteAvecCaseLiee);
+					List<CaseImpl> casesLiees=maCase.getVoisins();
+					for(CaseImpl caseLiee:casesLiees)
+					{
+						voisinsATester.addFirst(caseLiee);
+					}
 				}
 			}
 		}
-		
 	}
 	
 	//Pour ArcConsistency
 	//Supprime des valeurs du domaine et retourne le fait d'avoir supprimer qqchose ou non
-	public boolean domainReducerAC(ConstraintImpl contrainte, CaseImpl maCase) 
+	public boolean domainReducerAC(CaseImpl voisin, CaseImpl maCase, int pos) 
 	{
 		boolean somethingRemoved=false;
 		Iterator<Integer> domainIterator=maCase.getDomain().iterator();
@@ -259,19 +260,14 @@ public class SolverImpl extends Thread implements Solver
 			
 			boolean satisfiable=false;
 			int k=0;
-			while(!satisfiable && 
-					k<contrainte.getOtherCase(maCase).getDomain().size())
+			while(!satisfiable && k<voisin.getDomain().size())
 			{
 				//Est ce qu'on peut avoir des valeurs différentes??
-				if(valeurPossible!=
-						contrainte.getOtherCase(maCase).getDomain().get(k))
+				if(valeurPossible!=voisin.getDomain().get(k))
 				{
 					satisfiable=true;
 				}
-				else
-				{
-					k++;
-				}
+				k++;
 			}
 			if(!satisfiable)
 			{
