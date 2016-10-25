@@ -195,6 +195,7 @@ public class WindowImpl extends JFrame
 		contraintesReset.gridy = 1;
 		contraintesReset.insets = new Insets(10,10,20,20);
 		panelBoutons.add(boutonReset,contraintesReset);
+		ecouteurBoutonReset = new EcouteurBoutonReset(grilleInitiale,grilleFinale);
 		boutonReset.addActionListener(ecouteurBoutonReset);
 		
 		//Le bouton "importer une nouvelle grille"
