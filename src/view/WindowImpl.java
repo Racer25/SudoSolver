@@ -22,6 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneLayout;
 
 import controller.EcouteurExporterPDF;
+import controller.EcouteurParcourir;
 import controller.EcouteurBoutonEntrerManuellementUneGrille;
 import controller.EcouteurBoutonImporterUneNouvelleGrille;
 import controller.EcouteurBoutonReset;
@@ -76,7 +77,9 @@ public class WindowImpl extends JFrame
 	private JButton boutonReset;
 	private ImageIcon imageBoutonReset;
 	private GridBagConstraints contraintesReset;
-	private EcouteurBoutonReset ecouteurBoutonReset;
+	//private EcouteurBoutonReset ecouteurBoutonReset;
+	
+	private EcouteurParcourir ecouteurBoutonReset;
 	
 	//Le bouton Importer une nouvelle grille
 	private JButton boutonImporterUneNouvelleGrille;
@@ -195,7 +198,10 @@ public class WindowImpl extends JFrame
 		contraintesReset.gridy = 1;
 		contraintesReset.insets = new Insets(10,10,20,20);
 		panelBoutons.add(boutonReset,contraintesReset);
-		ecouteurBoutonReset = new EcouteurBoutonReset(grilleInitiale,grilleFinale);
+		
+		//ecouteurBoutonReset = new EcouteurBoutonReset(grilleInitiale,grilleFinale);
+		ecouteurBoutonReset = new EcouteurParcourir(this,vueGrille,grilleInitiale);
+		
 		boutonReset.addActionListener(ecouteurBoutonReset);
 		
 		//Le bouton "importer une nouvelle grille"
