@@ -27,6 +27,7 @@ public class EcouteurParcourir implements ActionListener{
 	
 	public EcouteurParcourir(JFrame frame,GrilleViewImpl vueGrille, GrilleImpl grilleInitiale){
 		this.frame = frame;
+		this.ssReaderImpl = new SsReaderImpl();
 		this.grilleFinale = vueGrille.getGrilleImpl();
 		this.vueGrille = vueGrille;
 		this.grilleInitiale = grilleInitiale;
@@ -44,8 +45,9 @@ public class EcouteurParcourir implements ActionListener{
 		    if(returnVal == JFileChooser.APPROVE_OPTION){
 		    
 		    if(chooser.getSelectedFile().getName().endsWith(".ss")==true){
-		    	System.out.println(chooser.getSelectedFile().getAbsolutePath());
-				valeurs = ssReaderImpl.lireSs(chooser.getSelectedFile().getAbsolutePath());
+		    	String file = chooser.getSelectedFile().getPath().replace('\\', '/');
+				valeurs = ssReaderImpl
+						.lireSs(file);
 			}
 		    	
 		    System.out.println("Selection de la grille : "+chooser.getSelectedFile().getName());
