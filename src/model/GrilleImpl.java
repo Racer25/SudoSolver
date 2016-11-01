@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import model.contract.Grille;
@@ -80,7 +81,7 @@ public class GrilleImpl implements Grille
 	
 	public List<CaseImpl> getCasesLiees(CaseImpl maCase)
 	{
-		List<CaseImpl> casesLiees=new ArrayList<CaseImpl>();
+		List<CaseImpl> casesLiees=new LinkedList<CaseImpl>();
 		casesLiees.addAll(getCasesLigne(maCase));
 		casesLiees.addAll(getCasesColonne((maCase)));
 		casesLiees.addAll(getCasesBlocRestantes((maCase)));
@@ -89,7 +90,7 @@ public class GrilleImpl implements Grille
 
 	public List<CaseImpl> getCasesLigne(CaseImpl maCase) 
 	{
-		List<CaseImpl> casesLigne=new ArrayList<CaseImpl>();
+		List<CaseImpl> casesLigne=new LinkedList<CaseImpl>();
 		for (int j=0; j < 9; j++)
 	    {
 			CaseImpl caseParcourue=this.getCase(maCase.getX(), j);
@@ -103,7 +104,7 @@ public class GrilleImpl implements Grille
 	
 	public List<CaseImpl> getCasesColonne(CaseImpl maCase) 
 	{
-		List<CaseImpl> casesColonne=new ArrayList<CaseImpl>();
+		List<CaseImpl> casesColonne=new LinkedList<CaseImpl>();
 		for (int i=0; i < 9; i++)
 	    {
 			CaseImpl caseParcourue=this.getCase(i, maCase.getY());
@@ -117,7 +118,7 @@ public class GrilleImpl implements Grille
 	
 	public List<CaseImpl> getCasesBlocRestantes(CaseImpl maCase) 
 	{
-		List<CaseImpl> casesBlocRestantes=new ArrayList<CaseImpl>();
+		List<CaseImpl> casesBlocRestantes=new LinkedList<CaseImpl>();
 		int minXBloc = 3*(maCase.getX()/3);
 	    int minYBloc = 3*(maCase.getY()/3);
 	    for (int i=minXBloc; i < minXBloc+3; i++)

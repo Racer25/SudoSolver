@@ -59,7 +59,7 @@ public class EcouteurSaisie implements KeyListener{
 				message.setText("");
 			}
 			else{
-				message.setText("Vos chiffres doivent être cohérents !");
+				message.setText("Vos chiffres doivent Ãªtre cohÃ©rents !");
 			}
 		}
 		else if(e.getKeyCode()<=e.VK_DELETE){
