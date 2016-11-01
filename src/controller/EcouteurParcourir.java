@@ -8,6 +8,7 @@ import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import model.GrilleImpl;
@@ -39,7 +40,7 @@ public class EcouteurParcourir implements ActionListener{
 			// TODO Auto-generated method stub
 			JFileChooser chooser = new JFileChooser();
 		    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-		        "Fichiers .ss", ".ss", ".ss");
+		        "Fichiers .ss", "ss");
 		    chooser.setFileFilter(filter);
 		    int returnVal = chooser.showOpenDialog(frame);
 		    if(returnVal == JFileChooser.APPROVE_OPTION){
@@ -48,6 +49,10 @@ public class EcouteurParcourir implements ActionListener{
 		    	String file = chooser.getSelectedFile().getPath().replace('\\', '/');
 				valeurs = ssReaderImpl
 						.lireSs(file);
+			}else{
+				JOptionPane jOptionPane =  new JOptionPane();
+				jOptionPane.showMessageDialog(frame,"Vous devez choisir un fichier au format .ss",null, JOptionPane.WARNING_MESSAGE);
+				actionPerformed(arg0);
 			}
 		    	
 		    System.out.println("Selection de la grille : "+chooser.getSelectedFile().getName());
