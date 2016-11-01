@@ -125,7 +125,7 @@ public class SolverImpl extends Thread implements Solver
 	    CaseImpl maCase=this.casesNonAssigneesTrieeParTailleDomaine.get(pos);
 	    
 	    //SAVE domaine de la case
-	  	List<Integer> domainSave=new ArrayList<Integer>(maCase.getDomain());
+	  	//List<Integer> domainSave=new ArrayList<Integer>(maCase.getDomain());
 	    
 	  	//Pour chaque valeur possible
 	    for(Integer value: maCase.getDomain())
@@ -135,32 +135,82 @@ public class SolverImpl extends Thread implements Solver
 	    	//Si cela satisfait toutes les contraintes de la case
 	        if (isOkay(maCase))
 	        {
-	        	//Reduction des domaines des cases futures+check si unDomaineVide
-	        	/*
-	        	if(forwardChecking(maCase, pos))
-	        	{
-	        		return false;
-	        	}
-	        	*/
+	        	//Copie profondes des domaines des voisins
+	        	List<CaseImpl> voisins=maCase.getVoisins();
+	        	List<List<Integer>> domainsVoisinsSave=new ArrayList<List<Integer>>();
 	        	
-	        	//arcConsistency(maCase, pos);
+	        	//Petite sauvegarde voisin
+	        	for(CaseImpl voisin : voisins)
+	        	{
+	        		List<Integer> domaine = new ArrayList<Integer>();
+	        		for(Integer val: voisin.getDomain())
+	        		{
+	        			domaine.add(val);
+	        		}
+	        		domainsVoisinsSave.add(domaine);
+	        	}
+	        	
+	        	//Grosse sauvegarde tout >pos
+	        	List<List<Integer>> domainsSave=new ArrayList<List<Integer>>();
+	        	for(CaseImpl maCaseNonAssignee: this.casesNonAssigneesTrieeParTailleDomaine)
+	        	{
+	        		List<Integer> domaine = new ArrayList<Integer>();
+			       	for(Integer val: maCaseNonAssignee.getDomain())
+			       	{
+			       		domaine.add(val);
+			       	}
+			       	domainsSave.add(domaine);
+	        	}
+	        	
+	        	
+	        	
+	        	
+	        	
+	        	//Reduction des domaines des cases futures+check si unDomaineVide
+	        	//forwardChecking(maCase, pos);     	
+	        	
+	        	arcConsistency(maCase, pos);
 	        	
 	        	//On passe à la suite
 	            if (backtracking(pos+1))
 	            {
 	            	return true;
 	            }
-	            /*
+	            
 	            else
 	            {
-	            	 reverseChecking(maCase, pos);
+	            	//Utilisation de la sauvegarde profonde des domaines
+	            	/*
+	            	for(int i=0; i< domainsVoisinsSave.size(); i++)
+		        	{
+	            		int posVoisin=voisins.get(i).getPrioriteTraitement();
+	            		if(posVoisin>pos)
+	            		{
+	            			voisins.get(i).setDomain(domainsVoisinsSave.get(i));
+	            		}
+	            			
+		        	}
+	            	*/
+	            	
+	            	for(int i=0; i<this.casesNonAssigneesTrieeParTailleDomaine.size(); i++)
+		        	{
+	            		
+		        		if(this.casesNonAssigneesTrieeParTailleDomaine.get(i)
+		        				.getPrioriteTraitement()>pos)
+		        		{
+		        			this.casesNonAssigneesTrieeParTailleDomaine.get(i).setDomain(
+		        					domainsSave.get(i));
+		        		}
+		        	}
+		        	
+	            	 /*reverseChecking(maCase, pos);*/
 	            }
-	            */
+	            
 	            
 	        }
 	    }
 	    maCase.setValue(0);
-	    maCase.setDomain(domainSave);
+	    //maCase.setDomain(domainSave);
 
 	    return false;
 	}
@@ -184,7 +234,7 @@ public class SolverImpl extends Thread implements Solver
 	}
 
 	
-	public boolean forwardChecking(CaseImpl maCase, int pos) 
+	public void forwardChecking(CaseImpl maCase, int pos) 
 	{
 		List<CaseImpl> casesLiees=maCase.getVoisins();
 		
@@ -196,7 +246,7 @@ public class SolverImpl extends Thread implements Solver
 			int posCaseLiee=casesLiees.get(k).getPrioriteTraitement();
 			if(posCaseLiee>pos)
 			{
-				casesLiees.get(k).getDomain().remove((Integer)maCase.getValue());
+				casesLiees.get(k).getDomain().remove(maCase.getValue());
 				if(casesLiees.get(k).getDomain().isEmpty())
 				{
 					unDomaineVide=true;
@@ -205,46 +255,45 @@ public class SolverImpl extends Thread implements Solver
 			k++;
 			
 		}
-		return unDomaineVide;
-	}
-	
-	public void reverseChecking(CaseImpl maCase, int pos) 
-	{		
-		List<CaseImpl> casesLiees=maCase.getVoisins();
-	
-		for(CaseImpl caseLiee: casesLiees)
-		{
-			int posCaseLiee=caseLiee.getPrioriteTraitement();
-			if(posCaseLiee>pos)
-			{
-				caseLiee.getDomain().add(maCase.getValue());
-			}
-		}
-	}
-	
+	}	
 	
 	//Va réduire le domaine des valeurs possibles de la case est de ses voisins,
 	//En utilisant les contraintes
 	public void arcConsistency(CaseImpl maCase, int pos) 
 	{
-		LinkedList<CaseImpl> voisinsATester=new LinkedList<CaseImpl>(maCase.getVoisins());
-		while(!voisinsATester.isEmpty())
+		LinkedList<CaseImpl[]> couplesATester=new LinkedList<CaseImpl[]>();
+		for(CaseImpl voisin :maCase.getVoisins())
 		{
-			CaseImpl voisinParcouru=voisinsATester.getFirst();
-			if(voisinParcouru.getPrioriteTraitement()>pos)
+			CaseImpl[] couple={maCase, voisin};
+			couplesATester.add(couple);
+		}
+		while(!couplesATester.isEmpty())
+		{
+			CaseImpl[] coupleParcouru=couplesATester.getFirst();
+			boolean removed=false;
+			if(coupleParcouru[1].getPrioriteTraitement()>pos)
 			{
-				boolean removed=domainReducerAC(voisinParcouru, maCase, pos);
-				voisinsATester.removeFirst();
+				removed=domainReducerAC(coupleParcouru[1], coupleParcouru[0], pos);
+			}
+			couplesATester.removeFirst();
+			if(coupleParcouru[1].getPrioriteTraitement()>pos)
+			{
 				//Avec les voisins/cases liées
 				if(removed)
 				{
-					List<CaseImpl> casesLiees=maCase.getVoisins();
-					for(CaseImpl caseLiee:casesLiees)
+					List<CaseImpl> voisinsDeVoisin=coupleParcouru[1].getVoisins();
+					for(CaseImpl voisinDeVoisin:voisinsDeVoisin)
 					{
-						voisinsATester.addFirst(caseLiee);
+						if(voisinDeVoisin.getPrioriteTraitement()>pos)
+						{
+							CaseImpl[] newCouple={coupleParcouru[1],voisinDeVoisin};
+							couplesATester.addFirst(newCouple);
+						}
 					}
 				}
 			}
+				
+			
 		}
 	}
 	

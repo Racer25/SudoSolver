@@ -26,13 +26,12 @@ public class CaseController implements Observer
 		int value=(int) arg;
 		if(value!=0)
 		{
-			caseView.getValueView().setText(Integer.toString(value));
+			this.caseView.getValueView().setText(Integer.toString(value));
 		}
 		else
 		{
-			caseView.getValueView().setText(" ");
+			this.caseView.getValueView().setText(" ");
 		}
-		//caseView.revalidate();
 	}
 
 }
