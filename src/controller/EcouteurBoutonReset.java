@@ -4,16 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import model.GrilleImpl;
+import view.Chronometre;
 
 public class EcouteurBoutonReset implements ActionListener{
 
 	//Variables 
 	private GrilleImpl grilleInitiale;
 	private GrilleImpl grilleFinale;
+	private Chronometre chronometre;
 	
-	public EcouteurBoutonReset(GrilleImpl grilleInitiale, GrilleImpl grilleFinale){
+	public EcouteurBoutonReset(Chronometre chronometre,GrilleImpl grilleInitiale, GrilleImpl grilleFinale){
 		this.grilleFinale = grilleFinale;
 		this.grilleInitiale = grilleInitiale;
+		this.chronometre = chronometre;
 	}
 	
 	@Override
@@ -24,6 +27,7 @@ public class EcouteurBoutonReset implements ActionListener{
 				grilleFinale.getCase(i, j).setValue(grilleInitiale.getCase(i, j).getValue());
 			}
 		}
+		chronometre.tare();
 	}
 
 }
