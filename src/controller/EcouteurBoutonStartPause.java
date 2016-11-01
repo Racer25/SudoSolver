@@ -16,26 +16,17 @@ public class EcouteurBoutonStartPause implements ActionListener{
 
 	//Variables
 	private GrilleImpl grille;
-	private Chronometre chronometre;
+	private EcouteurAlgoBoutons ecouteurAlgoBoutons;
 	
-	public EcouteurBoutonStartPause(Chronometre chronometre){
-		this.chronometre = chronometre;
+	public EcouteurBoutonStartPause(EcouteurAlgoBoutons ecouteurAlgoBoutons){
+		this.ecouteurAlgoBoutons=ecouteurAlgoBoutons;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-
-		//Remise � z�ro du chronometre
-		chronometre.tare();
-		
-		//Lancement du chronometre 
-		chronometre.lancer();
-		
-		((JButton) arg0.getSource()).setEnabled(false);
 		
 		//Résolution
-		Solver solver = new SolverImpl(grille,chronometre,(JButton) arg0.getSource());
+		Solver solver = new SolverImpl(ecouteurAlgoBoutons, grille);
 		solver.start();
 	
 	}

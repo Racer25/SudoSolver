@@ -4,9 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
-import javax.swing.JTextField;
 
-import model.GrilleImpl;
 
 public class EcouteurEnregistrerOption implements ActionListener{
 
@@ -22,8 +20,8 @@ public class EcouteurEnregistrerOption implements ActionListener{
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent arg0) 
+	{
 		
 		frame.dispose();
 	}

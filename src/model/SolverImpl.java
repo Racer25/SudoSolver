@@ -7,7 +7,9 @@ import java.util.List;
 
 import javax.swing.JButton;
 
+import controller.EcouteurAlgoBoutons;
 import model.contract.Solver;
+import model.utils.BooleanObservable;
 import view.Chronometre;
 
 //Résout le sudoku
@@ -20,12 +22,13 @@ public class SolverImpl extends Thread implements Solver
 	private List<CaseImpl> casesNonAssigneesTrieeParTailleDomaine;
 	private Chronometre chronometre;
 	private JButton start;
+	private BooleanObservable booleanObservable;
 	
-	public SolverImpl(GrilleImpl grille, Chronometre chronometre, JButton start)
+	public SolverImpl(EcouteurAlgoBoutons ecouteurAlgoBoutons, GrilleImpl grille)
 	{
+		this.booleanObservable=new BooleanObservable();
+		this.booleanObservable.addObserver(ecouteurAlgoBoutons);
 		this.grille=grille;
-		this.start = start;
-		this.chronometre = chronometre;
 		this.casesAvecContraintesCreees=new ArrayList<CaseImpl>();
 		this.contraintes=new ArrayList<ConstraintImpl>();
 		//constraintsGenerator();
@@ -80,6 +83,7 @@ public class SolverImpl extends Thread implements Solver
 	@Override
 	public void run()
 	{
+		this.booleanObservable.setEnCoursDeCalcul(true);
 		solve();
 	}
 	
@@ -93,24 +97,19 @@ public class SolverImpl extends Thread implements Solver
 
 		if(resolved)
 		{
-			//Arret du chronometre
-			chronometre.arreter();
 			//Faire un truc
 			System.out.println("Grille resolue");
 			
 		}
 		else
-		{
-			//Arret du chronometre
-			chronometre.arreter();
-			
+		{			
 			//Faire un autre truc
 			System.out.println("Ta grille est fausse");
 			
 		}
 		
-		//Acces aux boutons
-		start.setEnabled(true);
+		//Fin de la resolution
+		this.booleanObservable.setEnCoursDeCalcul(false);
 	}
 	
 	//Pos est le numéro de la case, sert pour faire du récursif

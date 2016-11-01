@@ -23,6 +23,7 @@ import javax.swing.ScrollPaneLayout;
 
 import controller.EcouteurExporterPDF;
 import controller.EcouteurParcourir;
+import controller.EcouteurAlgoBoutons;
 import controller.EcouteurBoutonEntrerManuellementUneGrille;
 import controller.EcouteurBoutonImporterUneGrilleAleatoire;
 import controller.EcouteurBoutonImporterUneNouvelleGrille;
@@ -209,9 +210,6 @@ public class WindowImpl extends JFrame
 		contraintesStartPause.gridy = 0;
 		contraintesStartPause.insets = new Insets(10,10,20,20);
 		panelBoutons.add(boutonStartPause,contraintesStartPause);
-		ecouteurBoutonStartPause = new EcouteurBoutonStartPause(chronometre);
-		ecouteurBoutonStartPause.setGrille(grilleFinale);
-		boutonStartPause.addActionListener(ecouteurBoutonStartPause);
 		
 		//Le bouton "reset"
 		boutonReset = new JButton();
@@ -313,6 +311,16 @@ public class WindowImpl extends JFrame
 		ecouteurBoutonEntrerManuellementUneGrille = new EcouteurBoutonEntrerManuellementUneGrille(vueGrille,grilleInitiale);
 		boutonEntrerManuellementUneGrille.addActionListener(ecouteurBoutonEntrerManuellementUneGrille);
 		barreMenu.getAjouterUneGrilleManuellement().addActionListener(ecouteurBoutonEntrerManuellementUneGrille);
+		
+		//les boutons ecoutent le solver
+		EcouteurAlgoBoutons ecouteurAlgoBoutons=
+				new EcouteurAlgoBoutons(boutonStartPause, 
+				boutonReset, boutonOption, boutonExportPDF, boutonImporterUneNouvelleGrille, 
+				boutonImporterUneGrilleAleatoire, boutonEntrerManuellementUneGrille, chronometre);
+		ecouteurBoutonStartPause = new EcouteurBoutonStartPause(ecouteurAlgoBoutons);
+		
+		ecouteurBoutonStartPause.setGrille(grilleFinale);
+		boutonStartPause.addActionListener(ecouteurBoutonStartPause);
 		
 		//Console
 		jTextArea = new JTextArea(8,1);
