@@ -15,6 +15,8 @@ public class BarreMenu extends JMenuBar{
 	private JMenuItem exporterPDF;
 	private JMenuItem ajouterUneGrilleManuellement;
 	private JMenuItem importerUneNouvelleGrille;
+	private JMenuItem importerUneGrilleAleatoire;
+	private JMenuItem option;
 	private JMenuItem quitter;
 	private JMenu fichier;
 	private JMenu options;
@@ -35,14 +37,22 @@ public class BarreMenu extends JMenuBar{
 		exporterPDF.setMnemonic('E');
 		exporterPDF.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,InputEvent.CTRL_MASK));
 		options.add(exporterPDF);
-		ajouterUneGrilleManuellement = new JMenuItem("Ajouter manuellement une grille",'A');
-		ajouterUneGrilleManuellement.setMnemonic('A');
+		ajouterUneGrilleManuellement = new JMenuItem("Ajouter manuellement une grille",'M');
+		ajouterUneGrilleManuellement.setMnemonic('M');
 		ajouterUneGrilleManuellement.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,InputEvent.CTRL_MASK));
 		options.add(ajouterUneGrilleManuellement);
 		importerUneNouvelleGrille = new JMenuItem("Importer une nouvelle grille",'I');
 		importerUneNouvelleGrille.setMnemonic('I');
 		importerUneNouvelleGrille.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,InputEvent.CTRL_MASK));
 		options.add(importerUneNouvelleGrille);
+		importerUneGrilleAleatoire = new JMenuItem("Importer une grille aleatoire",'A');
+		importerUneGrilleAleatoire.setMnemonic('A');
+		importerUneGrilleAleatoire.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,InputEvent.CTRL_MASK));
+		options.add(importerUneGrilleAleatoire);
+		option = new JMenuItem("Options",'O');
+		option.setMnemonic('O');
+		option.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,InputEvent.CTRL_MASK));
+		options.add(option);
 
 		this.setVisible(true);
 				
@@ -79,5 +89,23 @@ public class BarreMenu extends JMenuBar{
 	public void setQuitter(JMenuItem quitter) {
 		this.quitter = quitter;
 	}
+
+	public JMenuItem getImporterUneGrilleAleatoire() {
+		return importerUneGrilleAleatoire;
+	}
+
+	public void setImporterUneGrilleAleatoire(JMenuItem importerUneGrilleAleatoire) {
+		this.importerUneGrilleAleatoire = importerUneGrilleAleatoire;
+	}
+
+	public JMenuItem getOption() {
+		return option;
+	}
+
+	public void setOption(JMenuItem option) {
+		this.option = option;
+	}
+	
+	
 	
 }

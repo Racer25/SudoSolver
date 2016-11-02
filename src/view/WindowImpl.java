@@ -255,7 +255,7 @@ public class WindowImpl extends JFrame
 		panelBoutons.add(boutonOption,contraintesOption);
 		ecouteurBoutonOption = new EcouteurBoutonOption(this,algorithme,visuel);
 		boutonOption.addActionListener(ecouteurBoutonOption);
-		//(barreMenu.getOption()).addActionListener(ecouteurBoutonOption);
+		(barreMenu.getOption()).addActionListener(ecouteurBoutonOption);
 	
 		//Le panel des boutons2
 		panelBoutons2 = new JPanel();
@@ -278,8 +278,8 @@ public class WindowImpl extends JFrame
 		contraintesImporterUneNouvelleGrille.insets = new Insets(10,10,20,20);
 		panelBoutons2.add(boutonImporterUneNouvelleGrille,contraintesImporterUneNouvelleGrille);
 		ecouteurBoutonImporterUneNouvelleGrille = new EcouteurParcourir(this,vueGrille,grilleInitiale);
-		
 		boutonImporterUneNouvelleGrille.addActionListener(ecouteurBoutonImporterUneNouvelleGrille);
+		(barreMenu.getImporterUneNouvelleGrille()).addActionListener(ecouteurBoutonImporterUneNouvelleGrille);
 		
 		//Le bouton "importer une grille aleatoire"
 		boutonImporterUneGrilleAleatoire = new JButton();
@@ -295,7 +295,8 @@ public class WindowImpl extends JFrame
 		panelBoutons2.add(boutonImporterUneGrilleAleatoire,contraintesImporterUneGrilleAleatoire);
 		ecouteurBoutonImporterUneGrilleAleatoire = new EcouteurBoutonImporterUneGrilleAleatoire(vueGrille,grilleInitiale);
 		boutonImporterUneGrilleAleatoire.addActionListener(ecouteurBoutonImporterUneGrilleAleatoire);
-
+		(barreMenu.getImporterUneGrilleAleatoire()).addActionListener(ecouteurBoutonImporterUneGrilleAleatoire);
+		
 		//Le bouton "entrer manuellement une grille"
 		boutonEntrerManuellementUneGrille = new JButton();
 		boutonEntrerManuellementUneGrille.setPreferredSize(new Dimension(80,80));
@@ -344,5 +345,21 @@ public class WindowImpl extends JFrame
 		this.setVisible(true);
 		this.revalidate();
 		
+	}
+
+	public int getAlgorithme() {
+		return algorithme;
+	}
+
+	public void setAlgorithme(int algorithme) {
+		this.algorithme = algorithme;
+	}
+
+	public int getVisuel() {
+		return visuel;
+	}
+
+	public void setVisuel(int visuel) {
+		this.visuel = visuel;
 	}
 }
