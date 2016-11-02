@@ -16,17 +16,17 @@ public class EcouteurBoutonStartPause implements ActionListener{
 
 	//Variables
 	private GrilleImpl grille;
-	private EcouteurAlgoBoutons ecouteurAlgoBoutons;
+	private EcouteurAlgoView ecouteurAlgoView;
 	
-	public EcouteurBoutonStartPause(EcouteurAlgoBoutons ecouteurAlgoBoutons){
-		this.ecouteurAlgoBoutons=ecouteurAlgoBoutons;
+	public EcouteurBoutonStartPause(EcouteurAlgoView ecouteurAlgoView){
+		this.ecouteurAlgoView=ecouteurAlgoView;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		
 		//Résolution
-		Solver solver = new SolverImpl(ecouteurAlgoBoutons, grille);
+		Solver solver = new SolverImpl(ecouteurAlgoView, grille, 0);
 		solver.start();
 	
 	}

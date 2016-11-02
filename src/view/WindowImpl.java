@@ -23,7 +23,7 @@ import javax.swing.ScrollPaneLayout;
 
 import controller.EcouteurExporterPDF;
 import controller.EcouteurParcourir;
-import controller.EcouteurAlgoBoutons;
+import controller.EcouteurAlgoView;
 import controller.EcouteurBoutonEntrerManuellementUneGrille;
 import controller.EcouteurBoutonImporterUneGrilleAleatoire;
 import controller.EcouteurBoutonImporterUneNouvelleGrille;
@@ -165,7 +165,7 @@ public class WindowImpl extends JFrame
 		//La grille Initiale
 		grilleInitiale = new GrilleImpl();
 		vueGrille = new GrilleViewImpl(grilleFinale);
-		grilleController = new GrilleController(grilleFinale, vueGrille);
+		grilleController = new GrilleController(grilleFinale, vueGrille, 1);
 		
 		contraintesGrilles = new GridBagConstraints();
 		contraintesGrilles.gridx=0;
@@ -313,11 +313,12 @@ public class WindowImpl extends JFrame
 		barreMenu.getAjouterUneGrilleManuellement().addActionListener(ecouteurBoutonEntrerManuellementUneGrille);
 		
 		//les boutons ecoutent le solver
-		EcouteurAlgoBoutons ecouteurAlgoBoutons=
-				new EcouteurAlgoBoutons(boutonStartPause, 
+		EcouteurAlgoView ecouteurAlgoView=
+				new EcouteurAlgoView(boutonStartPause, 
 				boutonReset, boutonOption, boutonExportPDF, boutonImporterUneNouvelleGrille, 
-				boutonImporterUneGrilleAleatoire, boutonEntrerManuellementUneGrille, chronometre);
-		ecouteurBoutonStartPause = new EcouteurBoutonStartPause(ecouteurAlgoBoutons);
+				boutonImporterUneGrilleAleatoire, boutonEntrerManuellementUneGrille, 
+				chronometre, grilleFinale, vueGrille);
+		ecouteurBoutonStartPause = new EcouteurBoutonStartPause(ecouteurAlgoView);
 		
 		ecouteurBoutonStartPause.setGrille(grilleFinale);
 		boutonStartPause.addActionListener(ecouteurBoutonStartPause);

@@ -59,6 +59,25 @@ public class EcouteurBoutonImporterUneGrilleAleatoire implements ActionListener{
 				vueGrille.getCaseViews()[x][y].setCaseImplValue(valeurs.getCase(x, y).getValue());
 			}
 		}
+		//actualisation forcée
+		for(int x = 0 ; x < 9 ; x++)
+		{
+			for(int y = 0 ; y < 9 ; y++)
+			{
+				if(valeurs.getCase(x, y).getValue()!=0)
+				{
+					vueGrille.getCaseViews()[x][y].getValueView().setText(
+							Integer.toString(valeurs.getCase(x, y).getValue()));
+				}
+				else
+				{
+					vueGrille.getCaseViews()[x][y].getValueView().setText(
+							" ");
+				}
+				
+			}
+		}
+			
 		
 		vueGrille.revalidate();
 	}

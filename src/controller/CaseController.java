@@ -10,11 +10,13 @@ public class CaseController implements Observer
 {
 	private CaseImpl maCase;
 	private CaseViewImpl caseView;
+	private int visuel;
 	
-	public CaseController(CaseImpl maCase, CaseViewImpl caseView) 
+	public CaseController(CaseImpl maCase, CaseViewImpl caseView, int visuel) 
 	{
 		this.maCase = maCase;
 		this.caseView = caseView;
+		this.visuel=visuel;
 		
 		maCase.addObserver(this);
 	}
@@ -24,13 +26,16 @@ public class CaseController implements Observer
 	public void update(Observable o, Object arg) 
 	{
 		int value=(int) arg;
-		if(value!=0)
+		if(this.visuel==0)
 		{
-			this.caseView.getValueView().setText(Integer.toString(value));
-		}
-		else
-		{
-			this.caseView.getValueView().setText(" ");
+			if(value!=0)
+			{
+				this.caseView.getValueView().setText(Integer.toString(value));
+			}
+			else
+			{
+				this.caseView.getValueView().setText(" ");
+			}
 		}
 	}
 

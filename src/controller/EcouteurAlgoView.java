@@ -5,11 +5,13 @@ import java.util.Observer;
 
 import javax.swing.JButton;
 
+import model.GrilleImpl;
 import model.SolverImpl;
 import model.utils.BooleanObservable;
 import view.Chronometre;
+import view.GrilleViewImpl;
 
-public class EcouteurAlgoBoutons implements Observer
+public class EcouteurAlgoView implements Observer
 {
 	private JButton start;
 	private JButton reset;
@@ -19,11 +21,13 @@ public class EcouteurAlgoBoutons implements Observer
 	private JButton importerUneGrilleAleatoire;
 	private JButton entrerManuellementUneGrille;
 	private Chronometre chrono;
+	private GrilleImpl grille;
+	private GrilleViewImpl grilleView;
 	
-	public EcouteurAlgoBoutons(JButton start, JButton reset, JButton options, 
+	public EcouteurAlgoView(JButton start, JButton reset, JButton options, 
 			JButton exportPDF, JButton importerUneNouvelleGrille, 
 			JButton importerUneGrilleAleatoire, JButton entrerManuellementUneGrille,
-			Chronometre chrono) 
+			Chronometre chrono, GrilleImpl grille, GrilleViewImpl grilleView) 
 	{
 		this.start=start;
 		this.reset=reset;
@@ -33,6 +37,8 @@ public class EcouteurAlgoBoutons implements Observer
 		this.importerUneGrilleAleatoire=importerUneGrilleAleatoire;
 		this.entrerManuellementUneGrille=entrerManuellementUneGrille;
 		this.chrono=chrono;
+		this.grille=grille;
+		this.grilleView=grilleView;
 	}
 	
 	@Override
@@ -60,6 +66,24 @@ public class EcouteurAlgoBoutons implements Observer
 			this.importerUneNouvelleGrille.setEnabled(true);
 			this.entrerManuellementUneGrille.setEnabled(true);
 			this.chrono.arreter();
+			//actualisation forcée
+			for(int x = 0 ; x < 9 ; x++)
+			{
+				for(int y = 0 ; y < 9 ; y++)
+				{
+					if(this.grille.getCase(x, y).getValue()!=0)
+					{
+						this.grilleView.getCaseViews()[x][y].getValueView().setText(
+								Integer.toString(this.grille.getCase(x, y).getValue()));
+					}
+					else
+					{
+						this.grilleView.getCaseViews()[x][y].getValueView().setText(
+								" ");
+					}
+					
+				}
+			}
 		}
 		
 	}
