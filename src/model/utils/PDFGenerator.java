@@ -1,25 +1,22 @@
 package model.utils;
 
-import java.awt.Component;
+//Imports
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
-
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-
 import model.GrilleImpl;
 
-public class PDFGenerator {
-	
+public class PDFGenerator 
+{
 	//Variables
 	private GrilleImpl grilleInitiale;
 	private GrilleImpl grilleFinale;
@@ -28,13 +25,15 @@ public class PDFGenerator {
 	private static int numero = 0;
 	private JFrame frame;
 	
-	public PDFGenerator(JFrame frame, GrilleImpl grilleInitiale, GrilleImpl grilleFinale){
+	public PDFGenerator(JFrame frame, GrilleImpl grilleInitiale, GrilleImpl grilleFinale)
+	{
 		this.grilleFinale=grilleFinale;
 		this.grilleInitiale=grilleInitiale;
 		this.frame = frame;
 		
 	}
 	
+	@SuppressWarnings({ "deprecation", "static-access" })
 	public void createDocument()
 	{
 		final PDPage singlePage = new PDPage();
@@ -48,11 +47,14 @@ public class PDFGenerator {
 		fc.setSelectedFile(new File("exportPDF_"+numero+".pdf"));
 		 int val_retour = fc.showSaveDialog(frame);
 		 System.out.println(fc.getFileFilter().getDescription()=="PDF");
-		 if(fc.getSelectedFile().getName().endsWith(".pdf")==false && fc.getFileFilter().getDescription()=="PDF"){
+		 if(fc.getSelectedFile().getName().endsWith(".pdf")==false && fc.getFileFilter().getDescription()=="PDF")
+		 {
 			 fc.setSelectedFile(new File(fc.getSelectedFile().getPath()+".pdf"));
 		 }
-         if (val_retour == JFileChooser.APPROVE_OPTION) {
-        	 if(fc.getSelectedFile().getName().endsWith(".pdf")==true){
+         if (val_retour == JFileChooser.APPROVE_OPTION) 
+         {
+        	 if(fc.getSelectedFile().getName().endsWith(".pdf")==true)
+        	 {
 	            File fichier = fc.getSelectedFile();
 	            //afficher le chemin absolu du fichier
 	            System.out.println("Chemin absolu : "+fichier.getAbsolutePath()+"\n");
@@ -69,13 +71,17 @@ public class PDFGenerator {
 	    		    contentStream.endText();
 	    		    
 	    		    grille1 = new String[9][9];
-	    		    for(int i = 0 ; i < 9 ; i++){
-	    		    	for(int j = 0 ; j < 9 ; j++){
+	    		    for(int i = 0 ; i < 9 ; i++)
+	    		    {
+	    		    	for(int j = 0 ; j < 9 ; j++)
+	    		    	{
 	    		    		System.out.println(grilleInitiale.getCase(i, j).getValue());
-	    		    		if(grilleInitiale.getCase(i, j).getValue()!=0){
+	    		    		if(grilleInitiale.getCase(i, j).getValue()!=0)
+	    		    		{
 	    		    			grille1[i][j]=Integer.toString(grilleInitiale.getCase(i, j).getValue());
 	    		    		}
-	    		    		else{
+	    		    		else
+	    		    		{
 	    		    			grille1[i][j]="";
 	    		    		}
 	    			    }
@@ -89,9 +95,12 @@ public class PDFGenerator {
 	    		    contentStream.endText();
 	    		    
 	    		    grille2 = new String[9][9];
-	    		    for(int i = 0 ; i < 9 ; i++){
-	    		    	for(int j = 0 ; j < 9 ; j++){
-	    		    		if(grilleFinale.getCase(i, j).getValue()!=0){
+	    		    for(int i = 0 ; i < 9 ; i++)
+	    		    {
+	    		    	for(int j = 0 ; j < 9 ; j++)
+	    		    	{
+	    		    		if(grilleFinale.getCase(i, j).getValue()!=0)
+	    		    		{
 	    		    			grille2[i][j]=Integer.toString(grilleFinale.getCase(i, j).getValue());
 	    		    		}
 	    		    		else{
@@ -111,69 +120,81 @@ public class PDFGenerator {
 	    		    contentStream.showText("Exportation PDF faite le "+calendar.getTime()+".");
 	    		    contentStream.endText();
 	    		    
-	    		    contentStream.close();  // Stream must be closed before saving document.
+	    		    contentStream.close();
 	    		    numero++;
 	    		    document.save(fichier.getAbsolutePath());
-	    		} catch (IOException e) {
-	    		// TODO Auto-generated catch block
+	    		}
+	            catch (IOException e) 
+	            {
 	    		   	e.printStackTrace();
 	    		}
-        	 }else{
+        	 }
+        	 else
+        	 {
         		JOptionPane jOptionPane =  new JOptionPane();
  				jOptionPane.showMessageDialog(frame,"Vous devez enregistrer un fichier PDF",null, JOptionPane.WARNING_MESSAGE);
  				createDocument();
         	 }
             
-         } else {
-              System.out.println("L'enregistrement est annulée\n");
+         } 
+         else 
+         {
+              System.out.println("L'enregistrement est annule\n");
          }
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static void drawTable(PDPage page, PDPageContentStream contentStream, 
             float y, float margin, 
-            String[][] content) throws IOException {
+            String[][] content) throws IOException 
+	{
 		final float rowHeight = 20f;
 		final float tableWidth = page.getMediaBox().getWidth() - margin - margin;
 		final float tableHeight = rowHeight * 9;
 		final float colWidth = tableWidth/9;
 		final float cellMargin=5f;
 		
-		//draw the rows
 		float nexty = y ;
-		for (int i = 0; i < 10; i++) {
-			if(i%3==0){
+		for (int i = 0; i < 10; i++)
+		{
+			if(i%3==0)
+			{
 				contentStream.setLineWidth(3);
 				contentStream.drawLine(margin, nexty, margin+tableWidth, nexty);
 			}
-			else{
+			else
+			{
 				contentStream.setLineWidth(1);
 				contentStream.drawLine(margin, nexty, margin+tableWidth, nexty);
 			}
 			nexty-= rowHeight;
 		}
 		
-		//draw the columns
 		float nextx = margin;
-		for (int i = 0; i < 10; i++) {
-			if(i%3==0){
+		for (int i = 0; i < 10; i++) 
+		{
+			if(i%3==0)
+			{
 				contentStream.setLineWidth(3);
 				contentStream.drawLine(nextx, y+1, nextx, y-tableHeight-1);
 			}
-			else{
+			else
+			{
 				contentStream.setLineWidth(1);
 				contentStream.drawLine(nextx, y, nextx, y-tableHeight);
 			}
 		
 			nextx += colWidth;
 		}
-		
-		//now add the text        
+		      
 		contentStream.setFont( PDType1Font.HELVETICA_BOLD , 12 );        
 		
 		float textx = margin+cellMargin;
 		float texty = y-15;        
-		for(int i = 0; i < content.length; i++){
-			for(int j = 0 ; j < content[i].length; j++){
+		for(int i = 0; i < content.length; i++)
+		{
+			for(int j = 0 ; j < content[i].length; j++)
+			{
 				String text = content[i][j];
 				contentStream.beginText();
 				contentStream.moveTextPositionByAmount(textx,texty);
@@ -183,7 +204,7 @@ public class PDFGenerator {
 			}
 		texty-=rowHeight;
 		textx = margin+cellMargin;
-	}
+		}
 		
 	}
 

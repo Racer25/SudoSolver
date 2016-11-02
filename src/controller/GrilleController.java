@@ -1,12 +1,16 @@
 package controller;
 
+//Imports
 import model.GrilleImpl;
 import view.GrilleViewImpl;
 import view.WindowImpl;
 
 public class GrilleController
 {
+	//Variables
+	@SuppressWarnings("unused")
 	private GrilleImpl grille;
+	@SuppressWarnings("unused")
 	private GrilleViewImpl grilleView;
 	private WindowImpl frame;
 	
@@ -20,10 +24,10 @@ public class GrilleController
 		{
 			for(int j=0; j<grille.getCases()[i].length; j++)
 			{
+				@SuppressWarnings("unused")
 				CaseController caseController=new CaseController(grille.getCases()[i][j], 
 						grilleView.getCaseViews()[i][j], this.frame);
 			}
-			
 		}
 	}
 

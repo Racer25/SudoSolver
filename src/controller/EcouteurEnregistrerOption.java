@@ -1,18 +1,16 @@
 package controller;
 
+//Imports
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
-
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
-
 import view.WindowImpl;
 
-
-public class EcouteurEnregistrerOption implements ActionListener{
-
+public class EcouteurEnregistrerOption implements ActionListener
+{
 	//Variables
 	private JFrame frame;
 	private WindowImpl windowImpl;
@@ -51,7 +49,6 @@ public class EcouteurEnregistrerOption implements ActionListener{
 		this.windowImpl = windowImpl;
 	}
 	
-	@Override
 	public void actionPerformed(ActionEvent arg0) 
 	{
 		Enumeration<AbstractButton> enumBoutonsAlgo=this.groupeAlgorithme.getElements();

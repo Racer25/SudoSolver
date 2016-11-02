@@ -2,6 +2,7 @@ package model;
 
 public class ConstraintImpl 
 {
+	//Variables
 	private CaseImpl case1;
 	private CaseImpl case2;
 	
@@ -33,19 +34,23 @@ public class ConstraintImpl
 	}
 	
 	//Getters and setters
-	public CaseImpl getCase1() {
+	public CaseImpl getCase1() 
+	{
 		return case1;
 	}
 
-	public void setCase1(CaseImpl case1) {
+	public void setCase1(CaseImpl case1) 
+	{
 		this.case1 = case1;
 	}
 
-	public CaseImpl getCase2() {
+	public CaseImpl getCase2() 
+	{
 		return case2;
 	}
 
-	public void setCase2(CaseImpl case2) {
+	public void setCase2(CaseImpl case2) 
+	{
 		this.case2 = case2;
 	}
 

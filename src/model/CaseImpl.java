@@ -1,21 +1,21 @@
 package model;
 
+//Imports
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-
 public class CaseImpl extends Observable implements Comparable<CaseImpl>
 {	
-	//Valeur de 0 à 9 inclus (0 signifiant VIDE)
+	//Valeur de 0 a 9 inclus (0 signifiant VIDE)
+	//Variables
 	private Integer value;
 	private int x;
 	private int y;
 	private List<Integer> domain;
 	private List<CaseImpl> voisins;
 	private int prioriteTraitement;
-	
-	
+
 	//Constructors
 	public CaseImpl(int value, int x, int y)
 	{
@@ -23,7 +23,7 @@ public class CaseImpl extends Observable implements Comparable<CaseImpl>
 		this.y=y;
 		this.value=value;
 		this.domain=new ArrayList<Integer>();
-		//Domaine par défaut
+		//Domaine par defaut
 		if(value==0)
 		{
 			for(int i=1; i<=9; i++)
@@ -31,13 +31,11 @@ public class CaseImpl extends Observable implements Comparable<CaseImpl>
 				this.domain.add(i);
 			}
 		}
-		//Domaine si assigné
+		//Domaine si assigne
 		else
 		{
 			this.domain.add(value);
-		}
-		
-		
+		}		
 	}
 	
 	public CaseImpl(int value, int x, int y, List<Integer> domain)
@@ -62,27 +60,33 @@ public class CaseImpl extends Observable implements Comparable<CaseImpl>
 		notifyObservers(value);
 	}
 
-	public int getX() {
+	public int getX() 
+	{
 		return x;
 	}
 
-	public void setX(int x) {
+	public void setX(int x) 
+	{
 		this.x = x;
 	}
 
-	public int getY() {
+	public int getY() 
+	{
 		return y;
 	}
 
-	public void setY(int y) {
+	public void setY(int y) 
+	{
 		this.y = y;
 	}
 
-	public List<Integer> getDomain() {
+	public List<Integer> getDomain() 
+	{
 		return domain;
 	}
 
-	public void setDomain(List<Integer> domain) {
+	public void setDomain(List<Integer> domain) 
+	{
 		this.domain = domain;
 	}
 
@@ -103,21 +107,24 @@ public class CaseImpl extends Observable implements Comparable<CaseImpl>
 		}
 	}
 
-	public List<CaseImpl> getVoisins() {
+	public List<CaseImpl> getVoisins() 
+	{
 		return voisins;
 	}
 
-	public void setVoisins(List<CaseImpl> voisins) {
+	public void setVoisins(List<CaseImpl> voisins) 
+	{
 		this.voisins = voisins;
 	}
 
-	public int getPrioriteTraitement() {
+	public int getPrioriteTraitement() 
+	{
 		return prioriteTraitement;
 	}
 
-	public void setPrioriteTraitement(int prioriteTraitement) {
+	public void setPrioriteTraitement(int prioriteTraitement) 
+	{
 		this.prioriteTraitement = prioriteTraitement;
 	}
-	
 	
 }

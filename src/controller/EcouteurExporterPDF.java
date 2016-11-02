@@ -1,34 +1,22 @@
 package controller;
 
+//Imports
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import model.GrilleImpl;
 import model.utils.PDFGenerator;
 
-public class EcouteurExporterPDF implements ActionListener{
-
+public class EcouteurExporterPDF implements ActionListener
+{
 	//Variables 
-	private GrilleImpl grilleInitiale;
-	private GrilleImpl grilleFinale;
 	private PDFGenerator p;
-	private JFrame frame;
 	
-	public EcouteurExporterPDF(JFrame frame, GrilleImpl grilleInitiale, GrilleImpl grilleFinale,PDFGenerator p){
-		this.grilleInitiale = grilleInitiale;
-		this.grilleFinale = grilleFinale;
+	public EcouteurExporterPDF(PDFGenerator p)
+	{
 		this.p = p;
-		this.frame = frame;
 	}
 	
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent arg0) 
+	{
 		p.createDocument();
 	}
 

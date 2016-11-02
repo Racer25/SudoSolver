@@ -1,18 +1,16 @@
 package controller;
 
+//Imports
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.swing.JButton;
-
 import model.GrilleImpl;
-import model.SolverImpl;
-import model.utils.BooleanObservable;
 import view.Chronometre;
 import view.GrilleViewImpl;
 
 public class EcouteurAlgoView implements Observer
 {
+	//Variables
 	private JButton start;
 	private JButton reset;
 	private JButton options;
@@ -41,7 +39,6 @@ public class EcouteurAlgoView implements Observer
 		this.grilleView=grilleView;
 	}
 	
-	@Override
 	public void update(Observable arg0, Object arg1) 
 	{
 		if(((boolean)arg1)==true)
@@ -66,7 +63,7 @@ public class EcouteurAlgoView implements Observer
 			this.importerUneNouvelleGrille.setEnabled(true);
 			this.entrerManuellementUneGrille.setEnabled(true);
 			this.chrono.arreter();
-			//actualisation forcée
+			//actualisation forcee
 			for(int x = 0 ; x < 9 ; x++)
 			{
 				for(int y = 0 ; y < 9 ; y++)

@@ -1,10 +1,9 @@
 package controller;
 
+//Imports
 import java.io.File;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import model.GrilleImpl;
 import model.utils.SsReaderImpl;
@@ -20,27 +19,24 @@ public class EcouteurBoutonImporterUneGrilleAleatoire implements ActionListener{
 	private Random random;
 	private GrilleImpl valeurs;
 	
-	public EcouteurBoutonImporterUneGrilleAleatoire(GrilleViewImpl vueGrille, GrilleImpl grilleInitiale){
-		
+	public EcouteurBoutonImporterUneGrilleAleatoire(GrilleViewImpl vueGrille, GrilleImpl grilleInitiale)
+	{
 		this.grilleFinale = vueGrille.getGrilleImpl();
 		this.vueGrille = vueGrille;
 		this.grilleInitiale = grilleInitiale;
 		
 	}
 	
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public void actionPerformed(ActionEvent arg0) 
+	{
 		random = new Random();
-		
-		//On parcours les fichiers du r�pertoire "grille" et on choisi un ".ss" al�atoirement
-		ssReaderImpl = new SsReaderImpl();
+		//On parcours les fichiers du repertoire "grille" et on choisi un ".ss" aleatoirement
 		File repertoire = new File("./grilles");
 		String [] listeFichiers;
 		listeFichiers=repertoire.list(); 
 		int i = random.nextInt(listeFichiers.length);
-		if(listeFichiers[i].endsWith(".ss")==true){
+		if(listeFichiers[i].endsWith(".ss")==true)
+		{
 			valeurs = ssReaderImpl.lireSs("./grilles/"+listeFichiers[i]);
 		}
 		System.out.println("Selection de la grille : "+listeFichiers[i]);
@@ -76,10 +72,9 @@ public class EcouteurBoutonImporterUneGrilleAleatoire implements ActionListener{
 				}
 				
 			}
-		}
-			
-		
+		}		
 		vueGrille.revalidate();
 	}
+	
 }
 

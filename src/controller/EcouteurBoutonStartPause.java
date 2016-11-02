@@ -1,19 +1,15 @@
 package controller;
 
+//Imports
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-
 import model.GrilleImpl;
 import model.SolverImpl;
 import model.contract.Solver;
-import view.Chronometre;
 import view.WindowImpl;
 
-public class EcouteurBoutonStartPause implements ActionListener{
+public class EcouteurBoutonStartPause implements ActionListener
+{
 
 	//Variables
 	private GrilleImpl grille;
@@ -27,21 +23,21 @@ public class EcouteurBoutonStartPause implements ActionListener{
 		this.grille=grille;
 	}
 	
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		
-		//Résolution
+	public void actionPerformed(ActionEvent arg0) 
+	{		
+		//Resolution
 		Solver solver = new SolverImpl(this.ecouteurAlgoView, this.grille, 
 				this.frame.getAlgorithme());
 		solver.start();
-	
 	}
 
-	public GrilleImpl getGrille() {
+	public GrilleImpl getGrille() 
+	{
 		return grille;
 	}
 
-	public void setGrille(GrilleImpl grille) {
+	public void setGrille(GrilleImpl grille) 
+	{
 		this.grille = grille;
 	}
 

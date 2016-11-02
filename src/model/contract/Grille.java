@@ -1,5 +1,6 @@
 package model.contract;
 
+//Imports
 import model.CaseImpl;
 
 public interface Grille 

@@ -1,14 +1,16 @@
 package controller;
 
+//Imports
 import java.util.Observable;
 import java.util.Observer;
-
 import model.CaseImpl;
 import view.CaseViewImpl;
 import view.WindowImpl;
 
 public class CaseController implements Observer
 {
+	//Variables
+	@SuppressWarnings("unused")
 	private CaseImpl maCase;
 	private CaseViewImpl caseView;
 	private WindowImpl frame;
@@ -22,8 +24,6 @@ public class CaseController implements Observer
 		maCase.addObserver(this);
 	}
 	
-
-	@Override
 	public void update(Observable o, Object arg) 
 	{
 		int value=(int) arg;

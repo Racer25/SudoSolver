@@ -15,6 +15,7 @@ public class MainClass
 		algorithme = 0;
 		visuel = 0;
 		GrilleImpl grilleImpl = new GrilleImpl();
+		@SuppressWarnings("unused")
 		WindowImpl w = new WindowImpl(grilleImpl, algorithme, visuel);
 	}
 }

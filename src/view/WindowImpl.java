@@ -179,7 +179,7 @@ public class WindowImpl extends JFrame
 		ecouteurQuitter = new EcouteurQuitter();
 		barreMenu.getQuitter().addActionListener(ecouteurQuitter);
 		p = new PDFGenerator(this, grilleInitiale,grilleFinale);
-		ecouteurExporterPDF = new EcouteurExporterPDF(this,grilleInitiale,grilleFinale,p);
+		ecouteurExporterPDF = new EcouteurExporterPDF(p);
 		(barreMenu.getExporterPDF()).addActionListener(ecouteurExporterPDF);
 		
 		//Le chronometre 
@@ -238,7 +238,7 @@ public class WindowImpl extends JFrame
 		contraintesExportPDF.gridy = 3;
 		contraintesExportPDF.insets = new Insets(10,10,20,20);
 		panelBoutons.add(boutonExportPDF,contraintesExportPDF);
-		ecouteurExportPDF = new EcouteurExporterPDF(this,grilleInitiale,grilleFinale,p);
+		ecouteurExportPDF = new EcouteurExporterPDF(p);
 		boutonExportPDF.addActionListener(ecouteurExportPDF);
 				
 		//Le bouton "option"

@@ -1,17 +1,18 @@
 package model;
 
+//Imports
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
 import controller.EcouteurAlgoView;
 import model.contract.Solver;
 import model.utils.BooleanObservable;
 
-//Résout le sudoku
-public class SolverImpl extends Thread implements Solver {
-
+//Resout le sudoku
+public class SolverImpl extends Thread implements Solver 
+{
+	//Variables
 	private GrilleImpl grille;
 	private List<CaseImpl> casesAvecContraintesCreees;
 	private List<ConstraintImpl> contraintes;
@@ -27,22 +28,26 @@ public class SolverImpl extends Thread implements Solver {
 		this.grille = grille;
 		this.casesAvecContraintesCreees = new ArrayList<CaseImpl>();
 		this.contraintes = new ArrayList<ConstraintImpl>();
-		// constraintsGenerator();
 		preDomaineReducer();
 		this.casesNonAssigneesTrieeParTailleDomaine = this.grille
 				.getCasesNonAssigneesTrieeParTailleDomaineEtFixerPriorites();
 	}
 
-	public void constraintsGenerator() {
-		for (int i = 0; i < this.grille.getCases().length; i++) {
-			for (int j = 0; j < this.grille.getCases()[i].length; j++) {
+	public void constraintsGenerator() 
+	{
+		for (int i = 0; i < this.grille.getCases().length; i++) 
+		{
+			for (int j = 0; j < this.grille.getCases()[i].length; j++) 
+			{
 				CaseImpl caseParcourue = this.grille.getCases()[i][j];
 				List<CaseImpl> casesLiees = this.grille.getCases()[i][j].getVoisins();
 
-				for (CaseImpl caseLiee : casesLiees) {
-					// Créer une contrainte si la caseLiee n'a pas été une
+				for (CaseImpl caseLiee : casesLiees)
+				{
+					// Creer une contrainte si la caseLiee n'a pas ete une
 					// caseParcourue
-					if (!this.casesAvecContraintesCreees.contains(caseLiee)) {
+					if (!this.casesAvecContraintesCreees.contains(caseLiee)) 
+					{
 						this.contraintes.add(new ConstraintImpl(caseParcourue, caseLiee));
 					}
 				}
@@ -51,14 +56,19 @@ public class SolverImpl extends Thread implements Solver {
 		}
 	}
 
-	public void preDomaineReducer() {
-		for (int i = 0; i < this.grille.getCases().length; i++) {
-			for (int j = 0; j < this.grille.getCases()[i].length; j++) {
-				if (this.grille.getCases()[i][j].getValue() != 0) {
+	public void preDomaineReducer() 
+	{
+		for (int i = 0; i < this.grille.getCases().length; i++)
+		{
+			for (int j = 0; j < this.grille.getCases()[i].length; j++) 
+			{
+				if (this.grille.getCases()[i][j].getValue() != 0) 
+				{
 					// Prélèvement des voisins de la case
 					List<CaseImpl> casesLiees = this.grille.getCases()[i][j].getVoisins();
 
-					for (CaseImpl maCaseLiee : casesLiees) {
+					for (CaseImpl maCaseLiee : casesLiees) 
+					{
 						maCaseLiee.getDomain().remove(this.grille.getCases()[i][j].getValue());
 					}
 
@@ -67,35 +77,40 @@ public class SolverImpl extends Thread implements Solver {
 		}
 	}
 
-	@Override
-	public void run() {
+	public void run() 
+	{
 		this.booleanObservable.setEnCoursDeCalcul(true);
 		solve();
 	}
 
-	@Override
-	public void solve() {
+	public void solve() 
+	{
 		System.out.println("Initialisation de la résolution");
 		boolean resolved = false;
-		if (this.algo == 0) {
+		if (this.algo == 0) 
+		{
 			System.out.println("Choix : Forward Checking");
 			resolved = backtrackingFC(0);
-		} else if (this.algo == 1) {
+		}
+		else if (this.algo == 1) 
+		{
 			System.out.println("Choix : Arc Consistency");
 			resolved = backtrackingAC(0);
-		} else {
+		}
+		else 
+		{
 			System.out.println("Choix : Sans propagation de contrainte");
 			resolved = backtracking(0);
 		}
-
-		if (resolved) {
+		if (resolved) 
+		{
 			// Faire un truc
 			System.out.println("Grille resolue");
-
-		} else {
+		}
+		else 
+		{
 			// Faire un autre truc
 			System.out.println("Ta grille est fausse");
-
 		}
 
 		// Fin de la resolution
@@ -103,9 +118,11 @@ public class SolverImpl extends Thread implements Solver {
 	}
 
 	// Pos est le numéro de la case, sert pour faire du récursif
-	public boolean backtrackingFC(int pos) {
+	public boolean backtrackingFC(int pos)
+	{
 		// Si on est au bout du sudoku, c'est qu'on a pas eu de blocages :)
-		if (pos == this.casesNonAssigneesTrieeParTailleDomaine.size()) {
+		if (pos == this.casesNonAssigneesTrieeParTailleDomaine.size()) 
+		{
 			return true;
 		}
 
@@ -115,19 +132,23 @@ public class SolverImpl extends Thread implements Solver {
 		// List<Integer> domainSave=new ArrayList<Integer>(maCase.getDomain());
 
 		// Pour chaque valeur possible
-		for (Integer value : maCase.getDomain()) {
+		for (Integer value : maCase.getDomain()) 
+		{
 			maCase.setValue(value);
 
 			// Si cela satisfait toutes les contraintes de la case
-			if (isOkay(maCase)) {
+			if (isOkay(maCase)) 
+			{
 				// Copie profondes des domaines des voisins
 				List<CaseImpl> voisins = maCase.getVoisins();
 				List<List<Integer>> domainsVoisinsSave = new ArrayList<List<Integer>>();
 
 				// Petite sauvegarde voisin
-				for (CaseImpl voisin : voisins) {
+				for (CaseImpl voisin : voisins) 
+				{
 					List<Integer> domaine = new ArrayList<Integer>();
-					for (Integer val : voisin.getDomain()) {
+					for (Integer val : voisin.getDomain())
+					{
 						domaine.add(val);
 					}
 					domainsVoisinsSave.add(domaine);
@@ -137,13 +158,18 @@ public class SolverImpl extends Thread implements Solver {
 				forwardChecking(maCase, pos);
 
 				// On passe à la suite
-				if (backtracking(pos + 1)) {
+				if (backtracking(pos + 1)) 
+				{
 					return true;
-				} else {
+				} 
+				else
+				{
 					// Utilisation de la sauvegarde profonde des domaines
-					for (int i = 0; i < domainsVoisinsSave.size(); i++) {
+					for (int i = 0; i < domainsVoisinsSave.size(); i++) 
+					{
 						int posVoisin = voisins.get(i).getPrioriteTraitement();
-						if (posVoisin > pos) {
+						if (posVoisin > pos) 
+						{
 							voisins.get(i).setDomain(domainsVoisinsSave.get(i));
 						}
 
@@ -156,11 +182,12 @@ public class SolverImpl extends Thread implements Solver {
 		return false;
 	}
 
-	// Pos est le numéro de la case, sert pour faire du récursif
+	// Pos est le numero de la case, sert pour faire du recursif
 	public boolean backtrackingAC(int pos) 
 	{
 		// Si on est au bout du sudoku, c'est qu'on a pas eu de blocages :)
-		if (pos == this.casesNonAssigneesTrieeParTailleDomaine.size()) {
+		if (pos == this.casesNonAssigneesTrieeParTailleDomaine.size())
+		{
 			return true;
 		}
 
@@ -182,7 +209,8 @@ public class SolverImpl extends Thread implements Solver {
 				for (CaseImpl maCaseNonAssignee : this.casesNonAssigneesTrieeParTailleDomaine) 
 				{
 					List<Integer> domaine = new ArrayList<Integer>();
-					for (Integer val : maCaseNonAssignee.getDomain()) {
+					for (Integer val : maCaseNonAssignee.getDomain())
+					{
 						domaine.add(val);
 					}
 					domainsSave.add(domaine);
@@ -200,8 +228,8 @@ public class SolverImpl extends Thread implements Solver {
 				else 
 				{
 					// Utilisation de la sauvegarde profonde des domaines
-					for (int i = 0; i < this.casesNonAssigneesTrieeParTailleDomaine.size(); i++) {
-
+					for (int i = 0; i < this.casesNonAssigneesTrieeParTailleDomaine.size(); i++) 
+					{
 						if (this.casesNonAssigneesTrieeParTailleDomaine.get(i).getPrioriteTraitement() > pos) {
 							this.casesNonAssigneesTrieeParTailleDomaine.get(i).setDomain(domainsSave.get(i));
 						}
@@ -216,32 +244,35 @@ public class SolverImpl extends Thread implements Solver {
 		return false;
 	}
 
-	// Pos est le numéro de la case, sert pour faire du récursif
-	public boolean backtracking(int pos) {
+	// Pos est le numero de la case, sert pour faire du recursif
+	public boolean backtracking(int pos) 
+	{
 		// Si on est au bout du sudoku, c'est qu'on a pas eu de blocages :)
-		if (pos == this.casesNonAssigneesTrieeParTailleDomaine.size()) {
+		if (pos == this.casesNonAssigneesTrieeParTailleDomaine.size()) 
+		{
 			return true;
 		}
 
 		CaseImpl maCase = this.casesNonAssigneesTrieeParTailleDomaine.get(pos);
 
-		// SAVE domaine de la case
-		// List<Integer> domainSave=new ArrayList<Integer>(maCase.getDomain());
-
 		// Pour chaque valeur possible
-		for (Integer value : maCase.getDomain()) {
+		for (Integer value : maCase.getDomain()) 
+		{
 			maCase.setValue(value);
 
 			// Si cela satisfait toutes les contraintes de la case
-			if (isOkay(maCase)) {
+			if (isOkay(maCase)) 
+			{
 				// Copie profondes des domaines des voisins
 				List<CaseImpl> voisins = maCase.getVoisins();
 				List<List<Integer>> domainsVoisinsSave = new ArrayList<List<Integer>>();
 
 				// Petite sauvegarde voisin
-				for (CaseImpl voisin : voisins) {
+				for (CaseImpl voisin : voisins) 
+				{
 					List<Integer> domaine = new ArrayList<Integer>();
-					for (Integer val : voisin.getDomain()) {
+					for (Integer val : voisin.getDomain()) 
+					{
 						domaine.add(val);
 					}
 					domainsVoisinsSave.add(domaine);
@@ -249,69 +280,69 @@ public class SolverImpl extends Thread implements Solver {
 
 				// Grosse sauvegarde tout >pos
 				List<List<Integer>> domainsSave = new ArrayList<List<Integer>>();
-				for (CaseImpl maCaseNonAssignee : this.casesNonAssigneesTrieeParTailleDomaine) {
+				for (CaseImpl maCaseNonAssignee : this.casesNonAssigneesTrieeParTailleDomaine)
+				{
 					List<Integer> domaine = new ArrayList<Integer>();
-					for (Integer val : maCaseNonAssignee.getDomain()) {
+					for (Integer val : maCaseNonAssignee.getDomain()) 
+					{
 						domaine.add(val);
 					}
 					domainsSave.add(domaine);
 				}
 
 				// Reduction des domaines des cases futures
-				if (this.algo == 0) {
+				if (this.algo == 0)
+				{
 					forwardChecking(maCase, pos);
-				} else if (this.algo == 1) {
+				}
+				else if (this.algo == 1)
+				{
 					arcConsistency(maCase, pos);
 				}
 
 				// On passe à la suite
-				if (backtracking(pos + 1)) {
+				if (backtracking(pos + 1))
+				{
 					return true;
 				}
 
-				else {
+				else 
+				{
 					// Utilisation de la sauvegarde profonde des domaines
-					if (this.algo == 0) {
+					if (this.algo == 0) 
+					{
 
-					} else if (this.algo == 1) {
+					} 
+					else if (this.algo == 1) 
+					{
 
 					}
-					/*
-					 * for(int i=0; i< domainsVoisinsSave.size(); i++) { int
-					 * posVoisin=voisins.get(i).getPrioriteTraitement();
-					 * if(posVoisin>pos) {
-					 * voisins.get(i).setDomain(domainsVoisinsSave.get(i)); }
-					 * 
-					 * }
-					 */
-
-					for (int i = 0; i < this.casesNonAssigneesTrieeParTailleDomaine.size(); i++) {
-
-						if (this.casesNonAssigneesTrieeParTailleDomaine.get(i).getPrioriteTraitement() > pos) {
+					for (int i = 0; i < this.casesNonAssigneesTrieeParTailleDomaine.size(); i++) 
+					{
+						if (this.casesNonAssigneesTrieeParTailleDomaine.get(i).getPrioriteTraitement() > pos) 
+						{
 							this.casesNonAssigneesTrieeParTailleDomaine.get(i).setDomain(domainsSave.get(i));
 						}
 					}
-
-					/* reverseChecking(maCase, pos); */
 				}
-
 			}
 		}
 		maCase.setValue(0);
-		// maCase.setDomain(domainSave);
-
 		return false;
 	}
 
-	// Vérifie si la valeur actuelle de la case est possible au vue de l'était
+	// Verifie si la valeur actuelle de la case est possible au vue de l'etat
 	// actuel de la grille
 	// A APPELER SUR UNE CASE NON VIDE/NON ASSIGNEE
-	public boolean isOkay(CaseImpl maCase) {
+	public boolean isOkay(CaseImpl maCase)
+	{
 		// Cette valeur satisfait-elle toutes les contraintes?
 		boolean constraintsSatisfied = true;
 		int k = 0;
-		while (constraintsSatisfied && k < maCase.getVoisins().size()) {
-			if (maCase.getValue() == maCase.getVoisins().get(k).getValue()) {
+		while (constraintsSatisfied && k < maCase.getVoisins().size()) 
+		{
+			if (maCase.getValue() == maCase.getVoisins().get(k).getValue()) 
+			{
 				constraintsSatisfied = false;
 			}
 			k++;
@@ -319,13 +350,13 @@ public class SolverImpl extends Thread implements Solver {
 		return constraintsSatisfied;
 	}
 
-	public void forwardChecking(CaseImpl maCase, int pos) {
+	public void forwardChecking(CaseImpl maCase, int pos) 
+	{
 		List<CaseImpl> casesLiees = maCase.getVoisins();
-
 		int k = 0;
 		boolean unDomaineVide = false;
 		while (!unDomaineVide && k < casesLiees.size()) {
-			// Problème ici
+			// Probleme ici
 			int posCaseLiee = casesLiees.get(k).getPrioriteTraitement();
 			if (posCaseLiee > pos) {
 				casesLiees.get(k).getDomain().remove(maCase.getValue());
@@ -338,28 +369,36 @@ public class SolverImpl extends Thread implements Solver {
 		}
 	}
 
-	// Va réduire le domaine des valeurs possibles de la case est de ses
+	// Va reduire le domaine des valeurs possibles de la case est de ses
 	// voisins,
 	// En utilisant les contraintes
-	public void arcConsistency(CaseImpl maCase, int pos) {
+	public void arcConsistency(CaseImpl maCase, int pos) 
+	{
 		LinkedList<CaseImpl[]> couplesATester = new LinkedList<CaseImpl[]>();
-		for (CaseImpl voisin : maCase.getVoisins()) {
+		for (CaseImpl voisin : maCase.getVoisins()) 
+		{
 			CaseImpl[] couple = { maCase, voisin };
 			couplesATester.add(couple);
 		}
-		while (!couplesATester.isEmpty()) {
+		while (!couplesATester.isEmpty()) 
+		{
 			CaseImpl[] coupleParcouru = couplesATester.getFirst();
 			boolean removed = false;
-			if (coupleParcouru[1].getPrioriteTraitement() > pos) {
+			if (coupleParcouru[1].getPrioriteTraitement() > pos) 
+			{
 				removed = domainReducerAC(coupleParcouru[1], coupleParcouru[0], pos);
 			}
 			couplesATester.removeFirst();
-			if (coupleParcouru[1].getPrioriteTraitement() > pos) {
-				// Avec les voisins/cases liées
-				if (removed) {
+			if (coupleParcouru[1].getPrioriteTraitement() > pos) 
+			{
+				// Avec les voisins/cases liees
+				if (removed) 
+				{
 					List<CaseImpl> voisinsDeVoisin = coupleParcouru[1].getVoisins();
-					for (CaseImpl voisinDeVoisin : voisinsDeVoisin) {
-						if (voisinDeVoisin.getPrioriteTraitement() > pos) {
+					for (CaseImpl voisinDeVoisin : voisinsDeVoisin) 
+					{
+						if (voisinDeVoisin.getPrioriteTraitement() > pos) 
+						{
 							CaseImpl[] newCouple = { coupleParcouru[1], voisinDeVoisin };
 							couplesATester.addFirst(newCouple);
 						}
@@ -373,22 +412,25 @@ public class SolverImpl extends Thread implements Solver {
 	// Pour ArcConsistency
 	// Supprime des valeurs du domaine et retourne le fait d'avoir supprimer
 	// qqchose ou non
-	public boolean domainReducerAC(CaseImpl voisin, CaseImpl maCase, int pos) {
+	public boolean domainReducerAC(CaseImpl voisin, CaseImpl maCase, int pos)
+	{
 		boolean somethingRemoved = false;
 		Iterator<Integer> domainIterator = maCase.getDomain().iterator();
-		while (domainIterator.hasNext()) {
+		while (domainIterator.hasNext()) 
+		{
 			Integer valeurPossible = domainIterator.next();
-
 			boolean satisfiable = false;
 			int k = 0;
 			while (!satisfiable && k < voisin.getDomain().size()) {
-				// Est ce qu'on peut avoir des valeurs différentes??
-				if (valeurPossible != voisin.getDomain().get(k)) {
+				// Est ce qu'on peut avoir des valeurs differentes??
+				if (valeurPossible != voisin.getDomain().get(k))
+				{
 					satisfiable = true;
 				}
 				k++;
 			}
-			if (!satisfiable) {
+			if (!satisfiable) 
+			{
 				domainIterator.remove();
 				somethingRemoved = true;
 			}
@@ -397,22 +439,28 @@ public class SolverImpl extends Thread implements Solver {
 		return somethingRemoved;
 	}
 
-	public LinkedList<ConstraintImpl> getConstraints(CaseImpl maCase) {
+	public LinkedList<ConstraintImpl> getConstraints(CaseImpl maCase) 
+	{
 		LinkedList<ConstraintImpl> contraintesDeLaCase = new LinkedList<ConstraintImpl>();
-		for (ConstraintImpl contrainte : this.contraintes) {
-			if (contrainte.getCase1() == maCase || contrainte.getCase2() == maCase) {
+		for (ConstraintImpl contrainte : this.contraintes) 
+		{
+			if (contrainte.getCase1() == maCase || contrainte.getCase2() == maCase)
+			{
 				contraintesDeLaCase.add(contrainte);
 			}
 		}
 		return contraintesDeLaCase;
 	}
 
-	public ConstraintImpl getConstraint(CaseImpl maCase1, CaseImpl maCase2) {
+	public ConstraintImpl getConstraint(CaseImpl maCase1, CaseImpl maCase2) 
+	{
 		ConstraintImpl contrainteDeLaCase = null;
-		for (ConstraintImpl contrainte : this.contraintes) {
+		for (ConstraintImpl contrainte : this.contraintes)
+		{
 			if (contrainte.getCase1() == maCase1 && contrainte.getCase2() == maCase2) {
 				contrainteDeLaCase = contrainte;
-			} else if (contrainte.getCase1() == maCase2 && contrainte.getCase2() == maCase1) {
+			}
+			else if (contrainte.getCase1() == maCase2 && contrainte.getCase2() == maCase1) {
 				contrainteDeLaCase = contrainte;
 			}
 		}
