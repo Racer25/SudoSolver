@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import controller.EcouteurEnregistrer;
+import controller.EcouteurEnregistrerOption;
 import controller.EcouteurSaisie;
 
 public class Option extends JFrame{
@@ -26,7 +27,7 @@ public class Option extends JFrame{
 	private GridLayout layoutPanelBoutons;
 	private JButton annuler;
 	private JButton enregistrer;
-	private EcouteurEnregistrer ecouteurEnregistrer;
+	private EcouteurEnregistrerOption ecouteurEnregistrerOption;
 	
 	//Le panel Algorithme
 	private JPanel panelAlgorithme;
@@ -37,10 +38,12 @@ public class Option extends JFrame{
 	private JPanel panelVisuel;
 	private JLabel labelVisuel;
 	private GridLayout layoutPanelVisuel;
+	private WindowImpl frame;
 	
-	public Option(int algorithme, int visuel){
+	public Option(WindowImpl frame, int algorithme, int visuel){
 		this.algorithme = algorithme;
 		this.visuel = visuel;
+		this.frame = frame;
 		
 		//Options de la fenï¿½tre
 		this.setTitle("OPTIONS");
@@ -57,7 +60,7 @@ public class Option extends JFrame{
 		
 		//Le panel Algorithme
 		panelAlgorithme = new JPanel();
-		layoutPanelAlgorithme = new GridLayout(3,1);
+		layoutPanelAlgorithme = new GridLayout(4,1);
 		panelAlgorithme.setLayout(layoutPanelAlgorithme);
 		labelAlgorithme = new JLabel("Choisir l'algorithme de résolution :");
 		panelPrincipal.add(panelAlgorithme);
@@ -74,6 +77,11 @@ public class Option extends JFrame{
 		arcConsistency.setSelected(algorithme == 1);
 		groupe.add(arcConsistency);
 		panelAlgorithme.add(arcConsistency);
+		
+		JRadioButton sansPropagationDeContrainte = new JRadioButton("sans propagation de contraintes");
+		sansPropagationDeContrainte.setSelected(algorithme == 2);
+		groupe.add(sansPropagationDeContrainte);
+		panelAlgorithme.add(sansPropagationDeContrainte);
 				
 		//Le panel Visuel
 		panelVisuel = new JPanel();
@@ -107,8 +115,9 @@ public class Option extends JFrame{
 		
 		//Le bouton Enregistrer
 		enregistrer = new JButton("Enregistrer");
+		ecouteurEnregistrerOption = new EcouteurEnregistrerOption(frame,this,algorithme,visuel);
 		panelBoutons.add(enregistrer);
-		enregistrer.addActionListener(ecouteurEnregistrer);
+		enregistrer.addActionListener(ecouteurEnregistrerOption);
 		
 		
 		this.setVisible(true);
