@@ -14,19 +14,15 @@ public class EcouteurBoutonOption implements ActionListener{
 
 	//Variables
 	private WindowImpl frame;
-	private int algorithme;
-	private int visuel;
 	
-	public EcouteurBoutonOption(WindowImpl frame, int algorithme, int visuel){
+	public EcouteurBoutonOption(WindowImpl frame){
 		this.frame = frame;
-		this.algorithme = algorithme;
-		this.visuel = visuel;
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		Option option = new Option(frame, algorithme, visuel);
+	public void actionPerformed(ActionEvent arg0) 
+	{
+		Option option = new Option(frame);
 	}
 
 }

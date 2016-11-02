@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controller.EcouteurAnnuler;
 import controller.EcouteurEnregistrer;
 import controller.EcouteurSaisie;
 import model.GrilleImpl;
@@ -68,6 +69,8 @@ public class EntreeManuelleView extends JFrame{
 	//Le bouton Annuler
 	annuler = new JButton("Annuler");
 	panelBoutons.add(annuler);
+	EcouteurAnnuler ecouteurAnnuler = new EcouteurAnnuler(this);
+	annuler.addActionListener(ecouteurAnnuler);
 	
 	//Le bouton Enregistrer
 	enregistrer = new JButton("Enregistrer");

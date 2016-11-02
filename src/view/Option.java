@@ -12,15 +12,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import controller.EcouteurAnnuler;
 import controller.EcouteurEnregistrer;
 import controller.EcouteurEnregistrerOption;
 import controller.EcouteurSaisie;
 
 public class Option extends JFrame{
 
+	private static final long serialVersionUID = -3382111681595993976L;
 	//Variables
-	private static int algorithme;
-	private static int visuel;
 	private GridLayout layoutPanelPrincipal;
 	private JPanel panelPrincipal;
 	private JPanel panelBoutons;
@@ -40,9 +40,8 @@ public class Option extends JFrame{
 	private GridLayout layoutPanelVisuel;
 	private WindowImpl frame;
 	
-	public Option(WindowImpl frame, int algorithme, int visuel){
-		this.algorithme = algorithme;
-		this.visuel = visuel;
+	public Option(WindowImpl frame)
+	{
 		this.frame = frame;
 		
 		//Options de la fenï¿½tre
@@ -62,24 +61,24 @@ public class Option extends JFrame{
 		panelAlgorithme = new JPanel();
 		layoutPanelAlgorithme = new GridLayout(4,1);
 		panelAlgorithme.setLayout(layoutPanelAlgorithme);
-		labelAlgorithme = new JLabel("Choisir l'algorithme de résolution :");
+		labelAlgorithme = new JLabel("Choisir l'algorithme de rï¿½solution :");
 		panelPrincipal.add(panelAlgorithme);
 		panelAlgorithme.add(labelAlgorithme);
 		
 		ButtonGroup groupe = new ButtonGroup();
 		 
 		JRadioButton forwardChecking = new JRadioButton("forward checking");
-		forwardChecking.setSelected(algorithme == 0);
+		forwardChecking.setSelected(frame.getAlgorithme() == 0);
 		groupe.add(forwardChecking);
 		panelAlgorithme.add(forwardChecking);
 		
 		JRadioButton arcConsistency = new JRadioButton("arc consistency");
-		arcConsistency.setSelected(algorithme == 1);
+		arcConsistency.setSelected(frame.getAlgorithme() == 1);
 		groupe.add(arcConsistency);
 		panelAlgorithme.add(arcConsistency);
 		
 		JRadioButton sansPropagationDeContrainte = new JRadioButton("sans propagation de contraintes");
-		sansPropagationDeContrainte.setSelected(algorithme == 2);
+		sansPropagationDeContrainte.setSelected(frame.getAlgorithme() == 2);
 		groupe.add(sansPropagationDeContrainte);
 		panelAlgorithme.add(sansPropagationDeContrainte);
 				
@@ -87,19 +86,19 @@ public class Option extends JFrame{
 		panelVisuel = new JPanel();
 		layoutPanelVisuel = new GridLayout(3,1);
 		panelVisuel.setLayout(layoutPanelVisuel);
-		labelVisuel = new JLabel("Afficher les étapes de la résolution ?");
+		labelVisuel = new JLabel("Afficher les ï¿½tapes de la rï¿½solution ?");
 		panelPrincipal.add(panelVisuel);
 		panelVisuel.add(labelVisuel);
 		
 		ButtonGroup groupe2 = new ButtonGroup();
 		 
 		JRadioButton oui = new JRadioButton("oui");
-		oui.setSelected(visuel == 0);
+		oui.setSelected(frame.getVisuel() == 0);
 		groupe2.add(oui);
 		panelVisuel.add(oui);
 		
 		JRadioButton non = new JRadioButton("non");
-		non.setSelected(visuel == 1);
+		non.setSelected(frame.getVisuel() == 1);
 		groupe2.add(non);
 		panelVisuel.add(non);
 		
@@ -112,10 +111,12 @@ public class Option extends JFrame{
 		//Le bouton Annuler
 		annuler = new JButton("Annuler");
 		panelBoutons.add(annuler);
+		EcouteurAnnuler ecouteurAnnuler = new EcouteurAnnuler(this);
+		annuler.addActionListener(ecouteurAnnuler);
 		
 		//Le bouton Enregistrer
 		enregistrer = new JButton("Enregistrer");
-		ecouteurEnregistrerOption = new EcouteurEnregistrerOption(frame,this,algorithme,visuel);
+		ecouteurEnregistrerOption = new EcouteurEnregistrerOption(frame,this,groupe,groupe2);
 		panelBoutons.add(enregistrer);
 		enregistrer.addActionListener(ecouteurEnregistrerOption);
 		

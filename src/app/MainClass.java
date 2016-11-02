@@ -1,7 +1,6 @@
 package app;
 
 import model.GrilleImpl;
-import model.utils.PDFGenerator;
 import view.WindowImpl;
 
 public class MainClass 
@@ -16,6 +15,6 @@ public class MainClass
 		algorithme = 0;
 		visuel = 0;
 		GrilleImpl grilleImpl = new GrilleImpl();
-		WindowImpl w = new WindowImpl(grilleImpl,algorithme,visuel);
+		WindowImpl w = new WindowImpl(grilleImpl, algorithme, visuel);
 	}
 }

@@ -5,18 +5,19 @@ import java.util.Observer;
 
 import model.CaseImpl;
 import view.CaseViewImpl;
+import view.WindowImpl;
 
 public class CaseController implements Observer
 {
 	private CaseImpl maCase;
 	private CaseViewImpl caseView;
-	private int visuel;
+	private WindowImpl frame;
 	
-	public CaseController(CaseImpl maCase, CaseViewImpl caseView, int visuel) 
+	public CaseController(CaseImpl maCase, CaseViewImpl caseView, WindowImpl frame) 
 	{
 		this.maCase = maCase;
 		this.caseView = caseView;
-		this.visuel=visuel;
+		this.frame=frame;
 		
 		maCase.addObserver(this);
 	}
@@ -26,7 +27,7 @@ public class CaseController implements Observer
 	public void update(Observable o, Object arg) 
 	{
 		int value=(int) arg;
-		if(this.visuel==0)
+		if(this.frame.getVisuel()==0)
 		{
 			if(value!=0)
 			{

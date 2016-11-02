@@ -2,36 +2,29 @@ package controller;
 
 import model.GrilleImpl;
 import view.GrilleViewImpl;
+import view.WindowImpl;
 
 public class GrilleController
 {
 	private GrilleImpl grille;
 	private GrilleViewImpl grilleView;
-	private int visuel;
+	private WindowImpl frame;
 	
-	public GrilleController(GrilleImpl grille, GrilleViewImpl grilleView, int visuel) 
+	public GrilleController(GrilleImpl grille, GrilleViewImpl grilleView, WindowImpl frame) 
 	{
 		this.grille = grille;
 		this.grilleView = grilleView;
-		this.visuel=visuel;
+		this.frame=frame;
 		
 		for(int i=0; i<grille.getCases().length; i++)
 		{
 			for(int j=0; j<grille.getCases()[i].length; j++)
 			{
 				CaseController caseController=new CaseController(grille.getCases()[i][j], 
-						grilleView.getCaseViews()[i][j], visuel);
+						grilleView.getCaseViews()[i][j], this.frame);
 			}
 			
 		}
-	}
-
-	public int getVisuel() {
-		return visuel;
-	}
-
-	public void setVisuel(int visuel) {
-		this.visuel = visuel;
 	}
 
 }

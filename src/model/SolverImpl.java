@@ -78,10 +78,13 @@ public class SolverImpl extends Thread implements Solver {
 		System.out.println("Initialisation de la résolution");
 		boolean resolved = false;
 		if (this.algo == 0) {
+			System.out.println("Choix : Forward Checking");
 			resolved = backtrackingFC(0);
 		} else if (this.algo == 1) {
+			System.out.println("Choix : Arc Consistency");
 			resolved = backtrackingAC(0);
 		} else {
+			System.out.println("Choix : Sans propagation de contrainte");
 			resolved = backtracking(0);
 		}
 

@@ -10,19 +10,19 @@ public class Chronometre extends JPanel
 {
 	private static final long serialVersionUID = 2649187737448274951L;
 	
-	private static int heure=0,minute=0,seconde=0,milliseconde=0;
+	private static int heure=0,minute=0,seconde=0;
 	private Timer timer1;
 	private JLabel label1;
 	
 	public Chronometre()
 	{		
 		/* Le timer */
-		int delais=1;
+		int delais=1000;
 		ActionListener tache_timer;
 
 		/* cr�ation des composants */
 		//label1 = new JLabel(heure+":"+minute+":"+seconde+":"+milliseconde); /* d�clarer final car une classe interne va acceder � ce composant */
-		label1 = new JLabel("00:00:00:000"); /* d�clarer final car une classe interne va acceder � ce composant */
+		label1 = new JLabel("00:00:00"); /* d�clarer final car une classe interne va acceder � ce composant */
 		this.setSize(new Dimension(20,20));
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 		this.setBackground(Color.DARK_GRAY);
@@ -45,12 +45,7 @@ public class Chronometre extends JPanel
 		{
 			public void actionPerformed(ActionEvent e1)
 			{
-				milliseconde++;
-				if(milliseconde==999)
-				{
-					milliseconde=0;
-					seconde++;
-				}
+				seconde++;
 				if(seconde==60)
 				{
 					seconde=0;
@@ -82,17 +77,7 @@ public class Chronometre extends JPanel
 				else{
 					s = ""+seconde;
 				}
-				String ms;
-				if(milliseconde<10){
-					ms = "00"+milliseconde;
-				}
-				else if(milliseconde<100){
-					ms = "0"+milliseconde;
-				}
-				else{
-					ms = ""+milliseconde;
-				}
-				label1.setText(h+":"+m+":"+s+":"+ms);/* rafraichir le label */
+				label1.setText(h+":"+m+":"+s);/* rafraichir le label */
 			}
 		};
 		/* instanciation du timer */
@@ -109,9 +94,7 @@ public class Chronometre extends JPanel
 		heure=0;
 		minute=0;
 		seconde=0;
-		milliseconde=0;
-		//label1.setText(heure+":"+minute+":"+seconde+":"+milliseconde);
-		label1.setText("00:00:00:000");
+		label1.setText("00:00:00");
 		}
 	
 	public void lancer()

@@ -165,7 +165,7 @@ public class WindowImpl extends JFrame
 		//La grille Initiale
 		grilleInitiale = new GrilleImpl();
 		vueGrille = new GrilleViewImpl(grilleFinale);
-		grilleController = new GrilleController(grilleFinale, vueGrille, 1);
+		grilleController = new GrilleController(grilleFinale, vueGrille, this);
 		
 		contraintesGrilles = new GridBagConstraints();
 		contraintesGrilles.gridx=0;
@@ -253,7 +253,7 @@ public class WindowImpl extends JFrame
 		contraintesOption.gridy = 4;
 		contraintesOption.insets = new Insets(10,10,20,20);
 		panelBoutons.add(boutonOption,contraintesOption);
-		ecouteurBoutonOption = new EcouteurBoutonOption(this,algorithme,visuel);
+		ecouteurBoutonOption = new EcouteurBoutonOption(this);
 		boutonOption.addActionListener(ecouteurBoutonOption);
 		(barreMenu.getOption()).addActionListener(ecouteurBoutonOption);
 	
@@ -319,7 +319,7 @@ public class WindowImpl extends JFrame
 				boutonReset, boutonOption, boutonExportPDF, boutonImporterUneNouvelleGrille, 
 				boutonImporterUneGrilleAleatoire, boutonEntrerManuellementUneGrille, 
 				chronometre, grilleFinale, vueGrille);
-		ecouteurBoutonStartPause = new EcouteurBoutonStartPause(ecouteurAlgoView);
+		ecouteurBoutonStartPause = new EcouteurBoutonStartPause(ecouteurAlgoView, this, grilleFinale);
 		
 		ecouteurBoutonStartPause.setGrille(grilleFinale);
 		boutonStartPause.addActionListener(ecouteurBoutonStartPause);
