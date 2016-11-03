@@ -4,22 +4,20 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-
 import controller.EcouteurAnnuler;
-import controller.EcouteurEnregistrer;
 import controller.EcouteurEnregistrerOption;
-import controller.EcouteurSaisie;
 
-public class Option extends JFrame{
+public class Option extends JFrame
+{
 
 	private static final long serialVersionUID = -3382111681595993976L;
+	
 	//Variables
 	private GridLayout layoutPanelPrincipal;
 	private JPanel panelPrincipal;
@@ -38,13 +36,14 @@ public class Option extends JFrame{
 	private JPanel panelVisuel;
 	private JLabel labelVisuel;
 	private GridLayout layoutPanelVisuel;
+	@SuppressWarnings("unused")
 	private WindowImpl frame;
 	
 	public Option(WindowImpl frame)
 	{
 		this.frame = frame;
 		
-		//Options de la fen�tre
+		//Options de la fenetre
 		this.setTitle("OPTIONS");
 		this.setSize(new Dimension(500,200));
 		this.setResizable(false);
@@ -61,7 +60,7 @@ public class Option extends JFrame{
 		panelAlgorithme = new JPanel();
 		layoutPanelAlgorithme = new GridLayout(4,1);
 		panelAlgorithme.setLayout(layoutPanelAlgorithme);
-		labelAlgorithme = new JLabel("Choisir l'algorithme de r�solution :");
+		labelAlgorithme = new JLabel("Choisir l'algorithme de resolution :");
 		panelPrincipal.add(panelAlgorithme);
 		panelAlgorithme.add(labelAlgorithme);
 		
@@ -119,7 +118,6 @@ public class Option extends JFrame{
 		ecouteurEnregistrerOption = new EcouteurEnregistrerOption(frame,this,groupe,groupe2);
 		panelBoutons.add(enregistrer);
 		enregistrer.addActionListener(ecouteurEnregistrerOption);
-		
 		
 		this.setVisible(true);
 		this.revalidate();

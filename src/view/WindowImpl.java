@@ -9,9 +9,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.TextArea;
 import java.io.PrintStream;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,13 +18,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneLayout;
-
 import controller.EcouteurExporterPDF;
 import controller.EcouteurParcourir;
 import controller.EcouteurAlgoView;
 import controller.EcouteurBoutonEntrerManuellementUneGrille;
 import controller.EcouteurBoutonImporterUneGrilleAleatoire;
-import controller.EcouteurBoutonImporterUneNouvelleGrille;
 import controller.EcouteurBoutonOption;
 import controller.EcouteurBoutonReset;
 import controller.EcouteurBoutonStartPause;
@@ -71,11 +67,14 @@ public class WindowImpl extends JFrame
 	private GridBagConstraints contraintesChronometre;
 	
 	//Les grilles
+	@SuppressWarnings("unused")
 	private GrilleController grilleController;
 	private GridBagConstraints contraintesGrilles;
 	private GrilleViewImpl vueGrille;
+	@SuppressWarnings("unused")
 	private GridLayout layoutGrille;
 	private GrilleImpl grilleInitiale;
+	@SuppressWarnings("unused")
 	private GrilleImpl grilleFinale;
 	
 	//Le bouton Start/Pause
@@ -138,7 +137,7 @@ public class WindowImpl extends JFrame
 		this.visuel = visuel;
 		this.grilleFinale = grilleFinale;
 		
-		//Options de la fen�tre
+		//Options de la fenetre
 		this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		this.setMinimumSize(new Dimension(800,520));
 		this.setTitle("SUDOKU");
@@ -341,25 +340,28 @@ public class WindowImpl extends JFrame
 		panelConsole.setBorder(BorderFactory.createLineBorder(Color.BLACK,4));
 		this.getContentPane().add(panelConsole,BorderLayout.SOUTH);
 		
-		
 		this.setVisible(true);
 		this.revalidate();
 		
 	}
 
-	public int getAlgorithme() {
+	public int getAlgorithme() 
+	{
 		return algorithme;
 	}
 
-	public void setAlgorithme(int algorithme) {
+	public void setAlgorithme(int algorithme) 
+	{
 		this.algorithme = algorithme;
 	}
 
-	public int getVisuel() {
+	public int getVisuel() 
+	{
 		return visuel;
 	}
 
-	public void setVisuel(int visuel) {
+	public void setVisuel(int visuel) 
+	{
 		this.visuel = visuel;
 	}
 }

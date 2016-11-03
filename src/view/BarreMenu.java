@@ -9,8 +9,8 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 	
 @SuppressWarnings("serial")
-public class BarreMenu extends JMenuBar{
-	
+public class BarreMenu extends JMenuBar
+{
 	//Variables
 	private JMenuItem exporterPDF;
 	private JMenuItem ajouterUneGrilleManuellement;
@@ -22,15 +22,15 @@ public class BarreMenu extends JMenuBar{
 	private JMenu options;
 	
 	//Constructeur
-	public BarreMenu(){
-	
-		//Cr�ation du menu fichier
+	public BarreMenu()
+	{
+		//Creation du menu fichier
 		fichier = new JMenu("Fichier");
 		this.add(fichier);
 		quitter = new JMenuItem("Quitter");
 		fichier.add(quitter);
 		
-		//Cr�ation du menu fichier
+		//Creation du menu fichier
 		options = new JMenu("Options");
 		this.add(options);
 		exporterPDF = new JMenuItem("Exporter en PDF",'E');
@@ -58,54 +58,64 @@ public class BarreMenu extends JMenuBar{
 				
 	}
 
-	public JMenuItem getExporterPDF() {
+	public JMenuItem getExporterPDF() 
+	{
 		return exporterPDF;
 	}
 
-	public void setExporterPDF(JMenuItem exporterPDF) {
+	public void setExporterPDF(JMenuItem exporterPDF) 
+	{
 		this.exporterPDF = exporterPDF;
 	}
 
-	public JMenuItem getAjouterUneGrilleManuellement() {
+	public JMenuItem getAjouterUneGrilleManuellement()
+	{
 		return ajouterUneGrilleManuellement;
 	}
 
-	public void setAjouterUneGrilleManuellement(JMenuItem ajouterUneGrilleManuellement) {
+	public void setAjouterUneGrilleManuellement(JMenuItem ajouterUneGrilleManuellement)
+	{
 		this.ajouterUneGrilleManuellement = ajouterUneGrilleManuellement;
 	}
 
-	public JMenuItem getImporterUneNouvelleGrille() {
+	public JMenuItem getImporterUneNouvelleGrille()
+	{
 		return importerUneNouvelleGrille;
 	}
 
-	public void setImporterUneNouvelleGrille(JMenuItem importerUneNouvelleGrille) {
+	public void setImporterUneNouvelleGrille(JMenuItem importerUneNouvelleGrille)
+	{
 		this.importerUneNouvelleGrille = importerUneNouvelleGrille;
 	}
 
-	public JMenuItem getQuitter() {
+	public JMenuItem getQuitter()
+	{
 		return quitter;
 	}
 
-	public void setQuitter(JMenuItem quitter) {
+	public void setQuitter(JMenuItem quitter) 
+	{
 		this.quitter = quitter;
 	}
 
-	public JMenuItem getImporterUneGrilleAleatoire() {
+	public JMenuItem getImporterUneGrilleAleatoire() 
+	{
 		return importerUneGrilleAleatoire;
 	}
 
-	public void setImporterUneGrilleAleatoire(JMenuItem importerUneGrilleAleatoire) {
+	public void setImporterUneGrilleAleatoire(JMenuItem importerUneGrilleAleatoire) 
+	{
 		this.importerUneGrilleAleatoire = importerUneGrilleAleatoire;
 	}
 
-	public JMenuItem getOption() {
+	public JMenuItem getOption()
+	{
 		return option;
 	}
 
-	public void setOption(JMenuItem option) {
+	public void setOption(JMenuItem option) 
+	{
 		this.option = option;
 	}
-	
-	
 	
 }

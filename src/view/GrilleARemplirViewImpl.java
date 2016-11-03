@@ -8,7 +8,6 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import model.CaseImpl;
 import model.GrilleImpl;
 
@@ -18,6 +17,7 @@ public class GrilleARemplirViewImpl extends JPanel
 	
 	//Variables
 	private GridLayout layoutGrille;
+	@SuppressWarnings("unused")
 	private CaseImpl[][] tabCaseImpl;
 	private JTextField[][] tabJTextField;
 	
@@ -34,15 +34,17 @@ public class GrilleARemplirViewImpl extends JPanel
 	private GrilleImpl grilleImpl;
 	
 	//Constructeur
-	public GrilleARemplirViewImpl(){
-		
+	public GrilleARemplirViewImpl()
+	{	
 		this.grilleImpl = new GrilleImpl();
 		this.tabCaseImpl = grilleImpl.getCases();
 		this.tabJTextField = new JTextField[9][9];
 		layoutGrille = new GridLayout(3,3);
 		
-		for(int i = 0 ; i < 9 ; i++){
-			for(int j = 0 ; j < 9 ; j++){
+		for(int i = 0 ; i < 9 ; i++)
+		{
+			for(int j = 0 ; j < 9 ; j++)
+			{
 				tabJTextField[i][j] = new JTextField();
 				tabJTextField[i][j].setBackground(Color.WHITE);
 				tabJTextField[i][j].setHorizontalAlignment(0);
@@ -111,45 +113,67 @@ public class GrilleARemplirViewImpl extends JPanel
 		this.setLayout(layoutGrille);
 		this.setBackground(Color.WHITE);
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-		for(int i = 0 ; i < 9 ; i++){
-			for(int j = 0 ; j < 9 ; j++){
-				if(i<3 && j<3){
+		for(int i = 0 ; i < 9 ; i++)
+		{
+			for(int j = 0 ; j < 9 ; j++)
+			{
+				if(i<3 && j<3)
+				{
 					grille11.add(tabJTextField[i][j]);
-				}else if(i<6 && j<3){
+				}
+				else if(i<6 && j<3)
+				{
 					grille12.add(tabJTextField[i][j]);
-				}else if(j<3){
+				}
+				else if(j<3)
+				{
 					grille13.add(tabJTextField[i][j]);
-				}else if(i<3 && j<6){
+				}
+				else if(i<3 && j<6)
+				{
 					grille21.add(tabJTextField[i][j]);
-				}else if(i<6 && j<6){
+				}
+				else if(i<6 && j<6)
+				{
 					grille22.add(tabJTextField[i][j]);
-				}else if(j<6){
+				}
+				else if(j<6)
+				{
 					grille23.add(tabJTextField[i][j]);
-				}else if(i<3){
+				}
+				else if(i<3)
+				{
 					grille31.add(tabJTextField[i][j]);
-				}else if(i<6){
+				}
+				else if(i<6)
+				{
 					grille32.add(tabJTextField[i][j]);
-				}else{
+				}
+				else
+				{
 					grille33.add(tabJTextField[i][j]);
 				}
 			}
 		}		
-		
 	}
 	
-	public JTextField[][] getTabJTextField() {
+	public JTextField[][] getTabJTextField()
+	{
 		return tabJTextField;
 	}
 
-	public void setTabJTextField(JTextField[][] tabJTextField) {
+	public void setTabJTextField(JTextField[][] tabJTextField)
+	{
 		this.tabJTextField = tabJTextField;
 	}
 
-	public GrilleImpl getGrilleImpl() {
+	public GrilleImpl getGrilleImpl() 
+	{
 		return grilleImpl;
 	}
 
-	public void setGrilleImpl(GrilleImpl grilleImpl) {
+	public void setGrilleImpl(GrilleImpl grilleImpl)
+	{
 		this.grilleImpl = grilleImpl;
 	}
 

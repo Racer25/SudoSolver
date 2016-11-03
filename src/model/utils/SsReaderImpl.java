@@ -17,7 +17,6 @@ public class SsReaderImpl
 	//La fonction "lireSs" change les valeurs de la variable "grille" en fonction de celles d'un fichier .ss
 	public GrilleImpl lireSs(String file)
 	{
-		System.out.println(file);
 		int[][] grille = new int[9][9]; 
 		
 		try 

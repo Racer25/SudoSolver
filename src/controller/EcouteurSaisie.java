@@ -4,6 +4,7 @@ package controller;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class EcouteurSaisie implements KeyListener
@@ -14,14 +15,17 @@ public class EcouteurSaisie implements KeyListener
 	private int i;
 	private int j;
 	private JLabel message;
+	@SuppressWarnings("unused")
+	private JPanel panelMessage;
 	
-	public EcouteurSaisie(JTextField[][] tabJTextField,int i,int j,JLabel message)
+	public EcouteurSaisie(JTextField[][] tabJTextField,int i,int j,JLabel message,JPanel panelMessage)
 	{
 		this.i = i;
 		this.j = j;
 		this.tabJTextField = tabJTextField;
 		this.jTextField = tabJTextField[i][j];
 		this.message = message;
+		this.panelMessage = panelMessage;
 	}
 
 	@SuppressWarnings("static-access")

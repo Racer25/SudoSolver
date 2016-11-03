@@ -24,7 +24,7 @@ public class EcouteurBoutonImporterUneGrilleAleatoire implements ActionListener{
 		this.grilleFinale = vueGrille.getGrilleImpl();
 		this.vueGrille = vueGrille;
 		this.grilleInitiale = grilleInitiale;
-		
+		this.ssReaderImpl = new SsReaderImpl();
 	}
 	
 	public void actionPerformed(ActionEvent arg0) 

@@ -31,15 +31,17 @@ public class GrilleViewImpl extends JPanel
 	private GrilleImpl grilleImpl;
 	
 	//Constructeur
-	public GrilleViewImpl(GrilleImpl grilleImpl){
-		
+	public GrilleViewImpl(GrilleImpl grilleImpl)
+	{
 		this.grilleImpl = grilleImpl;
 		this.tabCaseImpl = grilleImpl.getCases();
 		this.tabCaseViewImpl = new CaseViewImpl[9][9];
 		layoutGrille = new GridLayout(3,3);
 		
-		for(int i = 0 ; i < 9 ; i++){
-			for(int j = 0 ; j < 9 ; j++){
+		for(int i = 0 ; i < 9 ; i++)
+		{
+			for(int j = 0 ; j < 9 ; j++)
+			{
 				tabCaseViewImpl[i][j] = new CaseViewImpl(tabCaseImpl[i][j]);
 			}
 		}
@@ -104,45 +106,67 @@ public class GrilleViewImpl extends JPanel
 		this.setLayout(layoutGrille);
 		this.setBackground(Color.WHITE);
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-		for(int i = 0 ; i < 9 ; i++){
-			for(int j = 0 ; j < 9 ; j++){
-				if(i<3 && j<3){
+		for(int i = 0 ; i < 9 ; i++)
+		{
+			for(int j = 0 ; j < 9 ; j++)
+			{
+				if(i<3 && j<3)
+				{
 					grille11.add(tabCaseViewImpl[i][j]);
-				}else if(i<6 && j<3){
+				}
+				else if(i<6 && j<3)
+				{
 					grille12.add(tabCaseViewImpl[i][j]);
-				}else if(j<3){
+				}
+				else if(j<3)
+				{
 					grille13.add(tabCaseViewImpl[i][j]);
-				}else if(i<3 && j<6){
+				}
+				else if(i<3 && j<6)
+				{
 					grille21.add(tabCaseViewImpl[i][j]);
-				}else if(i<6 && j<6){
+				}
+				else if(i<6 && j<6)
+				{
 					grille22.add(tabCaseViewImpl[i][j]);
-				}else if(j<6){
+				}
+				else if(j<6)
+				{
 					grille23.add(tabCaseViewImpl[i][j]);
-				}else if(i<3){
+				}
+				else if(i<3)
+				{
 					grille31.add(tabCaseViewImpl[i][j]);
-				}else if(i<6){
+				}
+				else if(i<6)
+				{
 					grille32.add(tabCaseViewImpl[i][j]);
-				}else{
+				}
+				else
+				{
 					grille33.add(tabCaseViewImpl[i][j]);
 				}
 			}
 		}		
-		
 	}
 
-	public CaseViewImpl[][] getCaseViews() {
+	public CaseViewImpl[][] getCaseViews()
+	{
 		return tabCaseViewImpl;
 	}
 
-	public void setCaseViews(CaseViewImpl[][] caseViews) {
+	public void setCaseViews(CaseViewImpl[][] caseViews)
+	{
 		this.tabCaseViewImpl = caseViews;
 	}
 
-	public GrilleImpl getGrilleImpl() {
+	public GrilleImpl getGrilleImpl() 
+	{
 		return grilleImpl;
 	}
 
-	public void setGrilleImpl(GrilleImpl grilleImpl) {
+	public void setGrilleImpl(GrilleImpl grilleImpl)
+	{
 		this.grilleImpl = grilleImpl;
 	}
 

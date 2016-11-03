@@ -1,21 +1,21 @@
 package view;
 
+//Imports
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import controller.EcouteurAnnuler;
 import controller.EcouteurEnregistrer;
 import controller.EcouteurSaisie;
 import model.GrilleImpl;
 
-public class EntreeManuelleView extends JFrame{
+public class EntreeManuelleView extends JFrame
+{
 
 	private static final long serialVersionUID = -4048563176694901418L;
 	
@@ -30,11 +30,12 @@ public class EntreeManuelleView extends JFrame{
 	//Le panel Message 
 	private JPanel panelMessage;
 	private JLabel message;
+	@SuppressWarnings("unused")
 	private GridLayout layoutPanelMessage;
 	
 	public EntreeManuelleView(GrilleImpl grilleFinale, GrilleImpl grilleInitiale){
 		
-	//Options de la fen�tre
+	//Options de la fenetre
 	this.setTitle("ENTRER MANUELLEMENT UNE GRILLE");
 	this.setSize(new Dimension(500,500));
 	this.setLocationRelativeTo(null);
@@ -77,7 +78,6 @@ public class EntreeManuelleView extends JFrame{
 	panelBoutons.add(enregistrer);
 	ecouteurEnregistrer = new EcouteurEnregistrer(panelGrille.getTabJTextField(), grilleInitiale, grilleFinale,this);
 	enregistrer.addActionListener(ecouteurEnregistrer);
-	
 	
 	this.setVisible(true);
 	this.revalidate();

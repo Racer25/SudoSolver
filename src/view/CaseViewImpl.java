@@ -1,12 +1,10 @@
 package view;
 
+//Imports
 import java.awt.Color;
-import java.awt.Font;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import model.CaseImpl;
 
 public class CaseViewImpl extends JPanel
@@ -16,17 +14,14 @@ public class CaseViewImpl extends JPanel
 	//Variables
 	private CaseImpl caseImpl;
 	private JLabel valueView;
-	//private Font font;
 	
 	//Constructeur
 	public CaseViewImpl(CaseImpl caseImpl)
 	{
 		this.caseImpl = caseImpl;
-		//font = new Font("Arial", 0, 50);
 		if(caseImpl.getValue() != 0)
 		{
 			this.valueView = new JLabel(Integer.toString(caseImpl.getValue()));
-			//this.valueView.setFont(font);
 		}
 		else
 		{
@@ -35,23 +30,26 @@ public class CaseViewImpl extends JPanel
 
 		this.add(valueView);
 		this.setBackground(Color.WHITE);
-		this.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
-		
+		this.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));	
 	}
 	
-	public JLabel getValueView() {
+	public JLabel getValueView() 
+	{
 		return valueView;
 	}
 	
-	public void setValueView(JLabel valueView) {
+	public void setValueView(JLabel valueView) 
+	{
 		this.valueView = valueView;
 	}
 
-	public int getCaseImplValue() {
+	public int getCaseImplValue() 
+	{
 		return caseImpl.getValue();
 	}
 
-	public void setCaseImplValue(int value) {
+	public void setCaseImplValue(int value) 
+	{
 		this.caseImpl.setValue(value);
 	}
 	
