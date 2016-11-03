@@ -3,6 +3,8 @@ package controller;
 //Imports
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import model.GrilleImpl;
 import view.Chronometre;
 
@@ -27,6 +29,11 @@ public class EcouteurBoutonReset implements ActionListener
 			for(int j = 0 ; j < 9 ; j++)
 			{
 				grilleFinale.getCase(i, j).setValue(grilleInitiale.getCase(i, j).getValue());
+				grilleFinale.getCase(i, j).setDomain(new ArrayList());
+				for(int k = 0 ; k < grilleInitiale.getCase(i, j).getDomain().size() ; k++)
+				{
+					grilleFinale.getCase(i, j).getDomain().add(grilleInitiale.getCase(i, j).getDomain().get(k));
+				}
 			}
 		}
 		chronometre.tare();
