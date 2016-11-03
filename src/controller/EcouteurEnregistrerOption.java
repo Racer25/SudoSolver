@@ -73,8 +73,6 @@ public class EcouteurEnregistrerOption implements ActionListener
 		{
 			windowImpl.setVisuel(1);
 		}
-		System.out.println("Algo: "+windowImpl.getAlgorithme());
-		System.out.println("Visuel: "+windowImpl.getVisuel());
 		frame.dispose();
 	}
 

@@ -46,7 +46,6 @@ public class PDFGenerator
 		fc.setFileFilter(filter);
 		fc.setSelectedFile(new File("exportPDF_"+numero+".pdf"));
 		 int val_retour = fc.showSaveDialog(frame);
-		 System.out.println(fc.getFileFilter().getDescription()=="PDF");
 		 if(fc.getSelectedFile().getName().endsWith(".pdf")==false && fc.getFileFilter().getDescription()=="PDF")
 		 {
 			 fc.setSelectedFile(new File(fc.getSelectedFile().getPath()+".pdf"));
@@ -75,7 +74,6 @@ public class PDFGenerator
 	    		    {
 	    		    	for(int j = 0 ; j < 9 ; j++)
 	    		    	{
-	    		    		System.out.println(grilleInitiale.getCase(i, j).getValue());
 	    		    		if(grilleInitiale.getCase(i, j).getValue()!=0)
 	    		    		{
 	    		    			grille1[i][j]=Integer.toString(grilleInitiale.getCase(i, j).getValue());

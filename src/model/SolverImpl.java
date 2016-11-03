@@ -14,8 +14,6 @@ public class SolverImpl extends Thread implements Solver
 {
 	//Variables
 	private GrilleImpl grille;
-	private List<CaseImpl> casesAvecContraintesCreees;
-	private List<ConstraintImpl> contraintes;
 	private List<CaseImpl> casesNonAssigneesTrieeParTailleDomaine;
 	private BooleanObservable booleanObservable;
 	private int algo;
@@ -26,34 +24,9 @@ public class SolverImpl extends Thread implements Solver
 		this.booleanObservable = new BooleanObservable();
 		this.booleanObservable.addObserver(ecouteurAlgoView);
 		this.grille = grille;
-		this.casesAvecContraintesCreees = new ArrayList<CaseImpl>();
-		this.contraintes = new ArrayList<ConstraintImpl>();
 		preDomaineReducer();
 		this.casesNonAssigneesTrieeParTailleDomaine = this.grille
 				.getCasesNonAssigneesTrieeParTailleDomaineEtFixerPriorites();
-	}
-
-	public void constraintsGenerator() 
-	{
-		for (int i = 0; i < this.grille.getCases().length; i++) 
-		{
-			for (int j = 0; j < this.grille.getCases()[i].length; j++) 
-			{
-				CaseImpl caseParcourue = this.grille.getCases()[i][j];
-				List<CaseImpl> casesLiees = this.grille.getCases()[i][j].getVoisins();
-
-				for (CaseImpl caseLiee : casesLiees)
-				{
-					// Creer une contrainte si la caseLiee n'a pas ete une
-					// caseParcourue
-					if (!this.casesAvecContraintesCreees.contains(caseLiee)) 
-					{
-						this.contraintes.add(new ConstraintImpl(caseParcourue, caseLiee));
-					}
-				}
-				this.casesAvecContraintesCreees.add(caseParcourue);
-			}
-		}
 	}
 
 	public void preDomaineReducer() 
@@ -437,34 +410,6 @@ public class SolverImpl extends Thread implements Solver
 		}
 
 		return somethingRemoved;
-	}
-
-	public LinkedList<ConstraintImpl> getConstraints(CaseImpl maCase) 
-	{
-		LinkedList<ConstraintImpl> contraintesDeLaCase = new LinkedList<ConstraintImpl>();
-		for (ConstraintImpl contrainte : this.contraintes) 
-		{
-			if (contrainte.getCase1() == maCase || contrainte.getCase2() == maCase)
-			{
-				contraintesDeLaCase.add(contrainte);
-			}
-		}
-		return contraintesDeLaCase;
-	}
-
-	public ConstraintImpl getConstraint(CaseImpl maCase1, CaseImpl maCase2) 
-	{
-		ConstraintImpl contrainteDeLaCase = null;
-		for (ConstraintImpl contrainte : this.contraintes)
-		{
-			if (contrainte.getCase1() == maCase1 && contrainte.getCase2() == maCase2) {
-				contrainteDeLaCase = contrainte;
-			}
-			else if (contrainte.getCase1() == maCase2 && contrainte.getCase2() == maCase1) {
-				contrainteDeLaCase = contrainte;
-			}
-		}
-		return contrainteDeLaCase;
 	}
 
 }
