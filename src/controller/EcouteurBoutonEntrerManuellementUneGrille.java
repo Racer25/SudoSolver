@@ -12,17 +12,19 @@ public class EcouteurBoutonEntrerManuellementUneGrille implements ActionListener
 	//Variables
 	private GrilleImpl grilleInitiale;
 	private GrilleImpl grilleFinale;
+	private GrilleViewImpl vueGrille;
 	
 	public EcouteurBoutonEntrerManuellementUneGrille(GrilleViewImpl vueGrille,GrilleImpl grilleInitiale)
 	{
 		this.grilleFinale = vueGrille.getGrilleImpl();
 		this.grilleInitiale = grilleInitiale;
+		this.vueGrille = vueGrille;
 	}
 	
 	public void actionPerformed(ActionEvent arg0) 
 	{
 		@SuppressWarnings("unused")
-		EntreeManuelleView entreeManuelleView = new EntreeManuelleView(grilleFinale,grilleInitiale);
+		EntreeManuelleView entreeManuelleView = new EntreeManuelleView(vueGrille,grilleFinale,grilleInitiale);
 	}
 
 }
