@@ -55,7 +55,23 @@ public class EcouteurBoutonImporterUneNouvelleGrille implements ActionListener{
 				vueGrille.getCaseViews()[x][y].setCaseImplValue(valeurs.getCase(x, y).getValue());
 			}
 		}
-		
+		for(int x = 0 ; x < 9 ; x++)
+		{
+			for(int y = 0 ; y < 9 ; y++)
+			{
+				if(grilleInitiale.getCase(x, y).getValue()!=0)
+				{
+					vueGrille.getCaseViews()[x][y].getValueView().setText(
+							Integer.toString(grilleInitiale.getCase(x, y).getValue()));
+				}
+				else
+				{
+					vueGrille.getCaseViews()[x][y].getValueView().setText(
+							" ");
+				}
+				
+			}
+		}				
 		vueGrille.revalidate();
 	}
 }

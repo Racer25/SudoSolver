@@ -3,6 +3,8 @@ package controller;
 //Imports
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -30,7 +32,7 @@ public class EcouteurParcourir implements ActionListener
 		this.grilleInitiale = grilleInitiale;
 	}
 	
-	@SuppressWarnings("static-access")
+	@SuppressWarnings({ "static-access", "rawtypes" })
 	public void actionPerformed(ActionEvent arg0) 
 	{
 		JFileChooser chooser = new JFileChooser();
@@ -64,9 +66,33 @@ public class EcouteurParcourir implements ActionListener
 					grilleInitiale.getCase(x, y).setValue(valeurs.getCase(x, y).getValue());
 					grilleFinale.getCase(x, y).setValue(valeurs.getCase(x, y).getValue());
 					vueGrille.getCaseViews()[x][y].setCaseImplValue(valeurs.getCase(x, y).getValue());
+				
+					grilleFinale.getCase(x, y).setDomain(new ArrayList());
+					grilleInitiale.getCase(x, y).setDomain(new ArrayList());
+					for(int k = 0 ; k < 9 ; k++)
+					{
+						grilleFinale.getCase(x, y).getDomain().add(k+1);
+						grilleInitiale.getCase(x, y).getDomain().add(k+1);
+					}
 				}
 			}
-		
+			for(int x = 0 ; x < 9 ; x++)
+			{
+				for(int y = 0 ; y < 9 ; y++)
+				{
+					if(grilleInitiale.getCase(x, y).getValue()!=0)
+					{
+						vueGrille.getCaseViews()[x][y].getValueView().setText(
+								Integer.toString(grilleInitiale.getCase(x, y).getValue()));
+					}
+					else
+					{
+						vueGrille.getCaseViews()[x][y].getValueView().setText(
+								" ");
+					}
+					
+				}
+			}			
 			vueGrille.revalidate();
 	   }
 	}

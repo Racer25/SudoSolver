@@ -26,6 +26,7 @@ public class EntreeManuelleView extends JFrame
 	private JButton annuler;
 	private JButton enregistrer;
 	private EcouteurEnregistrer ecouteurEnregistrer;
+	private GrilleViewImpl vueGrille;
 	
 	//Le panel Message 
 	private JPanel panelMessage;
@@ -33,8 +34,10 @@ public class EntreeManuelleView extends JFrame
 	@SuppressWarnings("unused")
 	private GridLayout layoutPanelMessage;
 	
-	public EntreeManuelleView(GrilleImpl grilleFinale, GrilleImpl grilleInitiale){
-		
+	public EntreeManuelleView(GrilleViewImpl vueGrille, GrilleImpl grilleFinale, GrilleImpl grilleInitiale){
+	
+	this.vueGrille = vueGrille;
+	
 	//Options de la fenetre
 	this.setTitle("ENTRER MANUELLEMENT UNE GRILLE");
 	this.setSize(new Dimension(500,500));
@@ -76,7 +79,7 @@ public class EntreeManuelleView extends JFrame
 	//Le bouton Enregistrer
 	enregistrer = new JButton("Enregistrer");
 	panelBoutons.add(enregistrer);
-	ecouteurEnregistrer = new EcouteurEnregistrer(panelGrille.getTabJTextField(), grilleInitiale, grilleFinale,this);
+	ecouteurEnregistrer = new EcouteurEnregistrer(vueGrille, panelGrille.getTabJTextField(), grilleInitiale, grilleFinale,this);
 	enregistrer.addActionListener(ecouteurEnregistrer);
 	
 	this.setVisible(true);
