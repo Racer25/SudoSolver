@@ -35,23 +35,23 @@ public class BarreMenu extends JMenuBar
 		this.add(options);
 		exporterPDF = new JMenuItem("Exporter en PDF",'E');
 		exporterPDF.setMnemonic('E');
-		exporterPDF.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,InputEvent.CTRL_MASK));
+		exporterPDF.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,InputEvent.CTRL_MASK));
 		options.add(exporterPDF);
 		ajouterUneGrilleManuellement = new JMenuItem("Ajouter manuellement une grille",'M');
 		ajouterUneGrilleManuellement.setMnemonic('M');
-		ajouterUneGrilleManuellement.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,InputEvent.CTRL_MASK));
+		ajouterUneGrilleManuellement.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M,InputEvent.CTRL_MASK));
 		options.add(ajouterUneGrilleManuellement);
 		importerUneNouvelleGrille = new JMenuItem("Importer une nouvelle grille",'I');
 		importerUneNouvelleGrille.setMnemonic('I');
-		importerUneNouvelleGrille.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,InputEvent.CTRL_MASK));
+		importerUneNouvelleGrille.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I,InputEvent.CTRL_MASK));
 		options.add(importerUneNouvelleGrille);
 		importerUneGrilleAleatoire = new JMenuItem("Importer une grille aleatoire",'A');
 		importerUneGrilleAleatoire.setMnemonic('A');
-		importerUneGrilleAleatoire.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,InputEvent.CTRL_MASK));
+		importerUneGrilleAleatoire.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,InputEvent.CTRL_MASK));
 		options.add(importerUneGrilleAleatoire);
 		option = new JMenuItem("Options",'O');
 		option.setMnemonic('O');
-		option.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,InputEvent.CTRL_MASK));
+		option.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,InputEvent.CTRL_MASK));
 		options.add(option);
 
 		this.setVisible(true);

@@ -44,56 +44,59 @@ public class EcouteurParcourir implements ActionListener
 	    {
 	    	if(chooser.getSelectedFile().getName().endsWith(".ss")==true)
 	    	{
-	    	String file = chooser.getSelectedFile().getPath().replace('\\', '/');
-			valeurs = ssReaderImpl
+	    		String file = chooser.getSelectedFile().getPath().replace('\\', '/');
+	    		valeurs = ssReaderImpl
 					.lireSs(file);
-	    	}else{
+	    		System.out.println("Selection de la grille : "+chooser.getSelectedFile().getName());
+				//La grille Initiale Copie profonde
+		for(int x = 0 ; x < 9 ; x++)
+		{
+			for(int y = 0 ; y < 9 ; y++)
+			{
+				//Changement du domaine de la case
+				grilleInitiale.getCase(x, y).setDomain(valeurs.getCase(x, y).getDomain());
+				grilleFinale.getCase(x, y).setDomain(valeurs.getCase(x, y).getDomain());
+								
+				grilleInitiale.getCase(x, y).setValue(valeurs.getCase(x, y).getValue());
+				grilleFinale.getCase(x, y).setValue(valeurs.getCase(x, y).getValue());
+				vueGrille.getCaseViews()[x][y].setCaseImplValue(valeurs.getCase(x, y).getValue());
+			
+				grilleFinale.getCase(x, y).setDomain(new ArrayList());
+				grilleInitiale.getCase(x, y).setDomain(new ArrayList());
+				for(int k = 0 ; k < 9 ; k++)
+				{
+					grilleFinale.getCase(x, y).getDomain().add(k+1);
+					grilleInitiale.getCase(x, y).getDomain().add(k+1);
+				}
+			}
+		}
+		for(int x = 0 ; x < 9 ; x++)
+		{
+			for(int y = 0 ; y < 9 ; y++)
+			{
+				if(grilleInitiale.getCase(x, y).getValue()!=0)
+				{
+					vueGrille.getCaseViews()[x][y].getValueView().setText(
+							Integer.toString(grilleInitiale.getCase(x, y).getValue()));
+				}
+				else
+				{
+					vueGrille.getCaseViews()[x][y].getValueView().setText(
+							" ");
+				}
+				
+			}
+		}			
+		vueGrille.revalidate();
+	    	}
+	    	else
+	    	{
 				JOptionPane jOptionPane =  new JOptionPane();
 				jOptionPane.showMessageDialog(frame,"Vous devez choisir un fichier au format .ss",null, JOptionPane.WARNING_MESSAGE);
 				actionPerformed(arg0);
 	    	}
 	    	
-		    System.out.println("Selection de la grille : "+chooser.getSelectedFile().getName());
-					//La grille Initiale Copie profonde
-			for(int x = 0 ; x < 9 ; x++)
-			{
-				for(int y = 0 ; y < 9 ; y++)
-				{
-					//Changement du domaine de la case
-					grilleInitiale.getCase(x, y).setDomain(valeurs.getCase(x, y).getDomain());
-					grilleFinale.getCase(x, y).setDomain(valeurs.getCase(x, y).getDomain());
-									
-					grilleInitiale.getCase(x, y).setValue(valeurs.getCase(x, y).getValue());
-					grilleFinale.getCase(x, y).setValue(valeurs.getCase(x, y).getValue());
-					vueGrille.getCaseViews()[x][y].setCaseImplValue(valeurs.getCase(x, y).getValue());
-				
-					grilleFinale.getCase(x, y).setDomain(new ArrayList());
-					grilleInitiale.getCase(x, y).setDomain(new ArrayList());
-					for(int k = 0 ; k < 9 ; k++)
-					{
-						grilleFinale.getCase(x, y).getDomain().add(k+1);
-						grilleInitiale.getCase(x, y).getDomain().add(k+1);
-					}
-				}
-			}
-			for(int x = 0 ; x < 9 ; x++)
-			{
-				for(int y = 0 ; y < 9 ; y++)
-				{
-					if(grilleInitiale.getCase(x, y).getValue()!=0)
-					{
-						vueGrille.getCaseViews()[x][y].getValueView().setText(
-								Integer.toString(grilleInitiale.getCase(x, y).getValue()));
-					}
-					else
-					{
-						vueGrille.getCaseViews()[x][y].getValueView().setText(
-								" ");
-					}
-					
-				}
-			}			
-			vueGrille.revalidate();
+		    
 	   }
 	}
 		
